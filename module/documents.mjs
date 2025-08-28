@@ -984,8 +984,53 @@ export class RQ3Actor extends Actor {
       return;
     }
     
-    // Implementation of the characteristic roll would go here
-    console.log(`Rolling ${characteristic} check`);
+    // Find the x? button element to position the tooltip
+    const buttonElement = document.querySelector(`[data-characteristic="${characteristic}"].characteristic-roll-custom`);
+    if (!buttonElement) {
+      console.error(`Could not find characteristic roll button for ${characteristic}`);
+      return;
+    }
+
+    // Show tooltip and get multiplier
+    const multiplier = await this.showCharacteristicRollTooltip(characteristic, buttonElement);
+
+    if (multiplier === null) return;
+
+    const target = char.current * multiplier;
+    const roll = new Roll("1d100");
+    await roll.evaluate();
+
+    const success = roll.total <= target;
+    const critical = roll.total <= Math.floor(target / 20);
+    const fumble = roll.total >= 96;
+
+    let resultText = "";
+    if (fumble) resultText = "Fumble!";
+    else if (critical) resultText = "Critical Success!";
+    else if (success) resultText = "Success";
+    else resultText = "Failure";
+
+    if (success && characteristic === 'pow') {
+      await this.update({ 'system.characteristics.pow.readyForTraining': true });
+    }
+
+    await ChatMessage.create({
+      content: `
+        <div class="rq3-char-roll">
+          <h3>${characteristic.toUpperCase()} x${multiplier} Roll</h3>
+          <div class="roll-result">
+            <strong>${roll.total}</strong> vs ${target}
+          </div>
+          <div class="result-text ${success ? 'success' : 'failure'}">
+            ${resultText}
+          </div>
+        </div>
+      `,
+      speaker: ChatMessage.getSpeaker({ actor: this }),
+      rolls: [roll]
+    });
+
+    return { roll, success, critical, fumble };
   }
 
   /**
