@@ -1494,6 +1494,12 @@ export class RQ3Actor extends Actor {
           return; // Tooltip already closed
         }
 
+        // Don't close if the click is on the target element that opened the tooltip
+        if (event.target === targetElement || targetElement.contains(event.target)) {
+          console.log('RQ3 | Click on target element, not closing tooltip');
+          return;
+        }
+
         if (!tooltip.contains(event.target)) {
           console.log('RQ3 | Click outside tooltip detected, closing tooltip');
           tooltip.remove();
@@ -1516,11 +1522,17 @@ export class RQ3Actor extends Actor {
         }
       };
 
-      // Add event listeners
+      // Add event listeners with a small delay to prevent immediate closure
       console.log('RQ3 | Adding event listeners for click-outside and escape');
-      document.addEventListener('click', handleClickOutside);
+      
+      // Delay the click-outside handler to prevent immediate closure
+      setTimeout(() => {
+        document.addEventListener('click', handleClickOutside);
+        console.log('RQ3 | Click-outside handler enabled after delay');
+      }, 100);
+      
       document.addEventListener('keydown', handleEscape);
-      console.log('RQ3 | Event listeners added');
+      console.log('RQ3 | Escape key handler added immediately');
 
       // Set up button click handlers
       tooltipElement.find('.rq3-roll-multiplier-btn').on('click', (event) => {
