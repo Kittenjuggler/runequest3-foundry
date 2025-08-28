@@ -70,12 +70,8 @@ jobs:
           ### Compatibility
           - Foundry VTT v12+
           
-        files: release/runequest3-foundry.zip
+        files: |
+          release/runequest3-foundry.zip
+          system.json
         draft: false
         prerelease: false
-        
-    - name: Upload system.json
-      uses: actions/upload-artifact@v4
-      with:
-        name: system-json
-        path: system.json
