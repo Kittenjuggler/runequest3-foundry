@@ -1487,10 +1487,15 @@ export class RQ3Actor extends Actor {
 
       // Set up click-outside functionality
       const handleClickOutside = (event) => {
+        console.log('RQ3 | Click outside handler triggered');
         const tooltip = document.getElementById(`rq3-roll-tooltip-${characteristic}`);
-        if (!tooltip) return; // Tooltip already closed
+        if (!tooltip) {
+          console.log('RQ3 | Tooltip not found in click-outside handler');
+          return; // Tooltip already closed
+        }
 
         if (!tooltip.contains(event.target)) {
+          console.log('RQ3 | Click outside tooltip detected, closing tooltip');
           tooltip.remove();
           document.removeEventListener('click', handleClickOutside);
           document.removeEventListener('keydown', handleEscape);
@@ -1512,8 +1517,10 @@ export class RQ3Actor extends Actor {
       };
 
       // Add event listeners
+      console.log('RQ3 | Adding event listeners for click-outside and escape');
       document.addEventListener('click', handleClickOutside);
       document.addEventListener('keydown', handleEscape);
+      console.log('RQ3 | Event listeners added');
 
       // Set up button click handlers
       tooltipElement.find('.rq3-roll-multiplier-btn').on('click', (event) => {
@@ -1531,9 +1538,12 @@ export class RQ3Actor extends Actor {
       });
 
       // Auto-close after 30 seconds
+      console.log('RQ3 | Setting up auto-close timeout for 30 seconds');
       setTimeout(() => {
+        console.log('RQ3 | Auto-close timeout triggered');
         const tooltip = document.getElementById(`rq3-roll-tooltip-${characteristic}`);
         if (tooltip) {
+          console.log('RQ3 | Auto-closing tooltip');
           tooltip.remove();
           document.removeEventListener('click', handleClickOutside);
           document.removeEventListener('keydown', handleEscape);
