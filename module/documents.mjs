@@ -1463,24 +1463,10 @@ export class RQ3Actor extends Actor {
       
       console.log('RQ3 | Final positioning:', { left, top });
 
-      tooltipElement.css({
-        position: 'fixed !important',
-        left: left + 'px !important',
-        top: top + 'px !important',
-        zIndex: 1000,
-        // Ensure visibility
-        display: 'block !important',
-        visibility: 'visible !important',
-        opacity: '1 !important',
-        pointerEvents: 'auto !important'
-      });
-
-      // Also set the styles directly on the DOM element to ensure they take precedence
-      const tooltipDomElement = tooltipElement[0];
-      tooltipDomElement.style.setProperty('position', 'fixed', 'important');
-      tooltipDomElement.style.setProperty('left', left + 'px', 'important');
-      tooltipDomElement.style.setProperty('top', top + 'px', 'important');
-      tooltipDomElement.style.setProperty('z-index', '1000', 'important');
+      // Position tooltip using CSS custom properties
+      tooltipElement.addClass('positioned');
+      tooltipElement[0].style.setProperty('--tooltip-left', left + 'px');
+      tooltipElement[0].style.setProperty('--tooltip-top', top + 'px');
 
       // Show tooltip immediately
       tooltipElement.addClass('show');
