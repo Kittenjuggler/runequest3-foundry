@@ -131,11 +131,9 @@
     </div>
   </header>
 
-  <!-- Compact Header - shown on other tabs -->
-  <header class="sheet-header compact-header">
-    <div class="compact-layout">
-      <!-- Column 1: Resource Bars (200px width) -->
-      <div class="compact-column-1">
+
+
+
         <!-- Hit Points -->
         <div class="resource-bars-vertical">
           <div class="rq3-resource">
@@ -177,97 +175,6 @@
             </div>
           </div>
         </div>
-      </div>
-      
-      <!-- Column 2: Name and Characteristics -->
-      <div class="compact-column-2">
-        <h1 class="charname">
-          <span class="charname-display">{{actor.name}}</span>
-        </h1>
-        
-        <div class="characteristics-compact-grid">
-          <!-- Each characteristic on one line, 1/3 width -->
-          <div class="characteristic-compact-line">
-            <span class="char-name">STR</span>
-            <span class="char-current">{{system.characteristics.str.current}}</span>
-            <button class="characteristic-roll-x5" data-characteristic="str" data-roll-type="x5" title="Roll STRx5">
-              <i class="fas fa-dice-d20"></i>
-            </button>
-            <button class="characteristic-roll-custom" data-characteristic="str" title="Roll custom multiplier">
-              x?
-            </button>
-          </div>
-          
-          <div class="characteristic-compact-line">
-            <span class="char-name">CON</span>
-            <span class="char-current">{{system.characteristics.con.current}}</span>
-            <button class="characteristic-roll-x5" data-characteristic="con" data-roll-type="x5" title="Roll CONx5">
-              <i class="fas fa-dice-d20"></i>
-            </button>
-            <button class="characteristic-roll-custom" data-characteristic="con" title="Roll custom multiplier">
-              x?
-            </button>
-          </div>
-          
-          <div class="characteristic-compact-line">
-            <span class="char-name">SIZ</span>
-            <span class="char-current">{{system.characteristics.siz.current}}</span>
-            <button class="characteristic-roll-x5" data-characteristic="siz" data-roll-type="x5" title="Roll SIZx5">
-              <i class="fas fa-dice-d20"></i>
-            </button>
-            <button class="characteristic-roll-custom" data-characteristic="siz" title="Roll custom multiplier">
-              x?
-            </button>
-          </div>
-          
-          <div class="characteristic-compact-line">
-            <span class="char-name">INT</span>
-            <span class="char-current">{{system.characteristics.int.current}}</span>    
-            <button class="characteristic-roll-x5" data-characteristic="int" data-roll-type="x5" title="Roll INTx5">
-              <i class="fas fa-dice-d20"></i>
-            </button>
-            <button class="characteristic-roll-custom" data-characteristic="int" title="Roll custom multiplier">
-              x?
-            </button>
-          </div>
-          
-          <div class="characteristic-compact-line">
-            <span class="char-name">POW</span>
-            <span class="char-current">{{system.characteristics.pow.current}}</span>
-            <button class="characteristic-roll-x5" data-characteristic="pow" data-roll-type="x5" title="Roll POWx5">
-              <i class="fas fa-dice-d20"></i>
-            </button>
-            <button class="characteristic-roll-custom" data-characteristic="pow" title="Roll custom multiplier">
-              x?
-            </button>
-          </div>
-          
-          <div class="characteristic-compact-line">
-            <span class="char-name">DEX</span>
-            <span class="char-current">{{system.characteristics.dex.current}}</span>
-            <button class="characteristic-roll-x5" data-characteristic="dex" data-roll-type="x5" title="Roll DEXx5">
-              <i class="fas fa-dice-d20"></i>
-            </button>
-            <button class="characteristic-roll-custom" data-characteristic="dex" title="Roll custom multiplier">
-              x?
-            </button>
-          </div>
-          
-          <div class="characteristic-compact-line">
-            <span class="char-name">CHA</span>
-            <span class="char-current">{{system.characteristics.cha.current}}</span>
-            <button class="characteristic-roll-x5" data-characteristic="cha" data-roll-type="x5" title="Roll CHAx5">
-              <i class="fas fa-dice-d20"></i>
-            </button>
-            <button class="characteristic-roll-custom" data-characteristic="cha" title="Roll custom multiplier">
-              x?
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="main">{{localize "RQ3.Tabs.main"}}</a>
     <a class="item" data-tab="skills">{{localize "RQ3.Tabs.skills"}}</a>

@@ -1382,6 +1382,17 @@ export class RQ3Actor extends Actor {
     console.log('RQ3 | showCharacteristicRollTooltip called with:', { characteristic, targetElement });
     
     return new Promise((resolve) => {
+      // Store the last mouse position for fallback positioning
+      let lastMouseX = 0;
+      let lastMouseY = 0;
+      
+      // Track mouse movement to get current position
+      const trackMouse = (e) => {
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+      };
+      
+      document.addEventListener('mousemove', trackMouse);
       const char = this.system.characteristics[characteristic];
       console.log('RQ3 | Characteristic data in tooltip method:', char);
       
@@ -1462,25 +1473,56 @@ export class RQ3Actor extends Actor {
           console.log('RQ3 | Using offset-based positioning');
           left = offsetLeft + targetElement.offsetWidth + 10;
           top = offsetTop + (targetElement.offsetHeight / 2) - (tooltipRect.height / 2);
-        } else {
-          // Method 3: Use the button's position relative to the viewport
-          console.log('RQ3 | Using viewport-relative positioning');
-          const buttonPosition = targetElement.getBoundingClientRect();
-          const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
-          const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-          
-          left = buttonPosition.left + scrollX + targetElement.offsetWidth + 10;
-          top = buttonPosition.top + scrollY + (targetElement.offsetHeight / 2) - (tooltipRect.height / 2);
-        }
+                 } else {
+           // Method 3: Use the button's position relative to the viewport
+           console.log('RQ3 | Using viewport-relative positioning');
+           const buttonPosition = targetElement.getBoundingClientRect();
+           const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+           const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+           
+           left = buttonPosition.left + scrollX + targetElement.offsetWidth + 10;
+           top = buttonPosition.top + scrollY + (targetElement.offsetHeight / 2) - (tooltipRect.height / 2);
+           
+           // If this still gives us zeros, try to find the button's actual position in the document
+           if (left <= 10 && top <= 10) {
+             console.log('RQ3 | Viewport-relative positioning also failed, trying document traversal');
+             
+             // Try to find the button's position by traversing up the DOM tree
+             let currentElement = targetElement;
+             let totalLeft = 0;
+             let totalTop = 0;
+             
+             while (currentElement && currentElement !== document.body) {
+               totalLeft += currentElement.offsetLeft || 0;
+               totalTop += currentElement.offsetTop || 0;
+               currentElement = currentElement.offsetParent;
+             }
+             
+             console.log('RQ3 | Calculated position through DOM traversal:', { totalLeft, totalTop });
+             
+             if (totalLeft > 0 || totalTop > 0) {
+               left = totalLeft + targetElement.offsetWidth + 10;
+               top = totalTop + (targetElement.offsetHeight / 2) - (tooltipRect.height / 2);
+               console.log('RQ3 | Using DOM traversal positioning:', { left, top });
+             }
+           }
+         }
       }
       
-      // Ensure we have valid coordinates
-      if (isNaN(left) || isNaN(top) || left < 0 || top < 0) {
-        console.warn('RQ3 | All positioning methods failed, using mouse position fallback');
-        // Use mouse position as last resort
-        left = Math.max(20, Math.min(window.innerWidth - 520, 100));
-        top = Math.max(20, Math.min(window.innerHeight - 150, 100));
-      }
+             // Ensure we have valid coordinates
+       if (isNaN(left) || isNaN(top) || left < 0 || top < 0) {
+         console.warn('RQ3 | All positioning methods failed, using mouse position fallback');
+         // Use mouse position as last resort
+         if (lastMouseX > 0 && lastMouseY > 0) {
+           left = Math.max(20, Math.min(lastMouseX + 20, window.innerWidth - 520));
+           top = Math.max(20, Math.min(lastMouseY - 65, window.innerHeight - 150));
+           console.log('RQ3 | Using mouse position fallback:', { lastMouseX, lastMouseY, left, top });
+         } else {
+           left = Math.max(20, Math.min(window.innerWidth - 520, 100));
+           top = Math.max(20, Math.min(window.innerHeight - 150, 100));
+           console.log('RQ3 | Using safe fallback positioning:', { left, top });
+         }
+       }
       
       // Adjust for viewport edges
       const viewportWidth = window.innerWidth;
@@ -1527,6 +1569,7 @@ export class RQ3Actor extends Actor {
           tooltip.remove();
           document.removeEventListener('click', handleClickOutside);
           document.removeEventListener('keydown', handleEscape);
+          document.removeEventListener('mousemove', trackMouse);
           resolve(null);
         }
       };
@@ -1540,6 +1583,7 @@ export class RQ3Actor extends Actor {
           }
           document.removeEventListener('click', handleClickOutside);
           document.removeEventListener('keydown', handleEscape);
+          document.removeEventListener('mousemove', trackMouse);
           resolve(null);
         }
       };
@@ -1568,6 +1612,7 @@ export class RQ3Actor extends Actor {
         }
         document.removeEventListener('click', handleClickOutside);
         document.removeEventListener('keydown', handleEscape);
+        document.removeEventListener('mousemove', trackMouse);
         resolve(multiplier);
       });
 
@@ -1581,6 +1626,7 @@ export class RQ3Actor extends Actor {
           tooltip.remove();
           document.removeEventListener('click', handleClickOutside);
           document.removeEventListener('keydown', handleEscape);
+          document.removeEventListener('mousemove', trackMouse);
           resolve(null);
         }
       }, 30000);
