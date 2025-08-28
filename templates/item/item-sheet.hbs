@@ -1,0 +1,672 @@
+<form class="{{cssClass}} runequest3" autocomplete="off">
+  <header class="sheet-header">
+    <img class="profile-img" src="{{itemImage item}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{item.name}}" placeholder="Item Name"/>
+      </h1>
+      <div class="item-type">
+        <label>{{localize "RQ3.Labels.type"}}: {{localize (concat "RQ3.ItemTypes." item.type)}}</label>
+      </div>
+    </div>
+  </header>
+
+  <section class="sheet-body">
+    <!-- Basic Information -->
+    <div class="basic-info">
+      <div class="detail-group">
+        <label>{{localize "RQ3.Labels.description"}}</label>
+        <textarea name="system.description" rows="4">{{system.description}}</textarea>
+      </div>
+      
+      {{#unless (or (eq item.type "skill") (eq item.type "rune"))}}
+      <div class="item-properties">
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.quantity"}}</label>
+          <input type="number" name="system.quantity" value="{{system.quantity}}" min="0"/>
+        </div>
+        {{#unless (eq item.type "armor")}}
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.weight"}}</label>
+          <input type="number" name="system.weight" value="{{system.weight}}" step="0.1" min="0"/>
+        </div>
+        {{/unless}}
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.price"}}</label>
+          <input type="number" name="system.price.value" value="{{system.price.value}}" step="0.01" min="0"/>
+        </div>
+      </div>
+      {{/unless}}
+    </div>
+
+    <!-- Weapon Specific -->
+    {{#if (eq item.type "weapon")}}
+    <div class="weapon-section">
+      <h3>{{localize "RQ3.ItemTypes.weapon"}} {{localize "RQ3.Labels.properties"}}</h3>
+      <div class="weapon-properties">
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.weaponType"}}</label>
+          <select name="system.weaponType">
+            {{#each config.weaponTypes as |label key|}}
+            <option value="{{key}}" {{#if (eq ../system.weaponType key)}}selected{{/if}}>{{localize (concat "RQ3.WeaponTypes." key)}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.damage"}}</label>
+          <input type="text" name="system.damage" value="{{system.damage}}"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.skill"}}</label>
+          <input type="text" name="system.skill" value="{{system.skill}}"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Combat.armorPoints"}}</label>
+          <input type="number" name="system.ap" value="{{system.ap}}" min="0"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Combat.weaponHP"}}</label>
+          <input type="number" name="system.hp" value="{{system.hp}}" min="0"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Combat.reach"}}</label>
+          <input type="text" name="system.reach" value="{{system.reach}}"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Combat.parry"}}</label>
+          <input type="text" name="system.parry" value="{{system.parry}}"/>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- Armor Specific -->
+    {{#if (eq item.type "armor")}}
+    <div class="armor-section">
+      <h3>{{localize "RQ3.ItemTypes.armor"}} {{localize "RQ3.Labels.properties"}}</h3>
+      <div class="armor-properties">
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.armorType"}}</label>
+          <select name="system.armorType">
+            {{#each config.armorTypes as |label key|}}
+            <option value="{{key}}" {{#if (eq ../system.armorType key)}}selected{{/if}}>{{localize (concat "RQ3.ArmorTypes." key)}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="detail-group">
+          <label>Armor Location</label>
+          <select name="system.armorLocation">
+            <option value="head" {{#if (eq system.armorLocation "head")}}selected{{/if}}>Head</option>
+            <option value="chest" {{#if (eq system.armorLocation "chest")}}selected{{/if}}>Chest</option>
+            <option value="arm" {{#if (eq system.armorLocation "arm")}}selected{{/if}}>Arm</option>
+            <option value="abdomen" {{#if (eq system.armorLocation "abdomen")}}selected{{/if}}>Abdomen</option>
+            <option value="leg" {{#if (eq system.armorLocation "leg")}}selected{{/if}}>Leg</option>
+            
+            <!-- Legacy options for existing items (will be hidden from dropdown but supported) -->
+            {{#if (eq system.armorLocation "head-only")}}
+            <option value="head-only" selected>Head Only (Legacy)</option>
+            {{/if}}
+            {{#if (eq system.armorLocation "torso-arms")}}
+            <option value="torso-arms" selected>Torso + Arms (Legacy)</option>
+            {{/if}}
+            {{#if (eq system.armorLocation "torso-only")}}
+            <option value="torso-only" selected>Torso Only (Legacy)</option>
+            {{/if}}
+            {{#if (eq system.armorLocation "chest-only")}}
+            <option value="chest-only" selected>Chest Only (Legacy)</option>
+            {{/if}}
+            {{#if (eq system.armorLocation "abdomen-only")}}
+            <option value="abdomen-only" selected>Abdomen Only (Legacy)</option>
+            {{/if}}
+            {{#if (eq system.armorLocation "arms-only")}}
+            <option value="arms-only" selected>Arms Only (Legacy)</option>
+            {{/if}}
+            {{#if (eq system.armorLocation "left-arm-only")}}
+            <option value="left-arm-only" selected>Left Arm Only (Legacy)</option>
+            {{/if}}
+            {{#if (eq system.armorLocation "right-arm-only")}}
+            <option value="right-arm-only" selected>Right Arm Only (Legacy)</option>
+            {{/if}}
+            {{#if (eq system.armorLocation "legs-only")}}
+            <option value="legs-only" selected>Legs Only (Legacy)</option>
+            {{/if}}
+            {{#if (eq system.armorLocation "left-leg-only")}}
+            <option value="left-leg-only" selected>Left Leg Only (Legacy)</option>
+            {{/if}}
+            {{#if (eq system.armorLocation "right-leg-only")}}
+            <option value="right-leg-only" selected>Right Leg Only (Legacy)</option>
+            {{/if}}
+            {{#if (eq system.armorLocation "full-suit")}}
+            <option value="full-suit" selected>Full Suit (Legacy)</option>
+            {{/if}}
+            {{#if (eq system.armorLocation "custom")}}
+            <option value="custom" selected>Custom (Legacy)</option>
+            {{/if}}
+          </select>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Equipment.encumbrance"}} (Auto-calculated)</label>
+          <input type="number" name="system.encumbrance" value="{{system.encumbrance}}" step="0.01" min="0" readonly/>
+        </div>
+        {{#unless (eq system.armorType "shield")}}
+        <div class="detail-group">
+          <label>Material</label>
+          <input type="text" name="system.material" value="{{system.material}}"/>
+        </div>
+        <div class="detail-group">
+          <label>Coverage</label>
+          <input type="text" name="system.coverage" value="{{system.coverage}}"/>
+        </div>
+        {{/unless}}
+      </div>
+      
+      <!-- Hit Location Protection -->
+      {{#unless (eq system.armorType "shield")}}
+      <div class="hit-locations">
+        <h4>Hit Location Protection (Auto-populated)</h4>
+        <div class="hit-location-grid">
+          <div class="detail-group">
+            <label>Head</label>
+            <input type="number" name="system.hitLocations.head" value="{{system.hitLocations.head}}" min="0" readonly/>
+          </div>
+          <div class="detail-group">
+            <label>Left Arm</label>
+            <input type="number" name="system.hitLocations.leftArm" value="{{system.hitLocations.leftArm}}" min="0" readonly/>
+          </div>
+          <div class="detail-group">
+            <label>Right Arm</label>
+            <input type="number" name="system.hitLocations.rightArm" value="{{system.hitLocations.rightArm}}" min="0" readonly/>
+          </div>
+          <div class="detail-group">
+            <label>Chest</label>
+            <input type="number" name="system.hitLocations.chest" value="{{system.hitLocations.chest}}" min="0" readonly/>
+          </div>
+          <div class="detail-group">
+            <label>Abdomen</label>
+            <input type="number" name="system.hitLocations.abdomen" value="{{system.hitLocations.abdomen}}" min="0" readonly/>
+          </div>
+          <div class="detail-group">
+            <label>Left Leg</label>
+            <input type="number" name="system.hitLocations.leftLeg" value="{{system.hitLocations.leftLeg}}" min="0" readonly/>
+          </div>
+          <div class="detail-group">
+            <label>Right Leg</label>
+            <input type="number" name="system.hitLocations.rightLeg" value="{{system.hitLocations.rightLeg}}" min="0" readonly/>
+          </div>
+        </div>
+      </div>
+      {{/unless}}
+      
+      <!-- Shield Specific -->
+      {{#if (eq system.armorType "shield")}}
+      <div class="shield-properties">
+        <div class="detail-group">
+          <label>Armor Points</label>
+          <input type="number" name="system.armorPoints" value="{{system.armorPoints}}" min="0"/>
+        </div>
+        <div class="detail-group">
+          <label>Parry Bonus (%)</label>
+          <input type="number" name="system.parryBonus" value="{{system.parryBonus}}" min="0"/>
+        </div>
+        <div class="detail-group">
+          <label>Size</label>
+          <input type="text" name="system.size" value="{{system.size}}"/>
+        </div>
+      </div>
+      {{/if}}
+    </div>
+    {{/if}}
+
+    <!-- Skill Specific -->
+    {{#if (eq item.type "skill")}}
+    <div class="skill-section">
+      <h3>{{localize "RQ3.ItemTypes.skill"}} {{localize "RQ3.Labels.properties"}}</h3>
+      <div class="skill-properties">
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.category"}}</label>
+          <select name="system.category">
+            {{#each config.skillCategories as |label key|}}
+            <option value="{{key}}" {{#if (eq ../system.category key)}}selected{{/if}}>{{localize (concat "RQ3.SkillCategories." key)}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.baseChance"}}</label>
+          <input type="number" name="system.baseChance" value="{{system.baseChance}}" min="0" max="100"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.value"}}</label>
+          <input type="number" name="system.value" value="{{system.value}}" min="0" max="500"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.experience"}}</label>
+          <input type="checkbox" name="system.experience" {{#if system.experience}}checked{{/if}}/>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- Spell Specific -->
+    {{#if (eq item.type "spell")}}
+    <div class="spell-section">
+      <h3>{{localize "RQ3.ItemTypes.spell"}} {{localize "RQ3.Labels.properties"}}</h3>
+      <div class="spell-properties">
+        <div class="detail-group">
+          <label>{{localize "RQ3.Magic.spellType"}}</label>
+          <select name="system.spellType">
+            {{#each config.spellTypes as |label key|}}
+            <option value="{{key}}" {{#if (eq ../system.spellType key)}}selected{{/if}}>{{localize (concat "RQ3.SpellTypes." key)}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.cost"}}</label>
+          <input type="number" name="system.cost" value="{{system.cost}}" min="0"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.range"}}</label>
+          <input type="text" name="system.range" value="{{system.range}}"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.duration"}}</label>
+          <input type="text" name="system.duration" value="{{system.duration}}"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Magic.intensity"}}</label>
+          <input type="number" name="system.intensity" value="{{system.intensity}}" min="1"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Magic.stackable"}}</label>
+          <input type="checkbox" name="system.stackable" {{#if system.stackable}}checked{{/if}}/>
+        </div>
+      </div>
+      <div class="spell-components">
+        <h4>{{localize "RQ3.Magic.components"}}</h4>
+        <div class="component-checkboxes">
+          <label><input type="checkbox" name="system.components.verbal" {{#if system.components.verbal}}checked{{/if}}/> {{localize "RQ3.Magic.verbal"}}</label>
+          <label><input type="checkbox" name="system.components.somatic" {{#if system.components.somatic}}checked{{/if}}/> {{localize "RQ3.Magic.somatic"}}</label>
+          <label><input type="checkbox" name="system.components.material" {{#if system.components.material}}checked{{/if}}/> {{localize "RQ3.Magic.material"}}</label>
+          <label><input type="checkbox" name="system.components.focus" {{#if system.components.focus}}checked{{/if}}/> {{localize "RQ3.Magic.focus"}}</label>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- Rune Specific -->
+    {{#if (eq item.type "rune")}}
+    <div class="rune-section">
+      <h3>{{localize "RQ3.ItemTypes.rune"}} {{localize "RQ3.Labels.properties"}}</h3>
+      <div class="rune-properties">
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.runeType"}}</label>
+          <select name="system.runeType">
+            {{#each config.runeTypes as |label key|}}
+            <option value="{{key}}" {{#if (eq ../system.runeType key)}}selected{{/if}}>{{localize (concat "RQ3.RuneTypes." key)}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Magic.affinityValue"}}</label>
+          <input type="number" name="system.affinityValue" value="{{system.affinityValue}}" min="0" max="100"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Magic.opposition"}}</label>
+          <input type="text" name="system.opposition" value="{{system.opposition}}"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Magic.associations"}}</label>
+          <textarea name="system.associations" rows="3">{{system.associations}}</textarea>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- Equipment Specific -->
+    {{#if (eq item.type "equipment")}}
+    <div class="equipment-section">
+      <h3>{{localize "RQ3.ItemTypes.equipment"}} {{localize "RQ3.Labels.properties"}}</h3>
+      <div class="equipment-properties">
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.equipmentType"}}</label>
+          <select name="system.equipmentType">
+            {{#each config.equipmentTypes as |label key|}}
+            <option value="{{key}}" {{#if (eq ../system.equipmentType key)}}selected{{/if}}>{{localize (concat "RQ3.EquipmentTypes." key)}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Equipment.consumable"}}</label>
+          <input type="checkbox" name="system.consumable.isConsumable" {{#if system.consumable.isConsumable}}checked{{/if}}/>
+        </div>
+        {{#if system.consumable.isConsumable}}
+        <div class="detail-group">
+          <label>{{localize "RQ3.Equipment.uses"}}</label>
+          <input type="number" name="system.consumable.uses.value" value="{{system.consumable.uses.value}}" min="0"/>
+          <span>/</span>
+          <input type="number" name="system.consumable.uses.max" value="{{system.consumable.uses.max}}" min="0"/>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- Species Specific -->
+    {{#if (eq item.type "species")}}
+    <div class="species-section">
+      <h3>{{localize "RQ3.ItemTypes.species"}} {{localize "RQ3.Labels.properties"}}</h3>
+      
+      <!-- Basic Species Info -->
+      <div class="species-basic">
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.type"}}</label>
+          <select name="system.type">
+            <option value="humanoid" {{#if (eq system.type "humanoid")}}selected{{/if}}>Humanoid</option>
+            <option value="beast" {{#if (eq system.type "beast")}}selected{{/if}}>Beast</option>
+            <option value="monster" {{#if (eq system.type "monster")}}selected{{/if}}>Monster</option>
+            <option value="spirit" {{#if (eq system.type "spirit")}}selected{{/if}}>Spirit</option>
+            <option value="plant" {{#if (eq system.type "plant")}}selected{{/if}}>Plant</option>
+            <option value="construct" {{#if (eq system.type "construct")}}selected{{/if}}>Construct</option>
+          </select>
+        </div>
+        <div class="detail-group">
+          <label>Average Height</label>
+          <input type="text" name="system.averageHeight" value="{{system.averageHeight}}"/>
+        </div>
+        <div class="detail-group">
+          <label>Average Weight</label>
+          <input type="text" name="system.averageWeight" value="{{system.averageWeight}}"/>
+        </div>
+      </div>
+
+      <!-- Size Range -->
+      <div class="species-size">
+        <h4>Size Range</h4>
+        <div class="size-range">
+          <div class="detail-group">
+            <label>Minimum SIZ</label>
+            <input type="number" name="system.averageSize.min" value="{{system.averageSize.min}}" min="1" max="30"/>
+          </div>
+          <div class="detail-group">
+            <label>Maximum SIZ</label>
+            <input type="number" name="system.averageSize.max" value="{{system.averageSize.max}}" min="1" max="30"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- Characteristic Modifiers -->
+      <div class="species-characteristics">
+        <h4>Characteristic Modifiers</h4>
+        <div class="char-mods">
+          <div class="detail-group">
+            <label>STR</label>
+            <input type="number" name="system.characteristicMods.str" value="{{system.characteristicMods.str}}" min="-10" max="10"/>
+          </div>
+          <div class="detail-group">
+            <label>CON</label>
+            <input type="number" name="system.characteristicMods.con" value="{{system.characteristicMods.con}}" min="-10" max="10"/>
+          </div>
+          <div class="detail-group">
+            <label>SIZ</label>
+            <input type="number" name="system.characteristicMods.siz" value="{{system.characteristicMods.siz}}" min="-10" max="10"/>
+          </div>
+          <div class="detail-group">
+            <label>INT</label>
+            <input type="number" name="system.characteristicMods.int" value="{{system.characteristicMods.int}}" min="-10" max="10"/>
+          </div>
+          <div class="detail-group">
+            <label>POW</label>
+            <input type="number" name="system.characteristicMods.pow" value="{{system.characteristicMods.pow}}" min="-10" max="10"/>
+          </div>
+          <div class="detail-group">
+            <label>DEX</label>
+            <input type="number" name="system.characteristicMods.dex" value="{{system.characteristicMods.dex}}" min="-10" max="10"/>
+          </div>
+          <div class="detail-group">
+            <label>APP</label>
+            <input type="number" name="system.characteristicMods.app" value="{{system.characteristicMods.app}}" min="-10" max="10"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- Movement -->
+      <div class="species-movement">
+        <h4>Movement</h4>
+        <div class="movement-rates">
+          <div class="detail-group">
+            <label>Walk</label>
+            <input type="number" name="system.movement.walk" value="{{system.movement.walk}}" min="1"/>
+          </div>
+          <div class="detail-group">
+            <label>Run</label>
+            <input type="number" name="system.movement.run" value="{{system.movement.run}}" min="1"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- Special Abilities -->
+      <div class="species-abilities">
+        <h4>Special Abilities</h4>
+        <div class="detail-group">
+          <label>Natural Armor</label>
+          <input type="number" name="system.naturalArmor" value="{{system.naturalArmor}}" min="0"/>
+        </div>
+        <div class="detail-group">
+          <label>Abilities</label>
+          <textarea name="system.abilities" rows="4">{{system.abilities}}</textarea>
+        </div>
+      </div>
+
+      <!-- Cultural Information -->
+      <div class="species-culture">
+        <h4>Cultural Information</h4>
+        <div class="detail-group">
+          <label>Typical Homeland</label>
+          <input type="text" name="system.culture.homeland" value="{{system.culture.homeland}}"/>
+        </div>
+        <div class="detail-group">
+          <label>Language</label>
+          <input type="text" name="system.culture.language" value="{{system.culture.language}}"/>
+        </div>
+      </div>
+
+      <!-- Lifespan -->
+      <div class="species-lifespan">
+        <h4>Lifespan</h4>
+        <div class="lifespan-stages">
+          <div class="detail-group">
+            <label>Maturity</label>
+            <input type="number" name="system.lifespan.maturity" value="{{system.lifespan.maturity}}" min="1"/>
+          </div>
+          <div class="detail-group">
+            <label>Prime</label>
+            <input type="number" name="system.lifespan.prime" value="{{system.lifespan.prime}}" min="1"/>
+          </div>
+          <div class="detail-group">
+            <label>Old</label>
+            <input type="number" name="system.lifespan.old" value="{{system.lifespan.old}}" min="1"/>
+          </div>
+          <div class="detail-group">
+            <label>Venerable</label>
+            <input type="number" name="system.lifespan.venerable" value="{{system.lifespan.venerable}}" min="1"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- Starting Skills -->
+      <div class="species-skills">
+        <h4>Starting Skill Values</h4>
+        
+        <!-- Agility Skills -->
+        <div class="skill-category">
+          <h5>Agility</h5>
+          <div class="skills-grid">
+            <div class="detail-group">
+              <label>Boat</label>
+              <input type="number" name="system.skills.boat" value="{{system.skills.boat}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Climb</label>
+              <input type="number" name="system.skills.climb" value="{{system.skills.climb}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Dodge</label>
+              <input type="number" name="system.skills.dodge" value="{{system.skills.dodge}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Jump</label>
+              <input type="number" name="system.skills.jump" value="{{system.skills.jump}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Ride</label>
+              <input type="number" name="system.skills.ride" value="{{system.skills.ride}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Swim</label>
+              <input type="number" name="system.skills.swim" value="{{system.skills.swim}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Throw</label>
+              <input type="number" name="system.skills.throw" value="{{system.skills.throw}}" min="0" max="100"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Communication Skills -->
+        <div class="skill-category">
+          <h5>Communication</h5>
+          <div class="skills-grid">
+            <div class="detail-group">
+              <label>Fast Talk</label>
+              <input type="number" name="system.skills.fast_talk" value="{{system.skills.fast_talk}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Orate</label>
+              <input type="number" name="system.skills.orate" value="{{system.skills.orate}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Sing</label>
+              <input type="number" name="system.skills.sing" value="{{system.skills.sing}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Speak Own Language</label>
+              <input type="number" name="system.skills.speak_own_language" value="{{system.skills.speak_own_language}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Speak Other Language</label>
+              <input type="number" name="system.skills.speak_other_language" value="{{system.skills.speak_other_language}}" min="0" max="100"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Knowledge Skills -->
+        <div class="skill-category">
+          <h5>Knowledge</h5>
+          <div class="skills-grid">
+            <div class="detail-group">
+              <label>Animal Lore</label>
+              <input type="number" name="system.skills.animal_lore" value="{{system.skills.animal_lore}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Evaluate</label>
+              <input type="number" name="system.skills.evaluate" value="{{system.skills.evaluate}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>First Aid</label>
+              <input type="number" name="system.skills.first_aid" value="{{system.skills.first_aid}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Human Lore</label>
+              <input type="number" name="system.skills.human_lore" value="{{system.skills.human_lore}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Mineral Lore</label>
+              <input type="number" name="system.skills.mineral_lore" value="{{system.skills.mineral_lore}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Plant Lore</label>
+              <input type="number" name="system.skills.plant_lore" value="{{system.skills.plant_lore}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Read/Write</label>
+              <input type="number" name="system.skills.read_write" value="{{system.skills.read_write}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>World Lore</label>
+              <input type="number" name="system.skills.world_lore" value="{{system.skills.world_lore}}" min="0" max="100"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Manipulation Skills -->
+        <div class="skill-category">
+          <h5>Manipulation</h5>
+          <div class="skills-grid">
+            <div class="detail-group">
+              <label>Conceal</label>
+              <input type="number" name="system.skills.conceal" value="{{system.skills.conceal}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Craft</label>
+              <input type="number" name="system.skills.craft" value="{{system.skills.craft}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Devise</label>
+              <input type="number" name="system.skills.devise" value="{{system.skills.devise}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Fine Manipulation</label>
+              <input type="number" name="system.skills.fine_manipulation" value="{{system.skills.fine_manipulation}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Play Instrument</label>
+              <input type="number" name="system.skills.play_instrument" value="{{system.skills.play_instrument}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Sleight</label>
+              <input type="number" name="system.skills.sleight" value="{{system.skills.sleight}}" min="0" max="100"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Perception Skills -->
+        <div class="skill-category">
+          <h5>Perception</h5>
+          <div class="skills-grid">
+            <div class="detail-group">
+              <label>Listen</label>
+              <input type="number" name="system.skills.listen" value="{{system.skills.listen}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Scan</label>
+              <input type="number" name="system.skills.scan" value="{{system.skills.scan}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Search</label>
+              <input type="number" name="system.skills.search" value="{{system.skills.search}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Track</label>
+              <input type="number" name="system.skills.track" value="{{system.skills.track}}" min="0" max="100"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stealth Skills -->
+        <div class="skill-category">
+          <h5>Stealth</h5>
+          <div class="skills-grid">
+            <div class="detail-group">
+              <label>Hide</label>
+              <input type="number" name="system.skills.hide" value="{{system.skills.hide}}" min="0" max="100"/>
+            </div>
+            <div class="detail-group">
+              <label>Sneak</label>
+              <input type="number" name="system.skills.sneak" value="{{system.skills.sneak}}" min="0" max="100"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+  </section>
+</form> 

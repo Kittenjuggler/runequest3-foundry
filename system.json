@@ -1,0 +1,102 @@
+{
+  "id": "runequest3",
+  "title": "RuneQuest 3rd Edition",
+  "description": "A game system for RuneQuest 3rd Edition in Foundry Virtual Tabletop",
+  "version": "1.0.5",
+  "compatibility": {
+    "minimum": 12,
+    "verified": 12
+  },
+  "authors": [
+    {
+      "name": "RQ3 Developer",
+      "email": "",
+      "url": ""
+    }
+  ],
+  "esmodules": ["runequest3.mjs"],
+  "styles": ["styles/runequest3.css"],
+  "packs": [
+    {
+      "name": "equipment",
+      "label": "Equipment",
+      "type": "Item",
+      "private": false
+    },
+    {
+      "name": "species",
+      "label": "Species",
+      "type": "Item",
+      "private": false
+    },
+    {
+      "name": "spirit-magic",
+      "label": "Spirit Magic",
+      "type": "Item",
+      "private": false
+    },
+    {
+      "name": "divine-magic",
+      "label": "Divine Magic", 
+      "type": "Item",
+      "private": false
+    },
+    {
+      "name": "sorcery",
+      "label": "Sorcery",
+      "type": "Item",
+      "private": false
+    },
+    {
+      "name": "weapons",
+      "label": "Weapons",
+      "type": "Item",
+      "private": false
+    },
+    {
+      "name": "armour",
+      "label": "Armour",
+      "type": "Item",
+      "private": false
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "documentTypes": {
+    "Actor": {
+      "character": {
+        "htmlFields": ["background.biography", "background.notes"]
+      },
+      "npc": {
+        "htmlFields": ["background.biography", "background.notes"]
+      },
+      "creature": {
+        "htmlFields": ["background.biography", "background.notes"]
+      }
+    },
+    "Item": {
+      "weapon": {},
+      "armor": {},
+      "equipment": {},
+      "skill": {},
+      "spell": {},
+      "rune": {},
+      "species": {}
+    }
+  },
+  "initiative": "1d10 + @characteristics.dex.modifier",
+  "grid": {
+    "distance": 5,
+    "units": "m"
+  },
+  "primaryTokenAttribute": "characteristics.con.hitPoints",
+  "secondaryTokenAttribute": "characteristics.pow.magicPoints",
+  "url": "",
+  "manifest": "",
+  "download": ""
+} 

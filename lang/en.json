@@ -1,0 +1,395 @@
+{
+  "RQ3": {
+    "SystemName": "RuneQuest 3rd Edition",
+    
+    "SheetLabels": {
+      "Character": "Character Sheet",
+      "NPC": "NPC Sheet", 
+      "Creature": "Creature Sheet",
+      "Item": "Item Sheet"
+    },
+    
+    "ActorTypes": {
+      "character": "Character",
+      "npc": "NPC",
+      "creature": "Creature"
+    },
+    
+    "ItemTypes": {
+      "weapon": "Weapon",
+      "armor": "Armor",
+      "equipment": "Equipment",
+      "skill": "Skill",
+      "spell": "Spell",
+      "rune": "Rune",
+      "species": "Species"
+    },
+    
+    "Characteristics": {
+      "str": "Strength",
+      "con": "Constitution", 
+      "siz": "Size",
+      "int": "Intelligence",
+      "pow": "Power",
+      "dex": "Dexterity",
+      "app": "Appearance",
+      "modifier": "Modifier"
+    },
+    
+    "Attributes": {
+      "hitPoints": "Hit Points",
+      "magicPoints": "Magic Points",
+      "fatigue": "Fatigue",
+      "encumbrance": "Encumbrance",
+      "movement": "Movement",
+      "walk": "Walk",
+      "run": "Run"
+    },
+    
+    "HitLocations": {
+      "head": "Head",
+      "leftArm": "Left Arm",
+      "rightArm": "Right Arm", 
+      "chest": "Chest",
+      "abdomen": "Abdomen",
+      "leftLeg": "Left Leg",
+      "rightLeg": "Right Leg",
+      "armor": "Armor",
+      "hitPoints": "HP"
+    },
+    
+    "SkillCategories": {
+      "agility": "Agility",
+      "communication": "Communication",
+      "knowledge": "Knowledge",
+      "manipulation": "Manipulation",
+      "perception": "Perception",
+      "stealth": "Stealth"
+    },
+    
+    "Skills": {
+      "boat": "Boat",
+      "climb": "Climb",
+      "dodge": "Dodge",
+      "jump": "Jump",
+      "ride": "Ride",
+      "swim": "Swim",
+      "throw": "Throw",
+      "fastTalk": "Fast Talk",
+      "orate": "Orate",
+      "sing": "Sing",
+      "speakOwnLanguage": "Speak Own Language",
+      "speakOtherLanguage": "Speak Other Language",
+      "speakTradeTalk": "Speak Trade Talk",
+      "craft": "Craft",
+      "evaluateItem": "Evaluate Item",
+      "firstAid": "First Aid",
+      "animalLore": "Animal Lore",
+      "worldLore": "World Lore",
+      "humanLore": "Human Lore",
+      "mineralLore": "Mineral Lore",
+      "plantLore": "Plant Lore",
+      "martialArts": "Martial Arts",
+      "readWriteLanguages": "Read/Write Languages",
+      "shiphandling": "Shiphandling",
+      "alchemicalLore": "Alchemical Lore",
+      "conceal": "Conceal",
+      "sleight": "Sleight",
+      "devise": "Devise",
+      "playInstrument": "Play Instrument",
+      "listen": "Listen",
+      "search": "Search",
+      "scan": "Scan",
+      "track": "Track",
+      "tasteAnalysis": "Taste Analysis",
+      "hide": "Hide",
+      "sneak": "Sneak"
+    },
+    
+    "WeaponTypes": {
+      "1h-sword": "1H Sword",
+      "2h-sword": "2H Sword",
+      "1h-axe": "1H Axe",
+      "2h-axe": "2H Axe",
+      "spear": "Spear",
+      "dagger": "Dagger",
+      "mace": "Mace",
+      "bow": "Bow",
+      "crossbow": "Crossbow",
+      "sling": "Sling",
+      "javelin": "Javelin",
+      "thrown": "Thrown"
+    },
+    
+    "ArmorTypes": {
+      "clothes": "Clothes",
+      "soft-leather": "Soft Leather",
+      "stiff-leather": "Stiff Leather",
+      "cuirbouilli": "Cuirbouilli",
+      "bezainted": "Bezainted",
+      "ringmail": "Ringmail",
+      "lamellar": "Lamellar",
+      "scale": "Scale",
+      "chainmail": "Chainmail",
+      "brigandine": "Brigandine",
+      "plate": "Plate",
+      "shield": "Shield"
+    },
+    
+    "ArmorLocations": {
+      "head-only": "Head Only (10%)",
+      "torso-arms": "Torso & Arms (50%)",
+      "torso-only": "Torso Only (30%)",
+      "chest-only": "Chest Only (20%)",
+      "abdomen-only": "Abdomen Only (10%)",
+      "arms-only": "Both Arms (20%)",
+      "left-arm-only": "Left Arm Only (10%)",
+      "right-arm-only": "Right Arm Only (10%)",
+      "legs-only": "Both Legs (40%)",
+      "left-leg-only": "Left Leg Only (20%)",
+      "right-leg-only": "Right Leg Only (20%)",
+      "full-suit": "Full Suit (100%)",
+      "custom": "Custom Coverage"
+    },
+    
+    "SpellTypes": {
+      "spirit": "Spirit Magic",
+      "divine": "Divine Magic",
+      "sorcery": "Sorcery"
+    },
+    
+    "RuneTypes": {
+      "elemental": "Elemental",
+      "power": "Power",
+      "form": "Form",
+      "condition": "Condition"
+    },
+    
+    "EquipmentTypes": {
+      "tool": "Tool",
+      "container": "Container",
+      "treasure": "Treasure",
+      "consumable": "Consumable",
+      "misc": "Miscellaneous"
+    },
+    
+    "CreatureTypes": {
+      "animal": "Animal",
+      "monster": "Monster",
+      "spirit": "Spirit",
+      "undead": "Undead",
+      "chaos": "Chaos"
+    },
+    
+    "NPCTypes": {
+      "minor": "Minor NPC",
+      "major": "Major NPC",
+      "notable": "Notable NPC"
+    },
+    
+    "Tabs": {
+      "main": "Main",
+      "characteristics": "Characteristics",
+      "skills": "Skills",
+      "combat": "Combat",
+      "equipment": "Equipment",
+      "magic": "Magic",
+      "background": "Background",
+      "notes": "Notes"
+    },
+    
+    "Labels": {
+      "name": "Name",
+      "description": "Description",
+      "value": "Value",
+      "current": "Current",
+      "maximum": "Maximum",
+      "temporary": "Temporary",
+      "base": "Base",
+      "total": "Total",
+      "modifier": "Modifier",
+      "damage": "Damage",
+      "armor": "Armor",
+      "skill": "Skill",
+      "range": "Range",
+      "duration": "Duration",
+      "cost": "Cost",
+      "weight": "Weight",
+      "quantity": "Quantity",
+      "price": "Price",
+      "currency": "Currency",
+      "experience": "Experience",
+      "checkmark": "Experience Check",
+      "improvements": "Improvements",
+      "age": "Age",
+      "height": "Height",
+      "weight": "Weight",
+      "gender": "Gender",
+      "species": "Species",
+      "homeland": "Homeland",
+      "occupation": "Occupation",
+      "cult": "Cult",
+      "reputation": "Reputation",
+      "organization": "Organization",
+      "importance": "Importance",
+      "naturalArmor": "Natural Armor",
+      "traits": "Traits",
+      "abilities": "Special Abilities",
+      "weaknesses": "Weaknesses",
+      "biography": "Biography",
+      "notes": "Notes",
+      "passions": "Passions",
+      "runes": "Runes",
+      "elemental": "Elemental Runes",
+      "power": "Power Runes",
+      "form": "Form Runes",
+      "condition": "Condition Runes",
+      "personalDetails": "Personal Details",
+      "type": "Type",
+      "category": "Category",
+      "baseChance": "Base Chance",
+      "weaponType": "Weapon Type",
+      "armorType": "Armor Type",
+      "armorLocation": "Armor Location",
+      "equipmentType": "Equipment Type",
+      "runeType": "Rune Type",
+      "creatureType": "Creature Type",
+      "properties": "Properties",
+      "original": "Orig",
+      "current": "Curr",
+      "material": "Material",
+      "coverage": "Coverage",
+      "size": "Size"
+    },
+    
+    "Buttons": {
+      "roll": "Roll",
+      "cast": "Cast",
+      "use": "Use",
+      "edit": "Edit",
+      "delete": "Delete",
+      "create": "Create",
+      "add": "Add",
+      "remove": "Remove",
+      "save": "Save",
+      "cancel": "Cancel",
+      "resetCurrent": "Reset Current"
+    },
+    
+    "Rolls": {
+      "characteristic": "Characteristic Roll",
+      "skill": "Skill Roll",
+      "success": "Success",
+      "failure": "Failure",
+      "critical": "Critical Success",
+      "fumble": "Fumble",
+      "vs": "vs"
+    },
+    
+    "Combat": {
+      "initiative": "Initiative",
+      "attackRoll": "Attack Roll",
+      "damageRoll": "Damage Roll",
+      "parry": "Parry",
+      "dodge": "Dodge",
+      "hitLocation": "Hit Location",
+      "armorPoints": "Armor Points",
+      "weaponHP": "Weapon HP",
+      "reach": "Reach",
+      "special": "Special"
+    },
+    
+    "Magic": {
+      "spellType": "Spell Type",
+      "magicPoints": "Magic Points",
+      "castingTime": "Casting Time",
+      "components": "Components",
+      "verbal": "Verbal",
+      "somatic": "Somatic",
+      "material": "Material",
+      "focus": "Focus",
+      "rune": "Rune",
+      "intensity": "Intensity",
+      "stackable": "Stackable",
+      "affinityValue": "Affinity Value",
+      "opposition": "Opposition",
+      "associations": "Associations",
+      "spells": "Associated Spells"
+    },
+    
+    "Equipment": {
+      "equipped": "Equipped",
+      "carried": "Carried",
+      "stored": "Stored",
+      "capacity": "Capacity",
+      "encumbrance": "Encumbrance",
+      "fatigue": "Fatigue",
+      "protection": "Protection",
+      "locations": "Locations",
+      "uses": "Uses",
+      "consumable": "Consumable"
+    },
+    
+    "Settings": {
+      "useHouseRules": "Use House Rules",
+      "useHouseRulesHint": "Enable various house rules and optional systems",
+      "initiativeFormula": "Initiative Formula",
+      "initiativeFormulaHint": "Formula used for initiative rolls",
+      "skillImprovementRule": "Skill Improvement Rule",
+      "skillImprovementRuleHint": "How skills improve with experience",
+      "magicPointRecovery": "Magic Point Recovery",
+      "magicPointRecoveryHint": "How quickly magic points recover",
+      "hitLocationRules": "Hit Location Rules",
+      "hitLocationRulesHint": "How hit locations are determined"
+    },
+    
+    "Errors": {
+      "invalidHitLocation": "Invalid hit location: {location}",
+      "skillNotFound": "Skill {skill} not found",
+      "characteristicNotFound": "Characteristic {characteristic} not found",
+      "notASpell": "This item is not a spell",
+      "spellNeedsActor": "Spell must be owned by an actor to cast",
+      "notEnoughMP": "Not enough magic points to cast this spell",
+      "notConsumable": "This item is not consumable",
+      "noUsesRemaining": "This item has no uses remaining"
+    },
+    
+    "Messages": {
+      "takeDamage": "{name} takes {damage} damage to {location}",
+      "armorAbsorbed": " ({armor} absorbed by armor)",
+      "healed": "{name} heals {healing} hit points to {location}",
+      "spellCast": "{name} casts {spell}",
+      "itemUsed": "{name} uses {item}"
+    },
+    
+    "StatusEffects": {
+      "unconscious": "Unconscious",
+      "stunned": "Stunned",
+      "prone": "Prone",
+      "fatigued": "Fatigued",
+      "exhausted": "Exhausted",
+      "encumbered": "Encumbered",
+      "bleeding": "Bleeding",
+      "poisoned": "Poisoned",
+      "diseased": "Diseased",
+      "blessed": "Blessed",
+      "cursed": "Cursed",
+      "invisible": "Invisible",
+      "silenced": "Silenced"
+    },
+    
+    "Currency": {
+      "lunars": "Lunars",
+      "wheels": "Wheels",
+      "clacks": "Clacks"
+    },
+    
+    "RuneAffinity": {
+      "untrained": "Untrained",
+      "novice": "Novice",
+      "initiate": "Initiate",
+      "adept": "Adept",
+      "master": "Master"
+    }
+  }
+} 

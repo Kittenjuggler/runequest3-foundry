@@ -1,0 +1,3888 @@
+/* -------------------------------------------- */
+/*  RuneQuest 3 System Styles                  */
+/* -------------------------------------------- */
+
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Source+Sans+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+
+/* -------------------------------------------- */
+/*  Global Variables                            */
+/* -------------------------------------------- */
+
+:root {
+  --rq3-primary: #4a4a4a;          /* Dark Grey */
+  --rq3-secondary: #6a6a6a;        /* Medium Grey */
+  --rq3-accent: #5a5a5a;           /* Medium Dark Grey */
+  --rq3-dark: #2a2a2a;             /* Very Dark Grey */
+  --rq3-light: #e0e0e0;            /* Light Grey */
+  --rq3-text: #ffffff;             /* White Text */
+  --rq3-text-light: #cccccc;       /* Light Grey Text */
+  --rq3-border: #666666;           /* Border Grey */
+  --rq3-success: #4CAF50;          /* Green */
+  --rq3-warning: #FF9800;          /* Orange */
+  --rq3-danger: #F44336;           /* Red */
+  --rq3-info: #2196F3;             /* Blue */
+}
+
+/* -------------------------------------------- */
+/*  Base System Styling                        */
+/* -------------------------------------------- */
+
+.runequest3 {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: var(--rq3-text);
+}
+
+/* Window Title Bar Styling */
+.application.sheet.actor.runequest3 .window-header,
+.runequest3.sheet .window-header,
+.window-app.runequest3 .window-header {
+  height: 100px !important;
+  display: flex;
+  align-items: center;
+}
+
+.application.sheet.actor.runequest3 .window-title,
+.runequest3.sheet .window-title,
+.window-app.runequest3 .window-title {
+  line-height: normal;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.application.sheet.actor.runequest3 .header-button,
+.runequest3.sheet .header-button,
+.window-app.runequest3 .header-button {
+  height: 100px;
+  width: 40px;
+  line-height: 100px;
+  margin: 5px 2px;
+}
+
+.runequest3 h1, .runequest3 h2, .runequest3 h3, .runequest3 h4 {
+  font-family: 'Inter', sans-serif;
+  color: var(--rq3-text);
+  border-bottom: 2px solid var(--rq3-secondary);
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+}
+
+.runequest3 .window-content {
+  background: linear-gradient(135deg, #3a3a3a 0%, #4a4a4a 100%);
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.05) 0%, transparent 90%),
+    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.05) 0%, transparent 90%);
+}
+
+/* -------------------------------------------- */
+/*  Sheet Header                                */
+/* -------------------------------------------- */
+
+.runequest3 .sheet-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--rq3-primary) 0%, var(--rq3-accent) 100%);
+  
+  
+  gap: 16px;
+}
+
+/* Actor Details Section */
+.runequest3 .actor-details {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+
+.runequest3 .image-and-resources {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.runequest3 .profile-img {
+  border: 3px solid var(--rq3-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.runequest3 .profile-img:hover {
+  border-color: var(--rq3-light);
+  box-shadow: 0 0 12px rgba(218, 165, 32, 0.5);
+}
+
+.runequest3 .resource-bars-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 200px;
+}
+
+.runequest3 .resource-bars-vertical .rq3-resource {
+  margin: 0;
+  min-width: auto;
+}
+
+.runequest3 .resource-bars-vertical .rq3-resource-label {
+  /* text-align: center !important; */
+}
+
+.runequest3 .actor-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding-left: 10px
+}
+
+.runequest3 .charname {
+  margin-bottom: 17px;
+  width: 100%;
+  height: 50px;
+}
+
+.runequest3 .charname input {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--rq3-light);
+  background: transparent;
+  border: none;
+  padding: 10px;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.runequest3 .charname input:focus {
+  outline: none;
+}
+
+/* Character name display/edit mode controls - Main header only */
+.runequest3 .full-header .charname-display {
+  display: none;
+}
+
+.runequest3 .full-header .charname-edit {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--rq3-light);
+  background: transparent;
+  border: none;
+  padding: 10px;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.runequest3 .full-header .charname-edit:focus {
+  outline: none;
+}
+
+/* Resources and Characteristics Section */
+.runequest3 .resources-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.runequest3 .resource-bars {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.runequest3 .characteristics-and-derived {
+  
+}
+
+/* Compact Characteristics Header - now full width */
+.runequest3 .characteristics-header-compact {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 8px;
+  margin: 0;
+  width: 100%;
+}
+
+.runequest3 .characteristics-compact-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: 10px;
+  justify-items: center;
+  
+}
+
+.runequest3 .characteristic-compact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 5px 10px;
+  border-radius: 7px;
+  width: 100%;
+  max-width: 108px;
+}
+
+.runequest3 .characteristic-abbrev {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-text);
+  font-size: 17px;
+  margin-bottom: 5px;
+  text-align: center;
+  min-width: 36px;
+}
+
+.runequest3 .characteristic-values-compact {
+  display: flex;
+  gap: 7px;
+}
+
+.runequest3 .value-pair {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.runequest3 .value-pair label {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--rq3-text);
+  text-align: center;
+  line-height: 1;
+}
+
+.runequest3 .value-pair input {
+  width: 38px;
+  height: 29px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid var(--rq3-border);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--rq3-dark);
+  padding: 2px;
+}
+
+.runequest3 .value-pair input:focus {
+  outline: none;
+  border-color: var(--rq3-accent);
+  box-shadow: 0 0 4px rgba(218, 165, 32, 0.3);
+}
+
+.runequest3 .compact-reset {
+  padding: 4px 8px;
+  white-space: nowrap;
+  align-self: flex-end;
+  margin-top: 8px;
+}
+
+.runequest3 .rq3-characteristics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.runequest3 .rq3-characteristic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+  background: rgba(96, 96, 96, 0.6);
+  border: 2px solid var(--rq3-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.runequest3 .rq3-characteristic:hover {
+  background: rgba(96, 96, 96, 0.8);
+  border-color: var(--rq3-accent);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.runequest3 .rq3-characteristic-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-text);
+  font-size: 16px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.runequest3 .rq3-characteristic-values {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 8px;
+  width: 100%;
+  justify-content: center;
+}
+
+.runequest3 .rq3-characteristic-original,
+.runequest3 .rq3-characteristic-current {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.runequest3 .rq3-characteristic-original label,
+.runequest3 .rq3-characteristic-current label {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--rq3-text);
+  text-align: center;
+}
+
+.runequest3 .rq3-characteristic-original input,
+.runequest3 .rq3-characteristic-current input {
+  width: 50px;
+  height: 40px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  border: 2px solid var(--rq3-border);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--rq3-dark);
+}
+
+.runequest3 .rq3-characteristic-original input:focus,
+.runequest3 .rq3-characteristic-current input:focus {
+  outline: none;
+  border-color: var(--rq3-accent);
+  box-shadow: 0 0 6px rgba(218, 165, 32, 0.3);
+}
+
+.runequest3 .rq3-characteristic-modifier {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--rq3-dark);
+  text-align: center;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 4px;
+  min-width: 60px;
+}
+
+/* -------------------------------------------- */
+/*  Sheet                                       */
+/* -------------------------------------------- */
+
+.sheet-body {
+  background: var(--rq3-dark) !important;
+}
+
+/* -------------------------------------------- */
+/*  Hit Locations                              */
+/* -------------------------------------------- */
+
+.rq3-hit-locations {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.rq3-hit-location {
+  background: rgba(96, 96, 96, 0.6);
+  border: 2px solid var(--rq3-border);
+  border-radius: 6px;
+  padding: 8px;
+  text-align: center;
+}
+
+.rq3-hit-location-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--rq3-text);
+  margin-bottom: 4px;
+}
+
+.hp-display {
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.hp-display.healthy {
+  background: rgba(34, 139, 34, 0.2);
+  color: var(--rq3-success);
+}
+
+.hp-display.injured {
+  background: rgba(255, 140, 0, 0.2);
+  color: var(--rq3-warning);
+}
+
+.hp-display.wounded {
+  background: rgba(220, 20, 60, 0.2);
+  color: var(--rq3-danger);
+}
+
+.hp-display.critical {
+  background: rgba(139, 0, 0, 0.3);
+  color: #8B0000;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* -------------------------------------------- */
+/*  Skills Display                              */
+/* -------------------------------------------- */
+
+.rq3-skills {
+  margin: 16px 0;
+}
+
+.rq3-skills h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-text);
+  margin: 16px 0 8px 0;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--rq3-secondary);
+}
+
+.skills-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.skills-header h3 {
+  margin: 0;
+}
+
+.skills-edit-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.toggle-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-text);
+  font-size: 14px;
+}
+
+.toggle-switch input[type="checkbox"] {
+  display: none;
+}
+
+.toggle-slider {
+  position: relative;
+  width: 44px;
+  height: 22px;
+  background: var(--rq3-border);
+  border-radius: 22px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.toggle-slider:before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  background: var(--rq3-light);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.global-edit-mode-toggle:checked + .toggle-slider {
+  background: var(--rq3-success);
+}
+
+.global-edit-mode-toggle:checked + .toggle-slider:before {
+  transform: translateX(22px);
+  background: var(--rq3-light);
+}
+
+.toggle-label {
+  transition: color 0.2s ease;
+  user-select: none;
+}
+
+.global-edit-mode-toggle:checked ~ .toggle-label {
+  color: var(--rq3-light);
+}
+
+.rq3-skill-values {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 100px;
+  justify-content: flex-end;
+}
+
+.rq3-skill-invested-container {
+  position: relative;
+  min-width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rq3-skill-invested,
+.rq3-skill-total,
+.rq3-skill-base {
+  font-weight: 600;
+  color: var(--rq3-text);
+  text-align: right;
+  min-width: 40px;
+}
+
+.rq3-skill-invested {
+  color: var(--rq3-text);
+  font-size: 14px;
+}
+
+.rq3-skill-total {
+  color: var(--rq3-text);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.rq3-skill-value-edit {
+  display: none;
+  margin-left: 8px;
+  width: 40px;
+  height: 20px;
+  padding: 2px 2px;
+  font-size: 12px;
+  text-align: center;
+  border: 1px solid var(--rq3-border);
+  background: var(--rq3-background-light);
+  color: var(--rq3-text);
+}
+
+.skill-roll-button:hover .rq3-skill-name {
+  color: var(--rq3-text-light);
+}
+
+/* Edit mode styles */
+.runequest3.edit-mode .rq3-skill-invested {
+  display: none;
+}
+
+.runequest3.edit-mode .rq3-skill-value-edit {
+  display: inline-block;
+}
+
+.runequest3.edit-mode .rq3-skill-name {
+  pointer-events: none;
+  cursor: default;
+}
+
+.runequest3.edit-mode .rq3-skill-values {
+  pointer-events: none;
+  cursor: default;
+}
+
+.runequest3.edit-mode .rq3-skill-value-edit {
+  pointer-events: auto;
+  cursor: text;
+}
+
+/* Hide dice roll buttons in edit mode but maintain spacing */
+.runequest3.edit-mode .skill-roll-button {
+  visibility: hidden;
+}
+
+.current-skills-section {
+  margin-bottom: 24px;
+}
+
+.available-skills-section {
+  margin-top: 24px;
+}
+
+.skills-container {
+  column-count: 3;
+  column-gap: 16px;
+  column-fill: balance;
+}
+
+.skills-container-explicit {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.skills-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rq3-skill-category {
+ 
+  break-inside: avoid;
+  display: inline-block;
+  width: 100%;
+}
+
+.rq3-skill-category-header {
+  background: var(--rq3-dark);
+  color: var(--rq3-light);
+  padding: 8px 12px;
+  border-radius: 6px 6px 0 0;
+  border: 2px 2px 0 2px solid var(--rq3-border);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.rq3-skill-list,
+.skills-list {
+  background: rgba(96, 96, 96, 0.4);
+  border: 2px solid var(--rq3-border);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  padding: 8px;
+}
+
+.rq3-skill-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 8px;
+  border-bottom: 1px solid rgba(102, 102, 102, 0.3);
+  transition: background 0.2s ease;
+  min-height: 24px;
+}
+
+.rq3-skill-item:hover {
+  background: rgba(96, 96, 96, 0.6);
+}
+
+.rq3-skill-item:last-child {
+  border-bottom: none;
+}
+
+.rq3-skill-name {
+  font-weight: 600;
+  color: var(--rq3-text);
+  cursor: pointer;
+  flex: 1;
+}
+
+.rq3-skill-name-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.rq3-skill-values {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 100px;
+  justify-content: flex-end;
+}
+
+.rq3-skill-invested,
+.rq3-skill-total,
+.rq3-skill-base {
+  font-weight: 600;
+  color: var(--rq3-text);
+  text-align: right;
+  min-width: 40px;
+}
+
+.rq3-skill-base {
+  color: var(--rq3-text-light);
+  font-size: 12px;
+}
+
+.rq3-skill-invested {
+  color: var(--rq3-text);
+  font-size: 14px;
+}
+
+.rq3-skill-total {
+  color: var(--rq3-text);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.skill-roll-button:hover .rq3-skill-name {
+  color: var(--rq3-text-light);
+}
+
+/* -------------------------------------------- */
+/*  Equipment and Items                         */
+/* -------------------------------------------- */
+
+.rq3-equipment,
+.equipment-list,
+.weapons-list,
+.spells-list,
+.runes-list {
+  margin: 16px 0;
+}
+
+.rq3-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid rgba(102, 102, 102, 0.3);
+  border-radius: 4px;
+  margin-bottom: 4px;
+  background: rgba(96, 96, 96, 0.4);
+  transition: all 0.2s ease;
+}
+
+.rq3-item:hover {
+  background: rgba(96, 96, 96, 0.6);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.rq3-item-image {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  margin-right: 8px;
+  border: 1px solid var(--rq3-border);
+}
+
+.rq3-item-name {
+  flex: 1;
+  font-weight: 600;
+  color: var(--rq3-text);
+}
+
+.rq3-item-controls {
+  display: flex;
+  gap: 4px;
+}
+
+.rq3-item-control {
+  background: none;
+  border: 1px solid var(--rq3-border);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  color: var(--rq3-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rq3-item-control:hover {
+  background: var(--rq3-primary);
+  color: var(--rq3-light);
+}
+
+.weapon-damage,
+.spell-cost,
+.item-quantity,
+.weapon-skill,
+.rune-affinity {
+  font-weight: 600;
+  color: var(--rq3-text);
+  margin-left: 8px;
+  font-size: 14px;
+}
+
+/* -------------------------------------------- */
+/*  Chat Messages                               */
+/* -------------------------------------------- */
+
+.rq3-skill-roll,
+.rq3-char-roll,
+.rq3-spell-cast {
+  background: linear-gradient(135deg, rgba(96, 96, 96, 0.9) 0%, rgba(112, 112, 112, 0.9) 100%);
+  
+  border-radius: 8px;
+  padding: 0px;
+  margin: 8px 0;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.rq3-skill-roll h3,
+.rq3-char-roll h3,
+.rq3-spell-cast h3 {
+  font-family: 'Inter', sans-serif;
+  color: var(--rq3-light);
+  margin: 0 0 8px 0;
+  padding: 8px;
+  font-size:14px;
+  background: var(--rq3-primary);
+  border-radius: 6px;
+  text-align: center;
+}
+
+.roll-result {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  margin: 8px 0;
+  padding: 8px;
+  border-radius: 6px;
+  color: var(--rq3-light);
+}
+
+.result-text {
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+.result-text.success {
+  background: rgba(16, 145, 16, 0.8);
+  color: var(--rq3-light);
+}
+
+.result-text.failure {
+  background: rgba(233, 7, 7, 0.8);
+  color: var(--rq3-light);
+}
+
+.spell-description {
+  margin-top: 8px;
+  padding: 8px;
+  background: rgba(96, 96, 96, 0.4);
+  border-radius: 4px;
+  border-left: 4px solid var(--rq3-secondary);
+}
+
+/* -------------------------------------------- */
+/*  Tabs                                        */
+/* -------------------------------------------- */
+
+.runequest3 .tabs {
+  margin:0;
+  border:none;
+  background: var(--rq3-dark);
+}
+
+.runequest3 .tabs .item {
+  color: var(--rq3-text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  margin-right: 4px;
+  padding: 8px 16px;
+  transition: all 0.2s ease;
+}
+
+.runequest3 .tabs .item:hover {
+  text-shadow: none;
+  color: var(--rq3-text);
+}
+
+.runequest3 .tabs .item.active {
+  
+  color: var(--rq3-success);
+  text-shadow: none;
+  
+}
+
+/* -------------------------------------------- */
+/*  Resource Bars                              */
+/* -------------------------------------------- */
+
+.rq3-resource {
+  margin: 8px 0;
+  min-width: 150px;
+}
+
+.rq3-resource-label {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  transform: translateY(-50%);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-light);
+  font-size: 12px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  z-index: 2;
+}
+
+.rq3-resource-bar {
+  background: var(--rq3-dark);
+  border: 2px solid var(--rq3-secondary);
+  border-radius: 8px;
+  height: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.rq3-resource-fill {
+  background: linear-gradient(135deg, var(--rq3-success) 0%, #0e9d0e 100%);
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.rq3-resource-fill.warning {
+  background: linear-gradient(135deg, var(--rq3-warning) 0%, #b17300 100%);
+}
+
+.rq3-resource-fill.danger {
+  background: linear-gradient(135deg, var(--rq3-danger) 0%, #c32c12 100%);
+}
+
+.rq3-resource-text {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  font-weight: 600;
+  color: var(--rq3-light);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  font-size: 12px;
+  z-index: 2;
+}
+
+/* -------------------------------------------- */
+/*  Responsive Design                           */
+/* -------------------------------------------- */
+
+/* Large tablets and small desktops */
+@media (max-width: 1024px) {
+  
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .rq3-characteristics {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 8px;
+  }
+  
+  .rq3-hit-locations {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 6px;
+  }
+  
+  .rq3-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .rq3-item-controls {
+    margin-top: 8px;
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* Small tablets and large phones */
+@media (max-width: 600px) {
+  
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+  
+}
+
+/* -------------------------------------------- */
+/*  Utility Classes                             */
+/* -------------------------------------------- */
+
+.rq3-text-center { text-align: center; }
+.rq3-text-right { text-align: right; }
+.rq3-text-left { text-align: left; }
+
+.rq3-mb-1 { margin-bottom: 4px; }
+.rq3-mb-2 { margin-bottom: 8px; }
+.rq3-mb-3 { margin-bottom: 12px; }
+.rq3-mb-4 { margin-bottom: 16px; }
+
+.rq3-mt-1 { margin-top: 4px; }
+.rq3-mt-2 { margin-top: 8px; }
+.rq3-mt-3 { margin-top: 12px; }
+.rq3-mt-4 { margin-top: 16px; }
+
+.rq3-p-1 { padding: 4px; }
+.rq3-p-2 { padding: 8px; }
+.rq3-p-3 { padding: 12px; }
+.rq3-p-4 { padding: 16px; }
+
+.rq3-flex { display: flex; }
+.rq3-flex-column { flex-direction: column; }
+.rq3-flex-wrap { flex-wrap: wrap; }
+.rq3-justify-between { justify-content: space-between; }
+.rq3-justify-center { justify-content: center; }
+.rq3-align-center { align-items: center; }
+
+.runequest3 .characteristic-buttons {
+  display: flex;
+  gap: 5px;
+  margin-top: 5px;
+  justify-content: center;
+}
+
+.runequest3 .characteristic-roll-x5,
+.runequest3 .characteristic-roll-custom {
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  color: var(--rq3-light);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 2px 7px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 38px;
+  height: 29px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.runequest3 .characteristic-roll-x5:hover,
+.runequest3 .characteristic-roll-custom:hover {
+  background: rgba(96, 96, 96, 0.3);
+  transform: translateY(-1px);
+}
+
+.runequest3 .characteristic-roll-x5:active,
+.runequest3 .characteristic-roll-custom:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(139, 69, 19, 0.3);
+}
+
+.runequest3 .characteristic-roll-x5 i {
+  font-size: 14px;
+}
+
+.runequest3 .pow-training {
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.runequest3 .pow-training label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-text);
+  cursor: pointer;
+}
+
+.runequest3 .pow-training input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+
+/* -------------------------------------------- */
+/*  Section Styling                             */
+/* -------------------------------------------- */
+
+.runequest3 .hit-locations-section,
+.runequest3 .attributes-section,
+.runequest3 .personal-details-section,
+.runequest3 .skills-section,
+.runequest3 .combat-section,
+.runequest3 .equipment-section,
+.runequest3 .magic-section,
+.runequest3 .background-section,
+.runequest3 .abilities-section,
+.runequest3 .movement-section {
+  margin: 0;
+  padding: 16px;
+  background: rgba(96, 96, 96, 0.3);
+  
+  
+}
+
+.runequest3 .hit-locations-section h3,
+.runequest3 .attributes-section h3,
+.runequest3 .personal-details-section h3,
+.runequest3 .skills-section h3,
+.runequest3 .combat-section h3,
+.runequest3 .equipment-section h3,
+.runequest3 .magic-section h3,
+.runequest3 .background-section h3,
+.runequest3 .abilities-section h3,
+.runequest3 .movement-section h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+/* -------------------------------------------- */
+/*  Personal Details                            */
+/* -------------------------------------------- */
+
+.runequest3 .personal-details,
+.runequest3 .npc-details,
+.runequest3 .creature-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.runequest3 .detail-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.runequest3 .detail-group label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-text);
+  font-size: 14px;
+}
+
+.runequest3 .detail-group input,
+.runequest3 .detail-group select {
+  padding: 6px 8px;
+  border: 2px solid var(--rq3-border);
+  border-radius: 4px;
+  background: rgba(96, 96, 96, 0.8);
+  color: var(--rq3-text);
+  font-family: 'Source Sans Pro', sans-serif;
+  min-height: 32px;
+  line-height: 1.4;
+}
+
+/* -------------------------------------------- */
+/*  Attributes Display                          */
+/* -------------------------------------------- */
+
+.runequest3 .rq3-attributes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.runequest3 .attribute-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.runequest3 .attribute-group label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-text);
+  font-size: 14px;
+}
+
+.runequest3 .attribute-value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.runequest3 .attribute-value input {
+  width: 60px;
+  text-align: center;
+}
+
+.runequest3 .movement-rates {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.runequest3 .movement-rates > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 8px;
+  background: rgba(96, 96, 96, 0.6);
+  border-radius: 4px;
+}
+
+/* -------------------------------------------- */
+/*  Hit Location Styling                        */
+/* -------------------------------------------- */
+
+.runequest3 .hit-location-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.runequest3 .hit-location-armor {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.runequest3 .hit-location-armor label {
+  font-weight: 600;
+  color: var(--rq3-text);
+}
+
+.runequest3 .hit-location-armor input {
+  width: 40px;
+  padding: 2px 4px;
+  font-size: 12px;
+}
+
+/* -------------------------------------------- */
+/*  Form Elements                               */
+/* -------------------------------------------- */
+
+.runequest3 input[type="text"],
+.runequest3 input[type="number"],
+.runequest3 select,
+.runequest3 textarea {
+  background: rgba(96, 96, 96, 0.8);
+  border: 2px solid var(--rq3-border);
+  border-radius: 4px;
+  color: var(--rq3-text);
+  padding: 4px 8px;
+  font-family: 'Source Sans Pro', sans-serif;
+  min-height: 32px;
+  line-height: 1.4;
+}
+
+/* Enhanced select dropdown styling */
+.runequest3 select {
+  background: rgba(96, 96, 96, 0.8);
+  border: 2px solid var(--rq3-border);
+  border-radius: 4px;
+  color: var(--rq3-text);
+  padding: 4px 8px;
+  font-family: 'Source Sans Pro', sans-serif;
+  cursor: pointer;
+  min-height: 32px;
+  line-height: 1.4;
+}
+
+.runequest3 select option {
+  background: rgba(74, 74, 74, 0.95);
+  color: var(--rq3-text);
+  padding: 4px 8px;
+}
+
+.runequest3 select option:hover,
+.runequest3 select option:checked {
+  background: rgba(106, 106, 106, 0.95);
+  color: var(--rq3-light);
+}
+
+.runequest3 input[type="text"]:focus,
+.runequest3 input[type="number"]:focus,
+.runequest3 select:focus,
+.runequest3 textarea:focus {
+  border-color: var(--rq3-secondary);
+  box-shadow: 0 0 8px rgba(218, 165, 32, 0.3);
+  outline: none;
+}
+
+.runequest3 button {
+  color: var(--rq3-light);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.runequest3 button:hover {
+
+}
+
+.runequest3 button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(139, 69, 19, 0.3);
+}
+
+/* -------------------------------------------- */
+/*  Characteristics Display                     */
+/* -------------------------------------------- */
+
+.runequest3 .characteristics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  grid-column: 1 / -1;
+}
+
+.runequest3 .characteristics-header h3 {
+  margin: 0;
+}
+
+.runequest3 .characteristics-header button {
+  font-size: 12px;
+  padding: 4px 8px;
+}
+
+/* Characteristics Table */
+.runequest3 .characteristics-table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+}
+
+.runequest3 .characteristics-header-row {
+  display: grid;
+  grid-template-columns: 60px 40px 40px 45px 90px;
+  gap: 6px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--rq3-secondary);
+  margin-bottom: 2px;
+}
+
+.runequest3 .char-name-header,
+.runequest3 .char-value-header,
+.runequest3 .char-buttons-header {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-text);
+  font-size: 12px;
+  text-align: center;
+}
+
+.runequest3 .char-name-header {
+  text-align: left;
+}
+
+.runequest3 .characteristic-row {
+  display: grid;
+  grid-template-columns: 60px 40px 40px 45px 90px;
+  gap: 6px;
+  padding: 2px 0;
+  align-items: center;
+}
+
+.runequest3 .characteristic-name {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-text);
+  font-size: 14px;
+}
+
+.runequest3 .characteristic-value {
+  display: flex;
+  justify-content: center;
+}
+
+.runequest3 .characteristic-value input {
+  width: 40px;
+  height: 24px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--rq3-border);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--rq3-dark);
+  padding: 1px;
+}
+
+.runequest3 .characteristic-training {
+  text-align: center;
+}
+
+.runequest3 .characteristic-training input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+
+.runequest3 .characteristic-training span {
+  color: var(--rq3-text-light);
+  font-size: 12px;
+}
+
+.runequest3 .characteristic-row .characteristic-buttons {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+}
+
+.runequest3 .characteristic-row .characteristic-roll-x5,
+.runequest3 .characteristic-row .characteristic-roll-custom {
+  background: transparent;
+  border: none;
+  border-radius: 3px;
+  color: var(--rq3-light);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  padding: 1px 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 28px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.runequest3 .characteristic-row .characteristic-roll-x5:hover,
+.runequest3 .characteristic-row .characteristic-roll-custom:hover {
+  background: rgba(96, 96, 96, 0.3);
+}
+
+/* Characteristics and Derived Stats Layout */
+.runequest3 .characteristics-and-derived {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+/* Derived Stats Table */
+.runequest3 .derived-stats-table {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 180px;
+  flex-shrink: 0;
+}
+
+.runequest3 .derived-stats-header {
+  margin-bottom: 8px;
+}
+
+.runequest3 .derived-stats-header h4 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-text);
+  font-size: 14px;
+  margin: 0;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--rq3-secondary);
+}
+
+.runequest3 .derived-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 8px;
+  background: rgba(96, 96, 96, 0.4);
+  border-radius: 3px;
+  border: 1px solid var(--rq3-border);
+}
+
+.runequest3 .derived-stat-label {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-text);
+  font-size: 12px;
+  flex: 1;
+}
+
+.runequest3 .derived-stat-value {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-text);
+  font-size: 12px;
+  text-align: right;
+  min-width: 40px;
+}
+
+/* Responsive adjustments for skills */
+@media (max-width: 1200px) {
+  .skills-container {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .skills-container {
+    column-count: 1;
+  }
+}
+
+/* Species Item Sheet Styling */
+.species-section {
+  padding: 16px;
+}
+
+.species-section h4 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-text);
+  margin: 16px 0 8px 0;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--rq3-secondary);
+}
+
+.species-basic,
+.species-size,
+.species-characteristics,
+.species-movement,
+.species-abilities,
+.species-culture,
+.species-lifespan {
+  margin-bottom: 16px;
+}
+
+.size-range,
+.char-mods,
+.movement-rates,
+.lifespan-stages {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.char-mods {
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
+
+.species-section .detail-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.species-section .detail-group label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-text);
+  font-size: 14px;
+}
+
+.species-section .detail-group input,
+.species-section .detail-group select,
+.species-section .detail-group textarea {
+  padding: 6px 8px;
+  border: 2px solid var(--rq3-border);
+  border-radius: 4px;
+  background: rgba(96, 96, 96, 0.8);
+  color: var(--rq3-text);
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.species-section .detail-group input[type="number"] {
+  text-align: center;
+}
+
+.species-skills {
+  margin-top: 16px;
+}
+
+.species-skills .skill-category {
+  margin-bottom: 16px;
+  background: rgba(74, 74, 74, 0.3);
+  border-radius: 6px;
+  padding: 12px;
+  border: 1px solid var(--rq3-border);
+}
+
+.species-skills .skill-category h5 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-text);
+  margin: 0 0 8px 0;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--rq3-secondary);
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 8px;
+}
+
+.skills-grid .detail-group {
+  margin-bottom: 0;
+}
+
+.skills-grid .detail-group input {
+  width: 60px;
+  text-align: center;
+}
+
+/* Species Drop Zone */
+.species-drop-zone {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  padding: 8px;
+  transition: all 0.3s ease;
+  min-height: 36px;
+}
+
+.species-empty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  border: 2px dashed var(--rq3-border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  background: rgba(96, 96, 96, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.species-empty:hover {
+  border-color: var(--rq3-accent);
+  background: rgba(96, 96, 96, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.species-drop-zone.drag-over .species-empty {
+  border-color: var(--rq3-light);
+  background: rgba(218, 165, 32, 0.2);
+  box-shadow: 0 0 8px rgba(218, 165, 32, 0.4);
+}
+
+.species-placeholder {
+  color: var(--rq3-text-light);
+  flex: 1;
+}
+
+.species-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--rq3-primary) 0%, var(--rq3-accent) 100%);
+  border: 2px solid var(--rq3-secondary);
+  border-radius: 6px;
+  padding: 8px 12px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.species-badge:hover {
+  border-color: var(--rq3-light);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.species-name {
+  color: var(--rq3-light);
+  font-weight: 600;
+  flex: 1;
+}
+
+.species-delete {
+  color: var(--rq3-text-light);
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding: 2px;
+}
+
+.species-delete:hover {
+  color: var(--rq3-danger);
+}
+
+.species-drop-zone:hover .species-empty,
+.species-drop-zone.drag-over .species-empty {
+  border-color: var(--rq3-light);
+  background: rgba(96, 96, 96, 0.5);
+}
+
+.species-drop-icon {
+  color: var(--rq3-border);
+  font-size: 14px;
+  transition: color 0.3s ease;
+  opacity: 0.6;
+}
+
+.species-empty:hover .species-drop-icon,
+.species-drop-zone.drag-over .species-drop-icon {
+  color: var(--rq3-light);
+  opacity: 1;
+}
+
+.species-drop-zone.drag-over .species-drop-icon::before {
+  content: "\f019"; /* fa-download icon */
+  animation: bounce 0.6s infinite alternate;
+}
+
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-3px); }
+}
+
+/* Global Edit Toggle */
+.global-edit-toggle {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid var(--rq3-border);
+  display: flex;
+  justify-content: center;
+}
+
+.global-edit-toggle .toggle-switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.global-edit-toggle .toggle-label {
+  color: var(--rq3-text);
+  user-select: none;
+}
+
+/* Custom skills styling */
+.add-custom-skill {
+  display: none;
+  padding: 8px 0;
+  text-align: center;
+  border-top: 1px solid var(--rq3-border);
+  margin-top: 8px;
+}
+
+.runequest3.edit-mode .add-custom-skill {
+  display: block;
+}
+
+.add-skill-icon {
+  color: var(--rq3-success);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.add-skill-icon:hover {
+  background: rgba(34, 139, 34, 0.1);
+  transform: scale(1.1);
+}
+
+.custom-skill {
+  /* Remove green styling - custom skills now look like regular skills */
+}
+
+/* Default state: hide delete icon */
+.custom-skill .delete-custom-skill {
+  display: none !important;
+}
+
+/* Edit mode: show delete icon */
+.runequest3.edit-mode .custom-skill .delete-custom-skill {
+  display: inline-flex !important;
+}
+
+.delete-custom-skill {
+  color: var(--rq3-danger);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 6px;
+  margin-left: 8px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+}
+
+.delete-custom-skill:hover {
+  
+  color: #ffffff;
+  transform: scale(1.2);
+}
+
+/* In edit mode, position delete icon where dice button was */
+.runequest3.edit-mode .delete-custom-skill {
+  position: absolute;
+  right: 8px;
+  margin-left: 0;
+}
+
+/* Make custom skill items relative positioned in edit mode for absolute positioning */
+.runequest3.edit-mode .custom-skill {
+  position: relative;
+}
+
+.custom-skill .rq3-skill-name {
+  /* Remove italic styling - custom skills now look like regular skills */
+  color: var(--rq3-text);
+}
+
+/* Disable pointer events on rollable items when in edit mode */
+.runequest3.edit-mode-no-pointer-events .rollable,
+.runequest3.edit-mode-no-pointer-events .skill-roll-button,
+.runequest3.edit-mode-no-pointer-events .rq3-skill-item .rq3-skill-name,
+.runequest3.edit-mode-no-pointer-events .characteristic-roll-x5,
+.runequest3.edit-mode-no-pointer-events .characteristic-roll-custom,
+.runequest3.edit-mode-no-pointer-events .item-roll-button,
+.runequest3.edit-mode-no-pointer-events [data-action="roll"] {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+/* Skill roll button styling */
+.runequest3 .skill-roll-button {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 6px;
+  color: var(--rq3-light);
+  font-size: 14px;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 32px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+}
+
+.runequest3 .skill-roll-button:hover {
+  background: rgba(96, 96, 96, 0.3) !important;
+  transform: translateY(-1px);
+  box-shadow: none !important;
+}
+
+.runequest3 .skill-roll-button:active {
+  transform: translateY(0);
+  box-shadow: none !important;
+}
+
+.runequest3 .skill-roll-button i {
+  font-size: 14px;
+}
+
+/* Skill training tick mark styling */
+.skill-training-tick {
+  color: var(--rq3-success);
+  opacity: 0.2;
+  font-size: 12px;
+  margin-right: 6px;
+  transition: opacity 0.3s ease;
+  cursor: default;
+  flex-shrink: 0;
+}
+
+.skill-training-tick.ready-for-training {
+  opacity: 1.0;
+}
+
+/* Only allow interaction in edit mode */
+.runequest3.edit-mode .skill-training-tick {
+  cursor: pointer;
+}
+
+.runequest3.edit-mode .skill-training-tick:hover {
+  opacity: 0.6;
+}
+
+.runequest3.edit-mode .skill-training-tick.ready-for-training:hover {
+  opacity: 0.8;
+}
+
+/* Ensure input fields ARE clickable in edit mode */
+.runequest3.edit-mode-no-pointer-events .rq3-skill-value-edit,
+.runequest3.edit-mode-no-pointer-events input,
+.runequest3.edit-mode-no-pointer-events textarea,
+.runequest3.edit-mode-no-pointer-events select {
+  pointer-events: auto !important;
+  cursor: auto !important;
+}
+
+/* Characteristic Training Tick */
+.characteristic-training-tick {
+  color: var(--rq3-success);
+  opacity: 0.2;
+  font-size: 0.9em;
+  margin-right: 5px;
+  transition: opacity 0.2s ease-in-out;
+  cursor: default;
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.characteristic-training-tick.ready-for-training {
+  opacity: 1.0;
+}
+
+.runequest3.edit-mode .characteristic-training-tick {
+  cursor: pointer;
+  pointer-events: auto; /* Ensure it's clickable */
+}
+
+.runequest3.edit-mode .characteristic-training-tick:not(.ready-for-training):hover {
+  opacity: 0.6;
+}
+
+.runequest3.edit-mode .characteristic-training-tick.ready-for-training:hover {
+  opacity: 0.8;
+}
+
+/* Custom Skill Specific Styling */
+.custom-skill-tick {
+  /* Remove green styling - custom skills now look like regular skills */
+}
+
+/* Armor item sheet styles */
+.runequest3.item .hit-locations {
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid var(--rq3-border);
+  border-radius: 4px;
+  background: rgba(96, 96, 96, 0.3);
+}
+
+.runequest3.item .hit-location-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.runequest3.item .hit-location-grid .detail-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.runequest3.item .hit-location-grid .detail-group label {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 2px;
+  color: var(--rq3-text);
+}
+
+.runequest3.item .hit-location-grid .detail-group input {
+  padding: 3px 6px;
+  border: 1px solid var(--rq3-border);
+  border-radius: 3px;
+  background: rgba(96, 96, 96, 0.8);
+  color: var(--rq3-text);
+}
+
+.runequest3.item .hit-location-grid .detail-group input[readonly] {
+  background: rgba(96, 96, 96, 0.5);
+  color: var(--rq3-text-light);
+}
+
+.runequest3.item .shield-properties {
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid var(--rq3-border);
+  border-radius: 4px;
+  background: rgba(96, 96, 96, 0.3);
+}
+
+.runequest3.item .armor-properties .detail-group input[readonly] {
+  background: rgba(96, 96, 96, 0.5);
+  color: var(--rq3-text-light);
+}
+
+/* -------------------------------------------- */
+/*  Combat Tab - Armor Visualization           */
+/* -------------------------------------------- */
+
+.combat-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 20px;
+  padding: 16px;
+  min-height: 500px;
+}
+
+/* Armor Visualization */
+.armor-visualization {
+  background: rgba(96, 96, 96, 0.3);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.character-outline {
+  position: relative;
+  width: 200px;
+  height: 390px; /* Increased height for stacked hit location badges */
+  margin-top: 16px;
+  padding-bottom: 70px; /* Space for stacked hit location badges below slots */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Armor Slots */
+.armor-slot {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border: 2px dashed var(--rq3-border);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(74, 74, 74, 0.5);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Removed hover effect for combat tab armor slots */
+
+.armor-slot.drag-over {
+  border-color: var(--rq3-success);
+  background: rgba(76, 175, 80, 0.3);
+  border-style: solid;
+  box-shadow: 0 0 12px rgba(76, 175, 80, 0.5);
+}
+
+.armor-slot.valid-drop {
+  border-color: var(--rq3-success);
+  background: rgba(76, 175, 80, 0.3);
+  border-style: solid;
+  box-shadow: 0 0 12px rgba(76, 175, 80, 0.5);
+}
+
+.armor-slot.invalid-drop {
+  border-color: var(--rq3-danger);
+  background: rgba(244, 67, 54, 0.3);
+}
+
+/* Specific slot positions - all rounded squares like chest */
+.head-slot {
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.left-arm-slot {
+  top: 100px;
+  left: -35px;
+}
+
+.right-arm-slot {
+  top: 100px;
+  right: -35px;
+}
+
+.chest-slot {
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.abdomen-slot {
+  top: 210px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.left-leg-slot {
+  bottom: 0px;
+  left: 15px;
+}
+
+.right-leg-slot {
+  bottom: 0px;
+  right: 15px;
+}
+
+/* Empty armor slot styling */
+.empty-armor-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--rq3-text-light);
+  font-size: 12px;
+  text-align: center;
+  opacity: 0.7;
+}
+
+.empty-armor-slot i {
+  font-size: 20px;
+  margin-bottom: 4px;
+  opacity: 0.5;
+}
+
+.empty-armor-slot span {
+  font-weight: 600;
+  font-size: 10px;
+}
+
+/* Equipped armor item styling */
+.equipped-armor-item {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--rq3-primary) 0%, var(--rq3-accent) 100%);
+  border: 2px solid var(--rq3-secondary);
+}
+
+.equipped-armor-item img {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+/* Combat Info Section */
+.combat-info {
+  background: rgba(96, 96, 96, 0.3);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.combat-info h3 {
+  margin-top: 0;
+}
+
+.weapons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.weapon-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  background: rgba(96, 96, 96, 0.5);
+  border-radius: 6px;
+  border: 1px solid var(--rq3-border);
+}
+
+.weapon-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.weapon-details .rq3-item-name {
+  font-weight: 600;
+  color: var(--rq3-text);
+}
+
+.weapon-details .weapon-damage,
+.weapon-details .weapon-skill {
+  font-size: 12px;
+  color: var(--rq3-text-light);
+}
+
+/* Armor Summary */
+.armor-summary {
+  margin-top: 16px;
+}
+
+.armor-summary h4 {
+  margin: 0 0 8px 0;
+  color: var(--rq3-text);
+  font-size: 14px;
+}
+
+.armor-summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 8px;
+  background: rgba(96, 96, 96, 0.4);
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.summary-label {
+  color: var(--rq3-text);
+  font-weight: 600;
+}
+
+.summary-value {
+  color: var(--rq3-success);
+  font-weight: bold;
+}
+
+/* Available Armor Section */
+.available-armor {
+  background: rgba(96, 96, 96, 0.3);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.available-armor h3 {
+  margin-top: 0;
+}
+
+.armor-inventory {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.armor-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: rgba(96, 96, 96, 0.5);
+  border-radius: 6px;
+  border: 1px solid var(--rq3-border);
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+.armor-item:hover {
+  background: rgba(96, 96, 96, 0.7);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.armor-item:active {
+  cursor: grabbing;
+}
+
+.armor-item.dragging {
+  opacity: 0.5;
+}
+
+.armor-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.armor-details .rq3-item-name {
+  font-weight: 600;
+  color: var(--rq3-text);
+  font-size: 13px;
+}
+
+.armor-details .armor-type,
+.armor-details .armor-enc {
+  color: var(--rq3-text-light);
+}
+
+.armor-details .armor-enc {
+  color: var(--rq3-warning);
+  font-weight: 600;
+}
+
+/* -------------------------------------------- */
+/*  Equipment Tab - Worn and Carried           */
+/* -------------------------------------------- */
+
+/* Worn Equipment Section */
+.worn-equipment {
+  background: rgba(96, 96, 96, 0.3);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.worn-equipment h4,.carried-equipment h4,.bag-equipment h4 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: var(--rq3-text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  border-bottom: 2px solid var(--rq3-secondary);
+  padding-bottom: 4px;
+}
+
+/* Worn Equipment Subsections */
+.worn-armor-subsection,
+.worn-other-subsection {
+  margin-bottom: 24px;
+}
+
+.worn-armor-subsection h5,
+.worn-other-subsection h5 {
+  margin: 0 0 12px 0;
+  color: var(--rq3-text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  border-bottom: 1px solid var(--rq3-border);
+  padding-bottom: 4px;
+}
+
+/* Worn Equipment List */
+.worn-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 8px;
+}
+
+/* Carried Equipment List */
+.carried-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 8px;
+}
+
+/* Bag Equipment List */
+.bag-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 8px;
+}
+
+/* Equipment Lists Specific Styling */
+.carried-items-list,
+.bag-items-list {
+  gap: 8px;
+  margin-bottom: 15px;
+  min-height: 100px;
+  margin-top: 0;
+}
+
+/* -------------------------------------------- */
+/*  Resources (Hit Points, Fatigue, Encumbrance) */
+/* -------------------------------------------- */
+
+.rq3-resources {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.rq3-resource {
+  border: 1px solid var(--rq3-border);
+  border-radius: 6px;
+  background: rgba(74, 74, 74, 0.2);
+  overflow: hidden;
+}
+
+.rq3-resource-bar {
+  position: relative;
+  height: 24px;
+  overflow: hidden;
+}
+
+.rq3-resource-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--rq3-success);
+  transition: width 0.3s ease;
+}
+
+.rq3-resource-fill.warning {
+  background: var(--rq3-warning);
+}
+
+.rq3-resource-fill.danger {
+  background: var(--rq3-danger);
+}
+
+.rq3-resource-label {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--rq3-text);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.rq3-resource-text {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--rq3-text);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Encumbrance breakdown display */
+.encumbrance-breakdown {
+  padding: 6px 8px;
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--rq3-text-light);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.encumbrance-detail {
+  display: block;
+  margin-bottom: 2px;
+  font-weight: 500;
+}
+
+.encumbrance-penalties {
+  display: block;
+  color: var(--rq3-warning);
+}
+
+/* Storage item styling - shared base */
+.carried-item,
+.bag-item {
+  border-left: 4px solid var(--rq3-primary);
+}
+
+/* Storage item hover effects */
+.carried-item:hover,
+.bag-item:hover {
+  background: rgba(74, 144, 226, 0.1);
+}
+
+/* -------------------------------------------- */
+/*  Equipment Tab - Three Column Layout        */
+/* -------------------------------------------- */
+
+/* Equipped Armor Section - Full Width */
+.equipped-armor-section, .equipped-hands-section {
+  background: rgba(96, 96, 96, 0.3);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.equipped-armor-section h4, .equipped-hands-section h4 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: var(--rq3-text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  border-bottom: 2px solid var(--rq3-secondary);
+  padding-bottom: 4px;
+}
+
+/* Three Column Equipment Container */
+.three-column-equipment-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.three-column-equipment-container .worn-equipment,
+.three-column-equipment-container .carried-equipment,
+.three-column-equipment-container .bag-equipment {
+  flex: 1;
+  min-width: 0; /* Allow flex items to shrink below content size */
+  background: rgba(96, 96, 96, 0.3);
+  border-radius: 8px;
+  padding: 8px;
+}
+
+/* Responsive adjustments for three columns */
+@media (max-width: 1200px) {
+  .three-column-equipment-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+/* Worn Equipment Section Updates */
+.worn-subsection,
+.carried-subsection,
+.bag-subsection {
+  margin-bottom: 20px;
+}
+
+.worn-subsection h5,
+.carried-subsection h5,
+.bag-subsection h5 {
+  color: var(--rq3-light);
+  font-weight: bold;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--rq3-border);
+}
+
+/* Armor Slots Grid */
+.armor-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+  justify-items: center;
+}
+
+/* Hands Slots Grid - Only 2 columns for left and right hands */
+.hands-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  justify-items: center;
+}
+
+.armor-slot-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  max-width: 80px;
+}
+
+.armor-slot-item label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-text);
+  font-size: 12px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Equipment Item Row Layout - 3 Column Grid */
+.equipment-item-row {
+  display: grid;
+  grid-template-columns: 50px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 4px;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--rq3-border);
+  border-radius: 4px;
+  cursor: grab;
+  transition: all 0.3s ease;
+}
+
+.equipment-item-row:hover {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: var(--rq3-light);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.equipment-item-row:active {
+  cursor: grabbing;
+}
+
+.equipment-item-row.dragging {
+  opacity: 0.5;
+}
+
+/* Column 1: Image */
+.item-image-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+}
+
+.equipment-item-row .item-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid var(--rq3-border);
+  object-fit: cover;
+}
+
+/* Column 2: Info (Name and Stats) */
+.item-info-column {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0; /* Allow text truncation */
+  flex: 1;
+}
+
+.item-name-line {
+  font-weight: bold;
+  color: var(--rq3-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.item-stats-line {
+  display: flex;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--rq3-text-light);
+}
+
+.item-stats-line .item-encumbrance,
+.item-stats-line .item-value {
+  font-family: 'Courier New', monospace;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 1px 4px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+/* Column 3: Controls */
+.item-controls-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 60px;
+}
+
+.item-quantity-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  min-width: 40px;
+}
+
+.qty-up,
+.qty-down {
+  background: transparent;
+  border: 1px solid var(--rq3-border);
+  border-radius: 2px;
+  color: var(--rq3-text-light);
+  cursor: pointer;
+  padding: 0;
+  width: 20px;
+  height: 12px;
+  font-size: 8px;
+  line-height: 1;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qty-up:hover,
+.qty-down:hover {
+  background: var(--rq3-primary);
+  color: var(--rq3-light);
+  border-color: var(--rq3-light);
+}
+
+.qty-up:active,
+.qty-down:active {
+  transform: scale(0.95);
+}
+
+.item-quantity-display {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  color: var(--rq3-text);
+  font-size: 10px;
+  text-align: center;
+  min-width: 20px;
+  padding: 1px 2px;
+}
+
+.item-quantity-display.armor-ap {
+  font-size: 9px;
+  color: var(--rq3-success);
+}
+
+/* Edit Controls */
+.item-edit-controls {
+  display: none;
+  gap: 4px;
+}
+
+.runequest3.edit-mode .item-edit-controls {
+  display: flex;
+}
+
+/* Clear Hands Button - only show in edit mode */
+.clear-hands-btn {
+  display: none;
+}
+
+.runequest3.edit-mode .clear-hands-btn {
+  display: inline;
+}
+
+/* Compact Header Styles */
+.compact-header {
+  padding: 12px;
+}
+
+.compact-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* Column 1: Resource Bars (200px width) */
+.compact-column-1 {
+  width: 200px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.compact-column-1 .rq3-resource {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.compact-column-1 .rq3-resource-label {
+  font-size: 0.9em;
+  font-weight: 600;
+  color: var(--rq3-light);
+}
+
+.compact-column-1 .rq3-resource-bar {
+  width: 100%;
+}
+
+/* Column 2: Name and Characteristics */
+.compact-column-2 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.compact-column-2 .charname {
+  margin: 0;
+  font-size: 1.4em;
+}
+
+.compact-column-2 .charname input {
+  width: 100%;
+}
+
+/* Compact header character name - always display only */
+.compact-header .charname-display {
+  font-size: 1.4em;
+  font-weight: 600;
+  color: var(--rq3-light);
+  display: block;
+}
+
+/* Characteristics Grid - each on one line, 1/3 width */
+.characteristics-compact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 8px 16px;
+  align-items: center;
+}
+
+.characteristic-compact-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: rgba(96, 96, 96, 0.2);
+  border-radius: 4px;
+  min-width: 0;
+}
+
+.characteristic-compact-line .char-name {
+  font-weight: 600;
+  color: var(--rq3-light);
+  min-width: 25px;
+  flex-shrink: 0;
+  font-size: 0.85em;
+}
+
+.characteristic-compact-line .char-current {
+  font-weight: 700;
+  color: var(--rq3-text);
+  min-width: 25px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.characteristic-compact-line .characteristic-training-tick {
+  font-size: 12px;
+  opacity: 0.6;
+  flex-shrink: 0;
+  min-width: 25px;
+}
+
+.characteristic-compact-line .characteristic-roll-x5, .characteristic-compact-line .characteristic-roll-custom {
+  padding: 2px 4px;
+  width: 25px;
+  height: 24px;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* Header visibility based on active tab */
+.runequest3 .full-header {
+  display: block;
+}
+
+.runequest3 .compact-header {
+  display: none;
+}
+
+/* Show compact header on non-main tabs using Foundry's active tab system */
+.runequest3.non-main-tab .full-header {
+  display: none;
+}
+
+.runequest3.non-main-tab .compact-header {
+  display: block;
+}
+
+/* Combat tab armor items are display-only, not draggable */
+.tab[data-tab="combat"] .equipped-item {
+  cursor: default;
+  pointer-events: none;
+}
+
+.tab[data-tab="combat"] .equipped-item img {
+  pointer-events: none;
+}
+
+.edit-button,
+.delete-button {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--rq3-border);
+  color: var(--rq3-text-light);
+  padding: 4px 6px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-button:hover {
+  background: var(--rq3-info);
+  color: white;
+  border-color: var(--rq3-info);
+}
+
+.delete-button:hover {
+  background: var(--rq3-danger);
+  color: white;
+  border-color: var(--rq3-danger);
+}
+
+/* Equipment Slot Styling */
+.equipment-slot, .weapon-slot {
+  width: 70px;
+  height: 70px;
+  border: 2px dashed var(--rq3-border);
+  border-radius: 8px;
+  background: rgba(74, 74, 74, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* When empty, add padding for the empty slot content */
+.equipment-slot:not(:has(.equipped-item)), .weapon-slot:not(:has(.equipped-item)) {
+  padding: 8px;
+}
+
+.equipment-slot:hover, .weapon-slot:hover {
+  border-color: var(--rq3-light);
+  background: rgba(96, 96, 96, 0.7);
+}
+
+.equipment-slot.drag-over, .weapon-slot.drag-over {
+  border-color: var(--rq3-success);
+  background: rgba(76, 175, 80, 0.3);
+  border-style: solid;
+  box-shadow: 0 0 12px rgba(76, 175, 80, 0.5);
+}
+
+.equipment-slot.valid-drop, .weapon-slot.valid-drop {
+  border-color: var(--rq3-success);
+  background: rgba(76, 175, 80, 0.3);
+  border-style: solid;
+  box-shadow: 0 0 12px rgba(76, 175, 80, 0.5);
+}
+
+.equipment-slot.invalid-drop, .weapon-slot.invalid-drop {
+  border-color: var(--rq3-danger);
+  background: rgba(244, 67, 54, 0.3);
+}
+
+/* Empty Slot Styling */
+.empty-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--rq3-text-light);
+  text-align: center;
+  opacity: 0.7;
+  width: 100%;
+  height: 100%;
+}
+
+.empty-slot i {
+  display: none;
+}
+
+.empty-slot span {
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* Equipped Item Styling */
+.equipped-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  position: relative;
+  background: transparent;
+  border-radius: 6px;
+  padding: 0;
+  border: none;
+  cursor: grab;
+}
+
+.equipped-item:active {
+  cursor: grabbing;
+}
+
+.equipped-item.dragging {
+  opacity: 0.5;
+  z-index: 1000;
+}
+
+.equipped-item img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 2px solid var(--rq3-secondary);
+  transition: all 0.2s ease;
+  pointer-events: none; /* Prevent image from interfering with drag */
+}
+
+.equipped-item:hover img {
+  border-color: var(--rq3-light);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.equipped-item .item-name {
+  display: none;
+}
+
+/* Hide armor points by default (for equipment tab) */
+.equipped-item .armor-points {
+  display: none;
+}
+
+/* Show armor points for combat tab armor slots */
+.armor-slot .equipped-item .armor-points, .weapon-stats {
+  display: none;
+}
+
+.equipped-item .unequip-button {
+  display: none;
+}
+
+/* Empty Drop Zones */
+.empty-carried-drop-zone, 
+.empty-bag-drop-zone {
+  min-height: 60px;
+  border: 2px dashed var(--rq3-border);
+  border-radius: 8px;
+  background: rgba(96, 96, 96, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.empty-carried-drop-zone:hover, 
+.empty-bag-drop-zone:hover {
+  border-color: var(--rq3-light);
+  background: rgba(96, 96, 96, 0.3);
+}
+
+.empty-carried-drop-zone.drag-over, 
+.empty-bag-drop-zone.drag-over {
+  border-color: var(--rq3-success);
+  background: rgba(76, 175, 80, 0.2);
+  border-style: solid;
+  box-shadow: 0 0 12px rgba(76, 175, 80, 0.5);
+}
+
+.empty-drop-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--rq3-text-light);
+  opacity: 0.8;
+}
+
+.empty-drop-message i {
+  font-size: 20px;
+}
+
+.empty-drop-message p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Combat Tab Updates */
+.combat-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 20px;
+  padding: 16px;
+  min-height: 500px;
+}
+
+.combat-info .combat-stats {
+  margin-top: 20px;
+}
+
+.combat-stats h4 {
+  margin: 0 0 12px 0;
+  color: var(--rq3-text);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  border-bottom: 1px solid var(--rq3-secondary);
+  padding-bottom: 4px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 8px;
+  background: rgba(96, 96, 96, 0.4);
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.stat-label {
+  color: var(--rq3-text);
+  font-weight: 600;
+}
+
+.stat-value {
+  color: var(--rq3-success);
+  font-weight: bold;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1000px) {
+  .combat-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+}
+
+/* -------------------------------------------- */
+/*  Roll Overlay Modal                          */
+/* -------------------------------------------- */
+
+.rq3-roll-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.rq3-roll-overlay.show {
+  display: flex;
+}
+
+.rq3-roll-modal {
+  background: #121212;
+  border: 2px solid var(--rq3-border);
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  animation: slideIn 0.3s ease-out;
+  position: relative;
+}
+
+.rq3-roll-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rq3-border);
+}
+
+.rq3-roll-modal-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--rq3-text);
+  margin: 0;
+}
+
+.rq3-roll-modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--rq3-text);
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.rq3-roll-modal-close:hover {
+  background-color: var(--rq3-hover);
+  color: var(--rq3-danger);
+}
+
+.rq3-roll-modal-content {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.rq3-roll-modal-content p {
+  margin: 10px 0;
+  color: var(--rq3-text);
+}
+
+.rq3-roll-modal-content .characteristic-info {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--rq3-accent);
+}
+
+.rq3-roll-modal-content .instruction {
+  font-size: 14px;
+  color: var(--rq3-muted);
+}
+
+.rq3-roll-multiplier-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.rq3-roll-multiplier-btn {
+  background: var(--rq3-button);
+  border: 1px solid var(--rq3-border);
+  border-radius: 6px;
+  padding: 12px 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--rq3-button-text);
+  text-align: center;
+  font-weight: bold;
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.rq3-roll-multiplier-btn:hover {
+  background: var(--rq3-button-hover);
+  border-color: var(--rq3-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.rq3-roll-multiplier-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.rq3-roll-multiplier-btn .multiplier {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.rq3-roll-multiplier-btn .target {
+  font-size: 12px;
+  color: var(--rq3-muted);
+  margin-top: 2px;
+}
+
+.rq3-roll-multiplier-btn.recommended {
+  background: var(--rq3-accent);
+  border-color: var(--rq3-accent);
+  color: white;
+}
+
+.rq3-roll-multiplier-btn.recommended:hover {
+  background: var(--rq3-accent-hover);
+  border-color: var(--rq3-accent-hover);
+}
+
+/* Animation keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { 
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Responsive adjustments for roll modal */
+@media (max-width: 600px) {
+  .rq3-roll-multiplier-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .rq3-roll-modal {
+    margin: 20px;
+    width: calc(100% - 40px);
+  }
+}
+
+/* -------------------------------------------- */
+/*  HP Adjustment Overlay                       */
+/* -------------------------------------------- */
+
+.rq3-hp-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.rq3-hp-overlay.show {
+  display: flex;
+}
+
+.rq3-hp-modal {
+  background: #121212;
+  border: 2px solid var(--rq3-border);
+  border-radius: 10px;
+  padding: 25px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  animation: slideIn 0.3s ease-out;
+  position: relative;
+}
+
+.rq3-hp-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rq3-border);
+}
+
+.rq3-hp-modal-title {
+  font-size: 16px;
+  font-weight: normal;
+  color: var(--rq3-text);
+  margin: 0;
+}
+
+.rq3-hp-modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--rq3-text);
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.rq3-hp-modal-close:hover {
+  background-color: var(--rq3-hover);
+  color: var(--rq3-danger);
+}
+
+.rq3-hp-current-display {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.rq3-hp-current-value {
+  font-size: 48px;
+  font-weight: bold;
+  color: var(--rq3-accent);
+  margin: 10px 0;
+}
+
+.rq3-hp-max-value {
+  font-size: 18px;
+  color: var(--rq3-muted);
+  margin-bottom: 5px;
+}
+
+.rq3-hp-percentage {
+  font-size: 14px;
+  color: var(--rq3-muted);
+  font-style: italic;
+}
+
+.rq3-hp-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.rq3-hp-controls-simple {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+
+
+.rq3-hp-btn-simple {
+  background: var(--rq3-button);
+  color: var(--rq3-button-text);
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  user-select: none;
+  border: none;
+}
+
+
+.rq3-hp-btn-simple.decrease {
+  background: #2a2a2a;
+  color: white;
+}
+
+.rq3-hp-btn-simple.decrease:hover {
+  background: #cc0000;
+}
+
+.rq3-hp-btn-simple.increase {
+  background: #2a2a2a;
+  color: white;
+}
+
+.rq3-hp-btn-simple.increase:hover {
+  background: #006600;
+}
+
+.rq3-hp-btn-simple:active {
+  transform: none;
+  box-shadow: none;
+}
+
+.rq3-hp-btn-simple.decrease:active {
+  transform: none;
+  box-shadow: none;
+}
+
+.rq3-hp-btn-simple.increase:active {
+  transform: none;
+  box-shadow: none;
+}
+
+.rq3-hp-btn-simple:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.rq3-hp-input-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.rq3-hp-input {
+  background: var(--rq3-input-bg);
+  border: 1px solid var(--rq3-border);
+  border-radius: 4px;
+  color: var(--rq3-text);
+  font-size: 16px;
+  text-align: center;
+  width: 80px;
+  height: 35px;
+  padding: 5px;
+}
+
+.rq3-hp-action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.rq3-hp-action-btn {
+  background: var(--rq3-button);
+  border: 1px solid var(--rq3-border);
+  border-radius: 6px;
+  color: var(--rq3-button-text);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px 15px;
+  transition: all 0.2s;
+  flex: 1;
+}
+
+.rq3-hp-action-btn:hover {
+  background: var(--rq3-button-hover);
+  border-color: var(--rq3-accent);
+}
+
+.rq3-hp-action-btn.primary {
+  background: var(--rq3-accent);
+  border-color: var(--rq3-accent);
+  color: white;
+}
+
+.rq3-hp-action-btn.primary:hover {
+  background: var(--rq3-accent-hover);
+  border-color: var(--rq3-accent-hover);
+}
+
+/* HP status colors */
+.rq3-hp-current-value.critical {
+  color: var(--rq3-danger);
+}
+
+.rq3-hp-current-value.wounded {
+  color: #ff9800;
+}
+
+.rq3-hp-current-value.injured {
+  color: #ffeb3b;
+}
+
+.rq3-hp-current-value.healthy {
+  color: var(--rq3-success);
+}
+
+/* Make HP display clickable */
+.rq3-resource-text[data-resource="hp"] {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 3px;
+  padding: 2px 4px;
+}
+
+.rq3-resource-text[data-resource="hp"]:hover {
+  background-color: rgba(76, 175, 80, 0.1);
+  transform: scale(1.05);
+  border: 1px solid var(--rq3-accent);
+}
+
+/* Make hit location HP badge clickable */
+.hp-badge[data-hit-location] {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 5px;
+  padding: 0px 5px;
+  background: rgb(174, 5, 5);
+  color: white;
+  font-weight: bold;
+  width: 33px;
+  text-align: center;
+}
+
+.hp-badge[data-hit-location]:hover {
+  background-color: rgb(153, 4, 4);
+}
+
+/* AP badge styling */
+.ap-badge {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 5px;
+  padding: 0px 5px;
+  background: rgba(70, 130, 180);
+  color: white;
+  font-weight: bold;
+  width: 33px;
+  text-align: center;
+}
+
+.ap-badge:hover {
+  background-color: rgb(58, 114, 159);
+}
+
+/* Hit location badges container */
+.hit-location-badges {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: absolute;
+  z-index: 10;
+  /* Position to slightly overlap armor image */
+  bottom: -25px;
+}
+
+.rq3-damage-value{
+  padding: 0 7px;
+  font-size: 24px;
+}
+
+/* -------------------------------------------- */
+/*  Damage Adjustment Tooltip                    */
+/* -------------------------------------------- */
+
+.rq3-damage-tooltip {
+  background: #2a2a2a !important; /* Fallback for --rq3-sheet-bg */
+  border: 2px solid #666666 !important; /* Fallback for --rq3-border-color */
+  border-radius: 8px;
+  padding: 15px 20px;
+  color: #ffffff !important; /* Fallback for --rq3-text-color */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  min-width: 200px;
+  z-index: 100000 !important; /* Higher than Foundry's UI */
+  position: fixed !important;
+  pointer-events: auto !important;
+  opacity: 1 !important; /* Make sure it's visible */
+  transition: opacity 0.2s ease-in-out;
+  display: block !important;
+  text-align: center;
+  transform: translateY(-50%); /* Center vertically */
+}
+
+.rq3-damage-tooltip.show {
+  display: block !important;
+  opacity: 1;
+}
+
+.rq3-damage-tooltip-header {
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--rq3-border-color);
+  text-align: center;
+}
+
+.rq3-damage-tooltip-title {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #ffffff !important; /* Fallback for --rq3-text-color */
+}
+
+.rq3-damage-tooltip-close {
+  background: none;
+  border: none;
+  color: #ffffff !important; /* Fallback for --rq3-text-color */
+  font-size: 1.2em;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.rq3-damage-tooltip-close:hover {
+  background: #4a4a4a !important; /* Fallback for --rq3-hover-bg */
+}
+
+.rq3-damage-tooltip-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rq3-damage-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rq3-damage-current,
+.rq3-damage-effective {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.damage-value {
+  font-weight: bold;
+  color: #5a5a5a !important; /* Fallback for --rq3-accent-color */
+}
+
+.effective-hp {
+  font-weight: bold;
+}
+
+.effective-hp.healthy { color: var(--rq3-success-color); }
+.effective-hp.wounded { color: var(--rq3-warning-color); }
+.effective-hp.injured { color: var(--rq3-danger-color); }
+.effective-hp.critical { color: var(--rq3-critical-color); }
+
+.rq3-damage-controls {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.rq3-damage-btn {
+  background: #4a4a4a !important; /* Fallback for --rq3-button-bg */
+  border: 1px solid #666666 !important; /* Fallback for --rq3-border-color */
+  color: #ffffff !important; /* Fallback for --rq3-text-color */
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85em;
+  transition: background-color 0.2s;
+  min-width: 40px;
+}
+
+.rq3-damage-btn:hover {
+  background: #5a5a5a !important; /* Fallback for --rq3-hover-bg */
+}
+
+.rq3-damage-btn.decrease {
+  background: var(--rq3-danger-color);
+  color: white;
+}
+
+.rq3-damage-btn.decrease:hover {
+  background: var(--rq3-danger-hover);
+}
+
+.rq3-damage-btn.increase {
+  background: var(--rq3-success-color);
+  color: white;
+}
+
+.rq3-damage-btn.increase:hover {
+  background: var(--rq3-success-hover);
+}
+
+/* -------------------------------------------- */
+/*  General Damage Section                      */
+/* -------------------------------------------- */
+
+.general-damage-section {
+  padding: 16px 5px;
+  margin-top: 30px;
+}
+
+.general-damage-section h3 {
+  margin: 0 0 5px 0 !important;
+  color: var(--rq3-text);
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  border-bottom: 2px solid var(--rq3-secondary);
+  padding-bottom: 4px;
+  text-align:center;
+}
+
+.general-damage-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+.general-damage-input-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.damage-btn {
+  background: var(--rq3-primary);
+  color: var(--rq3-light);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 12px;
+  font-size: 14px;
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border:none;
+}
+
+.damage-btn:hover {
+  box-shadow: none;
+
+}
+
+.damage-btn:active {
+}
+
+.damage-btn i {
+  font-size: 16px;
+}
+
+.damage-decrease {
+
+}
+
+.damage-decrease:hover {
+  background: #6f6f6f;
+}
+
+.damage-increase {
+
+}
+
+.damage-increase:hover {
+  background: #6f6f6f;
+}
+
+.damage-reset {
+  color: #333;
+  font-size: 12px;
+  padding: 6px 12px;
+  min-width: 100px;
+}
+
+.damage-reset:hover {
+  background: #6f6f6f;
+}
+
+.general-damage-display {
+  color: var(--rq3-text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  text-align: center;
+  min-width: 60px;
+  padding: 4px 8px;
+}
+
+/* Small square buttons for +/- */
+.damage-btn.small-square {
+  padding: 6px 6px 6px 10px;
+  min-width: 32px;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.damage-btn.small-square i {
+  font-size: 14px;
+}
+
+.general-damage-value {
+  background: rgba(96, 96, 96, 0.8);
+  color: var(--rq3-text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  text-align: center;
+  width: 80px;
+  height: 40px;
+  padding: 4px 8px;
+  min-width: 60px;
+}
+
+.general-damage-value:focus {
+
+}

@@ -1,0 +1,154 @@
+<form class="{{cssClass}} runequest3" autocomplete="off">
+  <header class="sheet-header">
+    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+    <div class="header-fields">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{actor.name}}" placeholder="NPC Name"/>
+      </h1>
+      <div class="npc-details">
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.organization"}}</label>
+          <input type="text" name="system.organization" value="{{system.organization}}"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.importance"}}</label>
+          <select name="system.importance">
+            <option value="minor" {{#if (eq system.importance "minor")}}selected{{/if}}>{{localize "RQ3.NPCTypes.minor"}}</option>
+            <option value="major" {{#if (eq system.importance "major")}}selected{{/if}}>{{localize "RQ3.NPCTypes.major"}}</option>
+            <option value="notable" {{#if (eq system.importance "notable")}}selected{{/if}}>{{localize "RQ3.NPCTypes.notable"}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="resource-bars">
+        <div class="rq3-resource">
+          <label class="rq3-resource-label">{{localize "RQ3.Attributes.hitPoints"}}</label>
+          <div class="rq3-resource-bar">
+            <div class="rq3-resource-fill" style="width: {{mult (div system.characteristics.con.hitPoints.value system.characteristics.con.hitPoints.max) 100}}%"></div>
+            <span class="rq3-resource-text">{{system.characteristics.con.hitPoints.value}}/{{system.characteristics.con.hitPoints.max}}</span>
+          </div>
+        </div>
+        <div class="rq3-resource">
+          <label class="rq3-resource-label">{{localize "RQ3.Attributes.magicPoints"}}</label>
+          <div class="rq3-resource-bar">
+            <div class="rq3-resource-fill" style="width: {{mult (div system.characteristics.pow.magicPoints.value system.characteristics.pow.magicPoints.max) 100}}%"></div>
+            <span class="rq3-resource-text">{{system.characteristics.pow.magicPoints.value}}/{{system.characteristics.pow.magicPoints.max}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="main">{{localize "RQ3.Tabs.main"}}</a>
+    <a class="item" data-tab="combat">{{localize "RQ3.Tabs.combat"}}</a>
+    <a class="item" data-tab="notes">{{localize "RQ3.Tabs.notes"}}</a>
+  </nav>
+
+  <section class="sheet-body">
+    <div class="tab" data-group="primary" data-tab="main">
+      
+      <!-- Characteristics Section -->
+      <div class="rq3-characteristics">
+        {{#each system.characteristics as |char key|}}
+        <div class="rq3-characteristic characteristic-roll" data-characteristic="{{key}}">
+          <div class="rq3-characteristic-label">{{localize (concat "RQ3.Characteristics." key)}}</div>
+          <div class="rq3-characteristic-values">
+            <div class="rq3-characteristic-original">
+              <label>{{localize "RQ3.Labels.original"}}</label>
+              <input type="number" name="system.characteristics.{{key}}.value" value="{{char.value}}" min="1" max="30"/>
+            </div>
+            <div class="rq3-characteristic-current">
+              <label>{{localize "RQ3.Labels.current"}}</label>
+              <input type="number" name="system.characteristics.{{key}}.current" value="{{char.current}}" min="1" max="30"/>
+            </div>
+          </div>
+          <div class="rq3-characteristic-modifier">{{formatCharacteristic char.current char.modifier}}</div>
+        </div>
+        {{/each}}
+      </div>
+
+      <!-- Hit Locations Section -->
+      <div class="hit-locations-section">
+        <h3>{{localize "RQ3.HitLocations"}}</h3>
+        <div class="rq3-hit-locations">
+          {{#each system.hitLocations as |location key|}}
+          <div class="rq3-hit-location">
+            <div class="rq3-hit-location-label">{{localize (concat "RQ3.HitLocations." key)}}</div>
+            <div class="hit-location-stats">
+              <div class="hit-location-hp">
+                {{{formatHitLocationHP location.hitPoints location.maxHitPoints}}}
+              </div>
+              <div class="hit-location-armor">
+                <label>{{localize "RQ3.HitLocations.armor"}}:</label>
+                <input type="number" name="system.hitLocations.{{key}}.armor" value="{{location.armor}}" min="0"/>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+
+      <!-- Skills Section -->
+      <div class="skills-section">
+        <h3>{{localize "RQ3.Tabs.skills"}}</h3>
+        <div class="skills-list">
+          {{#each items as |item id|}}
+            {{#if (eq item.type "skill")}}
+            <div class="rq3-skill-item" data-skill="{{item.name}}">
+              <span class="rq3-skill-name">{{item.name}}</span>
+              <span class="rq3-skill-value">{{item.system.value}}%</span>
+              <button class="skill-roll-button" data-skill="{{item.name}}" title="Roll {{item.name}}">
+                <i class="fas fa-dice-d20"></i>
+              </button>
+            </div>
+            {{/if}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+
+    <!-- Combat Tab -->
+    <div class="tab" data-group="primary" data-tab="combat">
+      <div class="combat-section">
+        <h3>{{localize "RQ3.Tabs.combat"}}</h3>
+        <div class="weapons-list">
+          {{#each items as |item id|}}
+            {{#if (eq item.type "weapon")}}
+            <div class="rq3-item">
+              <img class="rq3-item-image" src="{{item.img}}" title="{{item.name}}"/>
+              <span class="rq3-item-name">{{item.name}}</span>
+              <span class="weapon-damage">{{item.system.damage}}</span>
+            </div>
+            {{/if}}
+          {{/each}}
+        </div>
+        <div class="spells-list">
+          {{#each items as |item id|}}
+            {{#if (eq item.type "spell")}}
+            <div class="rq3-item">
+              <img class="rq3-item-image" src="{{item.img}}" title="{{item.name}}"/>
+              <span class="rq3-item-name">{{item.name}}</span>
+              <span class="spell-cost">{{item.system.cost}} MP</span>
+            </div>
+            {{/if}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes Tab -->
+    <div class="tab" data-group="primary" data-tab="notes">
+      <div class="notes-section">
+        <h3>{{localize "RQ3.Tabs.notes"}}</h3>
+        <div class="biography-section">
+          <label>{{localize "RQ3.Labels.biography"}}</label>
+          <textarea name="system.background.biography" rows="10">{{system.background.biography}}</textarea>
+        </div>
+        <div class="notes-section">
+          <label>{{localize "RQ3.Labels.notes"}}</label>
+          <textarea name="system.background.notes" rows="6">{{system.background.notes}}</textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+</form> 
