@@ -96,7 +96,7 @@
   },
   "primaryTokenAttribute": "characteristics.con.hitPoints",
   "secondaryTokenAttribute": "characteristics.pow.magicPoints",
-  "url": "",
-  "manifest": "",
-  "download": ""
+  "url": "https://github.com/Kittenjuggler/runequest3-foundry",
+  "manifest": "https://github.com/Kittenjuggler/runequest3-foundry/releases/latest/download/system.json",
+  "download": "https://github.com/Kittenjuggler/runequest3-foundry/releases/latest/download/runequest3-foundry.zip"
 } 

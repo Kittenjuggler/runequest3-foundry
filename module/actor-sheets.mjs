@@ -654,18 +654,6 @@ export class RQ3ActorSheet extends ActorSheet {
     
     // Add clear hands button listener
     html.find('.clear-hands-btn').click(this._clearEquippedHands.bind(this));
-    
-    // Listen to Foundry's tab changes to update header visibility
-    this._tabs[0].callback = this._onFoundryTabChange.bind(this);
-    
-    // Set initial header state based on current tab
-    const currentTab = this._tabs[0].active;
-    if (currentTab && currentTab !== 'main') {
-      this.element.addClass('non-main-tab');
-    } else {
-      this.element.removeClass('non-main-tab');
-    }
-    
 
   }
 
@@ -783,21 +771,7 @@ export class RQ3ActorSheet extends ActorSheet {
     });
   }
 
-  /**
-   * Handle Foundry tab changes to update header visibility
-   * @param {Event} event - The tab change event
-   * @param {TabsV2} tabs - The tabs instance  
-   * @param {string} active - The active tab name
-   * @private
-   */
-  _onFoundryTabChange(event, tabs, active) {
-    // Add/remove class based on whether we're on the main tab
-    if (active === 'main') {
-      this.element.removeClass('non-main-tab');
-    } else {
-      this.element.addClass('non-main-tab');
-    }
-  }
+
 
   /**
    * Clear equipped weapons from both hands for testing
@@ -2490,6 +2464,8 @@ export class RQ3ActorSheet extends ActorSheet {
       console.error('RQ3 | Error in _onHitLocationHPClick:', error);
     }
   }
+
+
 }
 
 /**

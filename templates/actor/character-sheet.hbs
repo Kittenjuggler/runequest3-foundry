@@ -2,179 +2,267 @@
   
   <!-- Full Header - shown on main tab -->
   <header class="sheet-header full-header">
-    <!-- Actor Details Section -->
-    <div class="actor-details">
-      <div class="image-and-resources">
-        <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="200" width="200"/>
-        <div class="resource-bars-vertical">
-          <div class="rq3-resource">
-            <div class="rq3-resource-bar">
-              <div class="rq3-resource-fill {{#if (and (effectiveTotalHP @root) system.characteristics.con.hitPoints.max (lt (effectiveTotalHP @root) (div system.characteristics.con.hitPoints.max 2)))}}danger{{else}}{{#if (and (effectiveTotalHP @root) system.characteristics.con.hitPoints.max (lt (effectiveTotalHP @root) (mult system.characteristics.con.hitPoints.max 0.75)))}}warning{{/if}}{{/if}}"
-                   style="width: {{#if (and (effectiveTotalHP @root) system.characteristics.con.hitPoints.max)}}{{mult (div (effectiveTotalHP @root) system.characteristics.con.hitPoints.max) 100}}{{else}}0{{/if}}%"></div>
-              <span class="rq3-resource-label">{{localize "RQ3.Attributes.hitPoints"}}</span>
-              <span class="rq3-resource-text">{{effectiveTotalHP @root}}/{{default system.characteristics.con.hitPoints.max 0}}</span>
-            </div>
-          </div>
-          <div class="rq3-resource">
-            <div class="rq3-resource-bar">
-              <div class="rq3-resource-fill" style="width: {{#if (and system.characteristics.pow.magicPoints.value system.characteristics.pow.magicPoints.max)}}{{mult (div system.characteristics.pow.magicPoints.value system.characteristics.pow.magicPoints.max) 100}}{{else}}0{{/if}}%"></div>
-              <span class="rq3-resource-label">{{localize "RQ3.Attributes.magicPoints"}}</span>
-              <span class="rq3-resource-text">{{default system.characteristics.pow.magicPoints.value 0}}/{{default system.characteristics.pow.magicPoints.max 0}}</span>
-            </div>
-          </div>
-          <div class="rq3-resource">
-            <div class="rq3-resource-bar">
-              <div class="rq3-resource-fill {{#if (and system.attributes.fatigue.value system.attributes.fatigue.max (gt system.attributes.fatigue.value (mult system.attributes.fatigue.max 0.75)))}}danger{{else}}{{#if (and system.attributes.fatigue.value system.attributes.fatigue.max (gt system.attributes.fatigue.value (mult system.attributes.fatigue.max 0.5)))}}warning{{/if}}{{/if}}" 
-                   style="width: {{#if (and system.attributes.fatigue.value system.attributes.fatigue.max)}}{{mult (div system.attributes.fatigue.value system.attributes.fatigue.max) 100}}{{else}}0{{/if}}%"></div>
-              <span class="rq3-resource-label">{{localize "RQ3.Attributes.fatigue"}}</span>
-              <span class="rq3-resource-text">{{default system.attributes.fatigue.value 0}}/{{default system.attributes.fatigue.max 0}}</span>
-            </div>
-          </div>
-          <div class="rq3-resource">
-            <div class="rq3-resource-bar">
-              <div class="rq3-resource-fill {{#if (and system.attributes.encumbrance.total system.attributes.encumbrance.max (gt system.attributes.encumbrance.total (mult system.attributes.encumbrance.max 0.75)))}}danger{{else}}{{#if (and system.attributes.encumbrance.total system.attributes.encumbrance.max (gt system.attributes.encumbrance.total (mult system.attributes.encumbrance.max 0.5)))}}warning{{/if}}{{/if}}" 
-                   style="width: {{#if (and system.attributes.encumbrance.total system.attributes.encumbrance.max)}}{{mult (div system.attributes.encumbrance.total system.attributes.encumbrance.max) 100}}{{else}}0{{/if}}%"></div>
-              <span class="rq3-resource-label">{{localize "RQ3.Attributes.encumbrance"}}</span>
-              <span class="rq3-resource-text">{{formatEnc (default system.attributes.encumbrance.total 0)}}/{{default system.attributes.encumbrance.max 0}}</span>
-            </div>
-            <div class="encumbrance-breakdown">
-              <span class="encumbrance-detail">Armor & Weapons: {{formatEnc (default system.attributes.encumbrance.armorAndWeapons 0)}} ENC</span>
-              <span class="encumbrance-penalties">
-                {{#if (and system.attributes.encumbrance.total (gt system.attributes.encumbrance.total 0))}}Dodge: -{{formatEnc system.attributes.encumbrance.total}}%{{/if}}
-                {{#if (and system.attributes.encumbrance.armorAndWeapons (gt system.attributes.encumbrance.armorAndWeapons 0))}}{{#if (and system.attributes.encumbrance.total (gt system.attributes.encumbrance.total 0))}}, {{/if}}Sneak: -{{formatEnc system.attributes.encumbrance.armorAndWeapons}}%{{/if}}
-              </span>
-            </div>
-          </div>
+    <!-- Main Header Content -->
+    <div class="header-main-content">
+      <div class="actor-details">
+        <div class="image-section">
+          <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="200" width="200"/>
         </div>
-      </div>
-      <div class="actor-info">
-        <div class="charname">
-          <span class="charname-display">{{actor.name}}</span>
-          <input name="name" type="text" value="{{actor.name}}" placeholder="Character Name" class="charname-edit"/>
-        </div>
-        
-        <div class="characteristics-and-derived">
-          <!-- Characteristics Table -->
-          <div class="characteristics-table">
-            <div class="characteristics-header-row">
-              <div class="char-name-header"></div>
-              <div class="char-value-header">Orig</div>
-              <div class="char-value-header">Curr</div>
-              <div class="char-value-header">Train</div>
-              <div class="char-buttons-header">Rolls</div>
+        <div class="actor-info">
+          <div class="charname-and-edit">
+            <div class="charname">
+              <span class="charname-display">{{actor.name}}</span>
+              <input name="name" type="text" value="{{actor.name}}" placeholder="Character Name" class="charname-edit"/>
             </div>
-            {{#each system.characteristics as |char key|}}
-            <div class="characteristic-row">
-              <div class="characteristic-name">{{upper (substr key 0 3)}}</div>
-              <div class="characteristic-value">
-                <input type="number" name="system.characteristics.{{key}}.value" value="{{char.value}}" min="1" max="30"/>
-              </div>
-              <div class="characteristic-value">
-                <input type="number" name="system.characteristics.{{key}}.current" value="{{char.current}}" min="1" max="30"/>
-              </div>
-              <div class="characteristic-training">
-                {{#if (eq key "pow")}}
-                <i class="fas fa-check characteristic-training-tick {{#if actor.system.characteristics.pow.readyForTraining}}ready-for-training{{/if}}" data-characteristic-key="pow" title="Toggle Training Readiness"></i>
-                {{else}}
-                <span>-</span>
-                {{/if}}
-              </div>
-              <div class="characteristic-buttons">
-                <button class="characteristic-roll-x5" data-characteristic="{{key}}" title="Roll x5">
-                  <i class="fas fa-dice-d20"></i>
-                </button>
-                <button class="characteristic-roll-custom" data-characteristic="{{key}}" title="Roll custom multiplier">
-                  x?
-                </button>
-              </div>
-            </div>
-            {{/each}}
-          </div>
-          
-          <!-- Derived Stats Column -->
-          <div class="derived-stats-table">
-            <div class="derived-stats-header">
-              <h4>Derived Stats</h4>
-            </div>
-            <div class="derived-stat-row">
-              <div class="derived-stat-label">Damage Modifier</div>
-              <div class="derived-stat-value">{{system.derivedStats.damageModifier}}</div>
-            </div>
-            <div class="derived-stat-row">
-              <div class="derived-stat-label">Move Rate</div>
-              <div class="derived-stat-value">{{system.derivedStats.moveRate}}m</div>
-            </div>
-            <div class="derived-stat-row">
-              <div class="derived-stat-label">Dex SRM</div>
-              <div class="derived-stat-value">{{system.derivedStats.dexSRM}}</div>
-            </div>
-            <div class="derived-stat-row">
-              <div class="derived-stat-label">Size SRM</div>
-              <div class="derived-stat-value">{{system.derivedStats.sizeSRM}}</div>
-            </div>
-            <div class="derived-stat-row">
-              <div class="derived-stat-label">Melee SRM</div>
-              <div class="derived-stat-value">{{system.derivedStats.meleeSRM}}</div>
-            </div>
-            
             <!-- Global Edit Toggle -->
             <div class="global-edit-toggle">
               <label class="toggle-switch">
                 <input type="checkbox" class="global-edit-mode-toggle" />
                 <span class="toggle-slider"></span>
-                <span class="toggle-label">Edit Mode</span>
+                <span class="toggle-label">Edit</span>
               </label>
             </div>
+          </div>
+        
+        <div class="characteristics-and-derived">
+          <!-- Characteristics Table -->
+          <div class="characteristics-table">
+            <div class="characteristics-columns">
+              <!-- Left Column -->
+              <div class="characteristics-column">
+                <div class="characteristics-header-row">
+                  <div class="char-name-header"></div>
+                  <div class="char-value-header">Orig</div>
+                  <div class="char-value-header">Curr</div>
+                  <div class="char-value-header">Train</div>
+                  <div class="char-buttons-header">Rolls</div>
+                </div>
+                <div class="characteristic-row">
+                  <div class="characteristic-name">STR</div>
+                  <div class="characteristic-value">
+                    <input type="number" name="system.characteristics.str.value" value="{{system.characteristics.str.value}}" min="1" max="30"/>
+                  </div>
+                  <div class="characteristic-value">
+                    <input type="number" name="system.characteristics.str.current" value="{{system.characteristics.str.current}}" min="1" max="30"/>
+                  </div>
+                  <div class="characteristic-training">
+                    <span>-</span>
+                  </div>
+                  <div class="characteristic-buttons">
+                    <button class="characteristic-roll-x5" data-characteristic="str" title="Roll x5">
+                      <i class="fas fa-dice-d20"></i>
+                    </button>
+                    <button class="characteristic-roll-custom" data-characteristic="str" title="Roll custom multiplier">
+                      x?
+                    </button>
+                  </div>
+                </div>
+                <div class="characteristic-row">
+                  <div class="characteristic-name">CON</div>
+                  <div class="characteristic-value">
+                    <input type="number" name="system.characteristics.con.value" value="{{system.characteristics.con.value}}" min="1" max="30"/>
+                  </div>
+                  <div class="characteristic-value">
+                    <input type="number" name="system.characteristics.con.current" value="{{system.characteristics.con.current}}" min="1" max="30"/>
+                  </div>
+                  <div class="characteristic-training">
+                    <span>-</span>
+                  </div>
+                  <div class="characteristic-buttons">
+                    <button class="characteristic-roll-x5" data-characteristic="con" title="Roll x5">
+                      <i class="fas fa-dice-d20"></i>
+                    </button>
+                    <button class="characteristic-roll-custom" data-characteristic="con" title="Roll custom multiplier">
+                      x?
+                    </button>
+                  </div>
+                </div>
+                <div class="characteristic-row">
+                  <div class="characteristic-name">SIZ</div>
+                  <div class="characteristic-value">
+                    <input type="number" name="system.characteristics.siz.value" value="{{system.characteristics.siz.value}}" min="1" max="30"/>
+                  </div>
+                  <div class="characteristic-value">
+                    <input type="number" name="system.characteristics.siz.current" value="{{system.characteristics.siz.current}}" min="1" max="30"/>
+                  </div>
+                  <div class="characteristic-training">
+                    <span>-</span>
+                  </div>
+                  <div class="characteristic-buttons">
+                    <button class="characteristic-roll-x5" data-characteristic="siz" title="Roll x5">
+                      <i class="fas fa-dice-d20"></i>
+                    </button>
+                    <button class="characteristic-roll-custom" data-characteristic="siz" title="Roll custom multiplier">
+                      x?
+                    </button>
+                  </div>
+                </div>
+                <div class="characteristic-row">
+                  <div class="characteristic-name">INT</div>
+                  <div class="characteristic-value">
+                    <input type="number" name="system.characteristics.int.value" value="{{system.characteristics.int.value}}" min="1" max="30"/>
+                  </div>
+                  <div class="characteristic-value">
+                    <input type="number" name="system.characteristics.int.current" value="{{system.characteristics.int.current}}" min="1" max="30"/>
+                  </div>
+                  <div class="characteristic-training">
+                    <span>-</span>
+                  </div>
+                  <div class="characteristic-buttons">
+                    <button class="characteristic-roll-x5" data-characteristic="int" title="Roll x5">
+                      <i class="fas fa-dice-d20"></i>
+                    </button>
+                    <button class="characteristic-roll-custom" data-characteristic="int" title="Roll custom multiplier">
+                      x?
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Right Column -->
+              <div class="characteristics-column">
+                <div class="characteristics-header-row">
+                  <div class="char-name-header"></div>
+                  <div class="char-value-header">Orig</div>
+                  <div class="char-value-header">Curr</div>
+                  <div class="char-value-header">Train</div>
+                  <div class="char-buttons-header">Rolls</div>
+                </div>
+                <div class="characteristic-row">
+                  <div class="characteristic-name">POW</div>
+                  <div class="characteristic-value">
+                    <input type="number" name="system.characteristics.pow.value" value="{{system.characteristics.pow.value}}" min="1" max="30"/>
+                  </div>
+                  <div class="characteristic-value">
+                    <input type="number" name="system.characteristics.pow.current" value="{{system.characteristics.pow.current}}" min="1" max="30"/>
+                  </div>
+                  <div class="characteristic-training">
+                    <i class="fas fa-check characteristic-training-tick {{#if actor.system.characteristics.pow.readyForTraining}}ready-for-training{{/if}}" data-characteristic-key="pow" title="Toggle Training Readiness"></i>
+                  </div>
+                  <div class="characteristic-buttons">
+                    <button class="characteristic-roll-x5" data-characteristic="pow" title="Roll x5">
+                      <i class="fas fa-dice-d20"></i>
+                    </button>
+                    <button class="characteristic-roll-custom" data-characteristic="pow" title="Roll custom multiplier">
+                      x?
+                    </button>
+                  </div>
+                </div>
+                <div class="characteristic-row">
+                  <div class="characteristic-name">DEX</div>
+                  <div class="characteristic-value">
+                    <input type="number" name="system.characteristics.dex.value" value="{{system.characteristics.dex.value}}" min="1" max="30"/>
+                  </div>
+                  <div class="characteristic-value">
+                    <input type="number" name="system.characteristics.dex.current" value="{{system.characteristics.dex.current}}" min="1" max="30"/>
+                  </div>
+                  <div class="characteristic-training">
+                    <span>-</span>
+                  </div>
+                  <div class="characteristic-buttons">
+                    <button class="characteristic-roll-x5" data-characteristic="dex" title="Roll x5">
+                      <i class="fas fa-dice-d20"></i>
+                    </button>
+                    <button class="characteristic-roll-custom" data-characteristic="dex" title="Roll custom multiplier">
+                      x?
+                    </button>
+                  </div>
+                </div>
+                <div class="characteristic-row">
+                  <div class="characteristic-name">APP</div>
+                  <div class="characteristic-value">
+                    <input type="number" name="system.characteristics.app.value" value="{{system.characteristics.app.value}}" min="1" max="30"/>
+                  </div>
+                  <div class="characteristic-value">
+                    <input type="number" name="system.characteristics.app.current" value="{{system.characteristics.app.current}}" min="1" max="30"/>
+                  </div>
+                  <div class="characteristic-training">
+                    <span>-</span>
+                  </div>
+                  <div class="characteristic-buttons">
+                    <button class="characteristic-roll-x5" data-characteristic="app" title="Roll x5">
+                      <i class="fas fa-dice-d20"></i>
+                    </button>
+                    <button class="characteristic-roll-custom" data-characteristic="app" title="Roll custom multiplier">
+                      x?
+                    </button>
+                  </div>
+                </div>
+                <div class="characteristic-row">
+                  <div class="characteristic-name">LUCK</div>
+                  <div class="characteristic-value">
+                    <input type="number" name="system.characteristics.luck.value" value="{{system.characteristics.luck.value}}" min="1" max="30"/>
+                  </div>
+                  <div class="characteristic-value">
+                    <input type="number" name="system.characteristics.luck.current" value="{{system.characteristics.luck.current}}" min="1" max="30"/>
+                  </div>
+                  <div class="characteristic-training">
+                    <span>-</span>
+                  </div>
+                  <div class="characteristic-buttons">
+                    <button class="characteristic-roll-x5" data-characteristic="luck" title="Roll x5">
+                      <i class="fas fa-dice-d20"></i>
+                    </button>
+                    <button class="characteristic-roll-custom" data-characteristic="luck" title="Roll custom multiplier">
+                      x?
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Status Bars Section -->
+    <div class="status-bars-section">
+      <div class="status-bar-column">
+        <div class="rq3-resource">
+          <div class="rq3-resource-bar">
+            <div class="rq3-resource-fill {{#if (and (effectiveTotalHP @root) system.characteristics.con.hitPoints.max (lt (effectiveTotalHP @root) (div system.characteristics.con.hitPoints.max 2)))}}danger{{else}}{{#if (and (effectiveTotalHP @root) system.characteristics.con.hitPoints.max (lt (effectiveTotalHP @root) (mult system.characteristics.con.hitPoints.max 0.75)))}}warning{{/if}}{{/if}}"
+                 style="width: {{#if (and (effectiveTotalHP @root) system.characteristics.con.hitPoints.max)}}{{mult (div (effectiveTotalHP @root) system.characteristics.con.hitPoints.max) 100}}{{else}}0{{/if}}%"></div>
+            <span class="rq3-resource-label">{{localize "RQ3.Attributes.hitPoints"}}</span>
+            <span class="rq3-resource-text">{{effectiveTotalHP @root}}/{{default system.characteristics.con.hitPoints.max 0}}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="status-bar-column">
+        <div class="rq3-resource">
+          <div class="rq3-resource-bar">
+            <div class="rq3-resource-fill" style="width: {{#if (and system.characteristics.pow.magicPoints.value system.characteristics.pow.magicPoints.max)}}{{mult (div system.characteristics.pow.magicPoints.value system.characteristics.pow.magicPoints.max) 100}}{{else}}0{{/if}}%"></div>
+            <span class="rq3-resource-label">{{localize "RQ3.Attributes.magicPoints"}}</span>
+            <span class="rq3-resource-text">{{default system.characteristics.pow.magicPoints.value 0}}/{{default system.characteristics.pow.magicPoints.max 0}}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="status-bar-column">
+        <div class="rq3-resource">
+          <div class="rq3-resource-bar">
+            <div class="rq3-resource-fill {{#if (and system.attributes.fatigue.value system.attributes.fatigue.max (gt system.attributes.fatigue.value (mult system.attributes.fatigue.max 0.75)))}}danger{{else}}{{#if (and system.attributes.fatigue.value system.attributes.fatigue.max (gt system.attributes.fatigue.value (mult system.attributes.fatigue.max 0.5)))}}warning{{/if}}{{/if}}" 
+                 style="width: {{#if (and system.attributes.fatigue.value system.attributes.fatigue.max)}}{{mult (div system.attributes.fatigue.value system.attributes.fatigue.max) 100}}{{else}}0{{/if}}%"></div>
+            <span class="rq3-resource-label">{{localize "RQ3.Attributes.fatigue"}}</span>
+            <span class="rq3-resource-text">{{default system.attributes.fatigue.value 0}}/{{default system.attributes.fatigue.max 0}}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="status-bar-column">
+        <div class="rq3-resource encumbrance-resource">
+          <div class="rq3-resource-bar" 
+               title="Armor & Weapons: {{formatEnc (default system.attributes.encumbrance.armorAndWeapons 0)}} ENC&#10;{{#if (and system.attributes.encumbrance.total (gt system.attributes.encumbrance.total 0))}}Dodge: -{{formatEnc system.attributes.encumbrance.total}}%{{/if}}{{#if (and system.attributes.encumbrance.armorAndWeapons (gt system.attributes.encumbrance.armorAndWeapons 0))}}{{#if (and system.attributes.encumbrance.total (gt system.attributes.encumbrance.total 0))}}, {{/if}}Sneak: -{{formatEnc system.attributes.encumbrance.armorAndWeapons}}%{{/if}}">
+            <div class="rq3-resource-fill {{#if (and system.attributes.encumbrance.total system.attributes.encumbrance.max (gt system.attributes.encumbrance.total (mult system.attributes.encumbrance.max 0.75)))}}danger{{else}}{{#if (and system.attributes.encumbrance.total system.attributes.encumbrance.max (gt system.attributes.encumbrance.total (mult system.attributes.encumbrance.max 0.5)))}}warning{{/if}}{{/if}}" 
+                 style="width: {{#if (and system.attributes.encumbrance.total system.attributes.encumbrance.max)}}{{mult (div system.attributes.encumbrance.total system.attributes.encumbrance.max) 100}}{{else}}0{{/if}}%"></div>
+            <span class="rq3-resource-label">{{localize "RQ3.Attributes.encumbrance"}}</span>
+            <span class="rq3-resource-text">{{formatEnc (default system.attributes.encumbrance.total 0)}}/{{default system.attributes.encumbrance.max 0}}</span>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-
-
-
-        <!-- Hit Points -->
-        <div class="resource-bars-vertical">
-          <div class="rq3-resource">
-            <div class="rq3-resource-bar">
-              <div class="rq3-resource-fill {{#if (lt (effectiveTotalHP @root) (div system.characteristics.con.hitPoints.max 2))}}danger{{else}}{{#if (lt (effectiveTotalHP @root) (mult system.characteristics.con.hitPoints.max 0.75))}}warning{{/if}}{{/if}}"
-                   style="width: {{mult (div (effectiveTotalHP @root) system.characteristics.con.hitPoints.max) 100}}%"></div>
-              <span class="rq3-resource-label">{{localize "RQ3.Attributes.hitPoints"}}</span>
-              <span class="rq3-resource-text">{{effectiveTotalHP @root}}/{{system.characteristics.con.hitPoints.max}}</span>
-            </div>
-          </div>
-          <div class="rq3-resource">
-            <div class="rq3-resource-bar">
-              <div class="rq3-resource-fill" style="width: {{mult (div system.characteristics.pow.magicPoints.value system.characteristics.pow.magicPoints.max) 100}}%"></div>
-              <span class="rq3-resource-label">{{localize "RQ3.Attributes.magicPoints"}}</span>
-              <span class="rq3-resource-text">{{system.characteristics.pow.magicPoints.value}}/{{system.characteristics.pow.magicPoints.max}}</span>
-            </div>
-          </div>
-          <div class="rq3-resource">
-            <div class="rq3-resource-bar">
-              <div class="rq3-resource-fill {{#if (gt system.attributes.fatigue.value (mult system.attributes.fatigue.max 0.75))}}danger{{else}}{{#if (gt system.attributes.fatigue.value (mult system.attributes.fatigue.max 0.5))}}warning{{/if}}{{/if}}" 
-                   style="width: {{mult (div system.attributes.fatigue.value system.attributes.fatigue.max) 100}}%"></div>
-              <span class="rq3-resource-label">{{localize "RQ3.Attributes.fatigue"}}</span>
-              <span class="rq3-resource-text">{{system.attributes.fatigue.value}}/{{system.attributes.fatigue.max}}</span>
-            </div>
-          </div>
-          <div class="rq3-resource">
-            <div class="rq3-resource-bar">
-              <div class="rq3-resource-fill {{#if (gt system.attributes.encumbrance.total (mult system.attributes.encumbrance.max 0.75))}}danger{{else}}{{#if (gt system.attributes.encumbrance.total (mult system.attributes.encumbrance.max 0.5))}}warning{{/if}}{{/if}}" 
-                   style="width: {{mult (div system.attributes.encumbrance.total system.attributes.encumbrance.max) 100}}%"></div>
-              <span class="rq3-resource-label">{{localize "RQ3.Attributes.encumbrance"}}</span>
-              <span class="rq3-resource-text">{{formatEnc system.attributes.encumbrance.total}}/{{system.attributes.encumbrance.max}}</span>
-            </div>
-            <div class="encumbrance-breakdown">
-              <span class="encumbrance-detail">Armor & Weapons: {{formatEnc system.attributes.encumbrance.armorAndWeapons}} ENC</span>
-              <span class="encumbrance-penalties">
-                {{#if (gt system.attributes.encumbrance.total 0)}}Dodge: -{{formatEnc system.attributes.encumbrance.total}}%{{/if}}
-                {{#if (gt system.attributes.encumbrance.armorAndWeapons 0)}}{{#if (gt system.attributes.encumbrance.total 0)}}, {{/if}}Sneak: -{{formatEnc system.attributes.encumbrance.armorAndWeapons}}%{{/if}}
-              </span>
-            </div>
-          </div>
-        </div>
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="main">{{localize "RQ3.Tabs.main"}}</a>
     <a class="item" data-tab="skills">{{localize "RQ3.Tabs.skills"}}</a>
@@ -210,7 +298,7 @@
               {{else}}
                 <div class="species-empty">
                   <i class="fas fa-user-plus species-drop-icon"></i>
-                  <span class="species-placeholder">Click to open compendium or drag species here</span>
+                  <span class="species-placeholder">Click and Drag</span>
                 </div>
               {{/if}}
             </div>
@@ -231,19 +319,41 @@
             <label>{{localize "RQ3.Labels.occupation"}}</label>
             <input type="text" name="system.background.occupation" value="{{system.background.occupation}}"/>
           </div>
-          <div class="detail-group">
-            <label>{{localize "RQ3.Labels.cult"}}</label>
-            <input type="text" name="system.background.cult" value="{{system.background.cult}}"/>
+        </div>
+      </div>
+
+      <!-- Derived Stats Section -->
+      <div class="derived-stats-section">
+        <h3>Derived Statistics</h3>
+        <div class="derived-stats-grid">
+          <div class="derived-stat-item">
+            <span class="derived-stat-label">Damage Modifier:</span>
+            <span class="derived-stat-value">{{system.derivedStats.damageModifier}}</span>
+          </div>
+          <div class="derived-stat-item">
+            <span class="derived-stat-label">Move Rate:</span>
+            <span class="derived-stat-value">{{system.derivedStats.moveRate}}m</span>
+          </div>
+          <div class="derived-stat-item">
+            <span class="derived-stat-label">Dex SRM:</span>
+            <span class="derived-stat-value">{{system.derivedStats.dexSRM}}</span>
+          </div>
+          <div class="derived-stat-item">
+            <span class="derived-stat-label">Size SRM:</span>
+            <span class="derived-stat-value">{{system.derivedStats.sizeSRM}}</span>
+          </div>
+          <div class="derived-stat-item">
+            <span class="derived-stat-label">Melee SRM:</span>
+            <span class="derived-stat-value">{{system.derivedStats.meleeSRM}}</span>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Skills Tab -->
-    <div class="tab" data-group="primary" data-tab="skills">
-      <div class="skills-section">
-        <h3>{{localize "RQ3.Tabs.skills"}}</h3>
-        <div class="rq3-skills">
+      <div class="tab" data-group="primary" data-tab="skills">
+    <div class="skills-section">
+      <div class="rq3-skills">
           
           <!-- All Skills by Category in 3 Explicit Columns -->
           <div class="skills-container-explicit">

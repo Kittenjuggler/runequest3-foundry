@@ -1,0 +1,39 @@
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+    authors:
+      - github-actions[bot]
+  categories:
+    - title: 🚀 Features
+      labels:
+        - enhancement
+        - feature
+    - title: 🐛 Bug Fixes
+      labels:
+        - bug
+        - fix
+    - title: 📚 Documentation
+      labels:
+        - documentation
+    - title: 🔧 Maintenance
+      labels:
+        - maintenance
+        - chore
+  template: |
+    ## What's Changed
+    ${{ CHANGELOG }}
+    
+    ## Installation
+    
+    ### Option 1: Manifest URL (Recommended)
+    Copy this URL and paste it into Foundry VTT's "Install System" dialog:
+    ```
+    https://github.com/Kittenjuggler/runequest3-foundry/releases/latest/download/system.json
+    ```
+    
+    ### Option 2: Manual Download
+    Download the zip file and extract it to your Foundry VTT systems folder.
+    
+    ## Compatibility
+    - Foundry VTT v12+

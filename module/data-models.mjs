@@ -54,6 +54,11 @@ class ActorDataModel extends foundry.abstract.TypeDataModel {
           value: new NumberField({ required: true, integer: true, min: 1, max: 25, initial: 10 }),
           current: new NumberField({ required: true, integer: true, min: 1, max: 25, initial: 10 }),
           modifier: new NumberField({ required: true, integer: true, initial: 0 })
+        }),
+        luck: new SchemaField({
+          value: new NumberField({ required: true, integer: true, min: 1, max: 25, initial: 10 }),
+          current: new NumberField({ required: true, integer: true, min: 1, max: 25, initial: 10 }),
+          modifier: new NumberField({ required: true, integer: true, initial: 0 })
         })
       }),
 
@@ -493,7 +498,8 @@ export class SpeciesDataModel extends ItemDataModel {
         int: new NumberField({ required: true, integer: true, initial: 0 }),
         pow: new NumberField({ required: true, integer: true, initial: 0 }),
         dex: new NumberField({ required: true, integer: true, initial: 0 }),
-        app: new NumberField({ required: true, integer: true, initial: 0 })
+        app: new NumberField({ required: true, integer: true, initial: 0 }),
+        luck: new NumberField({ required: true, integer: true, initial: 0 })
       }),
       
       movement: new SchemaField({

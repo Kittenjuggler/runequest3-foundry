@@ -82,12 +82,16 @@
 .runequest3 .sheet-header {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   padding: 16px;
   background: linear-gradient(135deg, var(--rq3-primary) 0%, var(--rq3-accent) 100%);
-  
-  
-  gap: 16px;
+  gap: 12px;
+}
+
+/* Main Header Content */
+.runequest3 .header-main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 /* Actor Details Section */
@@ -95,15 +99,15 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  gap: 10px;
+  gap: 16px;
   width: 100%;
 }
 
-.runequest3 .image-and-resources {
+.runequest3 .image-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  flex-shrink: 0;
 }
 
 .runequest3 .profile-img {
@@ -112,8 +116,8 @@
   cursor: pointer;
   transition: all 0.2s ease;
   flex-shrink: 0;
-  width: 200px;
-  height: 200px;
+  width: 210px;
+  height: 210px;
   object-fit: cover;
 }
 
@@ -144,14 +148,21 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 16px;
-  padding-left: 10px
+  gap: 8px;
+  padding-left: 10px;
+}
+
+.runequest3 .charname-and-edit {
+  display: flex;
+  align-items: center;
+  gap: 38px;
+  width: 100%;
 }
 
 .runequest3 .charname {
-  margin-bottom: 17px;
-  width: 100%;
-  height: 50px;
+  width: 70%;
+  height: 40px;
+  flex-shrink: 0;
 }
 
 .runequest3 .charname input {
@@ -213,91 +224,7 @@
   
 }
 
-/* Compact Characteristics Header - now full width */
-.runequest3 .characteristics-header-compact {
-  display: flex;
-  flex-direction: column;
-  padding: 12px 8px;
-  margin: 0;
-  width: 100%;
-}
 
-.runequest3 .characteristics-compact-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
-  gap: 10px;
-  justify-items: center;
-  
-}
-
-.runequest3 .characteristic-compact {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  padding: 5px 10px;
-  border-radius: 7px;
-  width: 100%;
-  max-width: 108px;
-}
-
-.runequest3 .characteristic-abbrev {
-  font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  color: var(--rq3-text);
-  font-size: 17px;
-  margin-bottom: 5px;
-  text-align: center;
-  min-width: 36px;
-}
-
-.runequest3 .characteristic-values-compact {
-  display: flex;
-  gap: 7px;
-}
-
-.runequest3 .value-pair {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-
-.runequest3 .value-pair label {
-  font-family: 'Source Sans Pro', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--rq3-text);
-  text-align: center;
-  line-height: 1;
-}
-
-.runequest3 .value-pair input {
-  width: 38px;
-  height: 29px;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 600;
-  border: 1px solid var(--rq3-border);
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--rq3-dark);
-  padding: 2px;
-}
-
-.runequest3 .value-pair input:focus {
-  outline: none;
-  border-color: var(--rq3-accent);
-  box-shadow: 0 0 4px rgba(218, 165, 32, 0.3);
-}
-
-.runequest3 .compact-reset {
-  padding: 4px 8px;
-  white-space: nowrap;
-  align-self: flex-end;
-  margin-top: 8px;
-}
 
 .runequest3 .rq3-characteristics {
   display: grid;
@@ -1127,6 +1054,7 @@
 .runequest3 .hit-locations-section,
 .runequest3 .attributes-section,
 .runequest3 .personal-details-section,
+.runequest3 .derived-stats-section,
 .runequest3 .skills-section,
 .runequest3 .combat-section,
 .runequest3 .equipment-section,
@@ -1144,6 +1072,7 @@
 .runequest3 .hit-locations-section h3,
 .runequest3 .attributes-section h3,
 .runequest3 .personal-details-section h3,
+.runequest3 .derived-stats-section h3,
 .runequest3 .skills-section h3,
 .runequest3 .combat-section h3,
 .runequest3 .equipment-section h3,
@@ -1163,14 +1092,54 @@
 .runequest3 .npc-details,
 .runequest3 .creature-details {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: 1fr 1.5fr 2fr 1fr 1fr 2fr 2fr;
   gap: 12px;
+}
+
+/* -------------------------------------------- */
+/*  Derived Stats                               */
+/* -------------------------------------------- */
+
+.runequest3 .derived-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 16px;
+}
+
+.runequest3 .derived-stat-item {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  border: 1px solid var(--rq3-border);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.runequest3 .derived-stat-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-light);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.runequest3 .derived-stat-value {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 1.4em;
+  font-weight: 700;
+  color: var(--rq3-text);
+  text-align: right;
 }
 
 .runequest3 .detail-group {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  align-items: center;
 }
 
 .runequest3 .detail-group label {
@@ -1285,6 +1254,7 @@
   font-family: 'Source Sans Pro', sans-serif;
   min-height: 32px;
   line-height: 1.4;
+  text-align: center;
 }
 
 /* Enhanced select dropdown styling */
@@ -1369,11 +1339,106 @@
   flex: 1;
 }
 
+.runequest3 .characteristics-columns {
+  display: flex;
+  gap: 50px;
+  width: 100%;
+}
+
+.runequest3 .characteristics-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+/* -------------------------------------------- */
+/*  Status Bars Section                         */
+/* -------------------------------------------- */
+
+.runequest3 .status-bars-section {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.runequest3 .status-bar-column {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.runequest3 .status-bars-section .status-bar-column .rq3-resource {
+  width: 100%;
+  max-width: 220px;
+  min-width: 0;
+}
+
+.runequest3 .status-bars-section .status-bar-column .rq3-resource-bar {
+  width: 100%;
+  height: 24px;
+  background: rgba(96, 96, 96, 0.6);
+  border: 1px solid var(--rq3-border);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0 8px;
+}
+
+.runequest3 .status-bars-section .status-bar-column .rq3-resource-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-light);
+  font-size: 11px;
+  position: relative;
+  z-index: 3;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  flex-shrink: 0;
+}
+
+.runequest3 .status-bars-section .status-bar-column .rq3-resource-text {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--rq3-light);
+  font-size: 11px;
+  position: relative;
+  z-index: 3;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  flex-shrink: 0;
+}
+
+.runequest3 .status-bars-section .status-bar-column .rq3-resource-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(135deg, #339040 0%, #49ad56 100%) !important;
+  transition: width 0.3s ease;
+  z-index: 1;
+  border-radius: 5px;
+}
+
+/* Status bar color states with high specificity */
+.runequest3 .status-bars-section .status-bar-column .rq3-resource-fill.danger {
+  background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%) !important;
+}
+
+.runequest3 .status-bars-section .status-bar-column .rq3-resource-fill.warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%) !important;
+}
+
+
+
 .runequest3 .characteristics-header-row {
   display: grid;
-  grid-template-columns: 60px 40px 40px 45px 90px;
-  gap: 6px;
-  padding: 4px 0;
+  grid-template-columns: 55px 35px 35px 40px 80px;
+  gap: 4px;
+  padding: 3px 0;
   border-bottom: 1px solid var(--rq3-secondary);
   margin-bottom: 2px;
 }
@@ -1384,7 +1449,7 @@
   font-family: 'Inter', sans-serif;
   font-weight: 600;
   color: var(--rq3-text);
-  font-size: 12px;
+  font-size: 11px;
   text-align: center;
 }
 
@@ -1394,9 +1459,9 @@
 
 .runequest3 .characteristic-row {
   display: grid;
-  grid-template-columns: 60px 40px 40px 45px 90px;
-  gap: 6px;
-  padding: 2px 0;
+  grid-template-columns: 55px 35px 35px 40px 80px;
+  gap: 4px;
+  padding: 1px 0;
   align-items: center;
 }
 
@@ -1413,10 +1478,10 @@
 }
 
 .runequest3 .characteristic-value input {
-  width: 40px;
-  height: 24px;
+  width: 35px;
+  height: 22px;
   text-align: center;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   border: 1px solid var(--rq3-border);
   border-radius: 3px;
@@ -1454,12 +1519,12 @@
   color: var(--rq3-light);
   font-family: 'Inter', sans-serif;
   font-weight: 600;
-  font-size: 10px;
-  padding: 1px 4px;
+  font-size: 9px;
+  padding: 1px 3px;
   cursor: pointer;
   transition: all 0.2s ease;
-  width: 28px;
-  height: 20px;
+  width: 24px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1648,9 +1713,9 @@
   display: flex;
   align-items: center;
   border-radius: 6px;
-  padding: 8px;
   transition: all 0.3s ease;
-  min-height: 36px;
+  min-height: 32px;
+  width:100%;
 }
 
 .species-empty {
@@ -1659,8 +1724,8 @@
   gap: 8px;
   width: 100%;
   border: 2px dashed var(--rq3-border);
-  border-radius: 6px;
-  padding: 8px 12px;
+  border-radius: 5px;
+  padding: 6px 12px;
   background: rgba(96, 96, 96, 0.3);
   transition: all 0.3s ease;
   cursor: pointer;
@@ -1669,8 +1734,6 @@
 .species-empty:hover {
   border-color: var(--rq3-accent);
   background: rgba(96, 96, 96, 0.5);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .species-drop-zone.drag-over .species-empty {
@@ -1690,10 +1753,11 @@
   gap: 8px;
   background: linear-gradient(135deg, var(--rq3-primary) 0%, var(--rq3-accent) 100%);
   border: 2px solid var(--rq3-secondary);
-  border-radius: 6px;
-  padding: 8px 12px;
+  border-radius: 5px;
+  padding: 6px 12px;
   width: 100%;
   transition: all 0.3s ease;
+  height: 32px;
 }
 
 .species-badge:hover {
@@ -1749,11 +1813,12 @@
 
 /* Global Edit Toggle */
 .global-edit-toggle {
-  margin-top: 15px;
-  padding-top: 10px;
-  border-top: 1px solid var(--rq3-border);
+  margin-top: 0;
+  padding-top: 0;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .global-edit-toggle .toggle-switch {
@@ -2750,131 +2815,12 @@
   display: inline;
 }
 
-/* Compact Header Styles */
-.compact-header {
-  padding: 12px;
-}
 
-.compact-layout {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-}
 
-/* Column 1: Resource Bars (200px width) */
-.compact-column-1 {
-  width: 200px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
 
-.compact-column-1 .rq3-resource {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
 
-.compact-column-1 .rq3-resource-label {
-  font-size: 0.9em;
-  font-weight: 600;
-  color: var(--rq3-light);
-}
-
-.compact-column-1 .rq3-resource-bar {
-  width: 100%;
-}
-
-/* Column 2: Name and Characteristics */
-.compact-column-2 {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.compact-column-2 .charname {
-  margin: 0;
-  font-size: 1.4em;
-}
-
-.compact-column-2 .charname input {
-  width: 100%;
-}
-
-/* Compact header character name - always display only */
-.compact-header .charname-display {
-  font-size: 1.4em;
-  font-weight: 600;
-  color: var(--rq3-light);
-  display: block;
-}
-
-/* Characteristics Grid - each on one line, 1/3 width */
-.characteristics-compact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 8px 16px;
-  align-items: center;
-}
-
-.characteristic-compact-line {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 8px;
-  background: rgba(96, 96, 96, 0.2);
-  border-radius: 4px;
-  min-width: 0;
-}
-
-.characteristic-compact-line .char-name {
-  font-weight: 600;
-  color: var(--rq3-light);
-  min-width: 25px;
-  flex-shrink: 0;
-  font-size: 0.85em;
-}
-
-.characteristic-compact-line .char-current {
-  font-weight: 700;
-  color: var(--rq3-text);
-  min-width: 25px;
-  text-align: center;
-  flex-shrink: 0;
-}
-
-.characteristic-compact-line .characteristic-training-tick {
-  font-size: 12px;
-  opacity: 0.6;
-  flex-shrink: 0;
-  min-width: 25px;
-}
-
-.characteristic-compact-line .characteristic-roll-x5, .characteristic-compact-line .characteristic-roll-custom {
-  padding: 2px 4px;
-  width: 25px;
-  height: 24px;
-  font-size: 12px;
-  flex-shrink: 0;
-}
-
-/* Header visibility based on active tab */
+/* Full header always visible */
 .runequest3 .full-header {
-  display: block;
-}
-
-.runequest3 .compact-header {
-  display: none;
-}
-
-/* Show compact header on non-main tabs using Foundry's active tab system */
-.runequest3.non-main-tab .full-header {
-  display: none;
-}
-
-.runequest3.non-main-tab .compact-header {
   display: block;
 }
 

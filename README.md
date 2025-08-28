@@ -2,6 +2,15 @@
 
 A comprehensive game system implementation for RuneQuest 3rd Edition in Foundry Virtual Tabletop.
 
+## 🚀 Quick Install
+
+**Foundry VTT Manifest URL:**
+```
+https://github.com/Kittenjuggler/runequest3-foundry/releases/latest/download/system.json
+```
+
+Copy this URL and paste it into Foundry VTT's "Install System" dialog for automatic installation.
+
 ## Features
 
 ### Character System
@@ -121,11 +130,17 @@ A comprehensive game system implementation for RuneQuest 3rd Edition in Foundry 
 
 3. When creating a new world, select "RuneQuest 3rd Edition" as the game system
 
-### Method 2: Using Foundry's System Installer
+### Method 2: Using Foundry's System Installer (Recommended)
 1. In Foundry VTT, go to the "Game Systems" tab
 2. Click "Install System"
-3. Use the manifest URL: `[Your manifest URL here]` (when hosted)
+3. Use the manifest URL: `https://github.com/Kittenjuggler/runequest3-foundry/releases/latest/download/system.json`
 4. Click "Install"
+
+### Method 3: Manual Download from GitHub
+1. Go to [https://github.com/Kittenjuggler/runequest3-foundry/releases](https://github.com/Kittenjuggler/runequest3-foundry/releases)
+2. Download the latest `runequest3-foundry.zip` file
+3. Extract it to your Foundry VTT Data/systems folder
+4. Restart Foundry VTT
 
 ### Directory Structure
 The system should be installed with the following structure:

@@ -1,0 +1,82 @@
+name: Release Foundry VTT System
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Create release package
+      run: |
+        # Create a temporary directory for the release
+        mkdir -p release/runequest3
+        
+        # Copy all necessary files (excluding development files)
+        cp -r lang release/runequest3/
+        cp -r module release/runequest3/
+        cp -r packs release/runequest3/
+        cp -r styles release/runequest3/
+        cp -r templates release/runequest3/
+        cp runequest3.mjs release/runequest3/
+        cp system.json release/runequest3/
+        cp README.md release/runequest3/
+        
+        # Create the zip file
+        cd release
+        zip -r runequest3-foundry.zip runequest3/
+        
+    - name: Get version from system.json
+      id: get_version
+      run: |
+        VERSION=$(node -p "require('./system.json').version")
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v${{ steps.get_version.outputs.version }}
+        name: Release v${{ steps.get_version.outputs.version }}
+        body: |
+          ## RuneQuest 3rd Edition Foundry VTT System
+          
+          ### Installation
+          
+          **Option 1: Manifest URL (Recommended)**
+          Copy this URL and paste it into Foundry VTT's "Install System" dialog:
+          ```
+          https://github.com/Kittenjuggler/runequest3-foundry/releases/latest/download/system.json
+          ```
+          
+          **Option 2: Manual Download**
+          Download the zip file and extract it to your Foundry VTT systems folder.
+          
+          ### What's New
+          - RuneQuest 3rd Edition game system
+          - Character sheets for characters, NPCs, and creatures
+          - Comprehensive item management
+          - Support for all RQ3 magic systems
+          
+          ### Compatibility
+          - Foundry VTT v12+
+          
+        files: release/runequest3-foundry.zip
+        draft: false
+        prerelease: false
+        
+    - name: Upload system.json
+      uses: actions/upload-artifact@v4
+      with:
+        name: system-json
+        path: system.json

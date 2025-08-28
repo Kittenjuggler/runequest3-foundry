@@ -660,33 +660,11 @@ export class RQ3Actor extends Actor {
     const roll = new Roll("1d100");
     await roll.evaluate({async: true}); // Evaluate the roll to get roll.total
 
-    // Check for success and update readyForTraining status
+    // Check for success (no longer auto-ticking training)
     const isSuccess = roll.total <= skillValue; // Standard d100 success
 
-    if (isSuccess) {
-      let updatePathKey;
-      let updateDataObject;
-
-      if (isCustomSkill) {
-        updatePathKey = `system.customSkills.${categoryKey}.${skillKey}.readyForTraining`;
-        updateDataObject = true;
-        // For custom skills, the object structure is already there, just set the flag.
-        await this.update({ [updatePathKey]: updateDataObject });
-      } else {
-        // Standard skill
-        updatePathKey = `system.skills.${categoryKey}.${skillKey}`;
-        const skillDataPath = `skills.${categoryKey}.${skillKey}`;
-        const existingSkillData = foundry.utils.getProperty(this.system, skillDataPath);
-        
-        const currentInvestedValue = existingSkillData?.value || 0;
-        // Ensure the skill object exists with its current value and the new training status
-        updateDataObject = {
-          value: currentInvestedValue,
-          readyForTraining: true
-        };
-        await this.update({ [updatePathKey]: updateDataObject });
-      }
-    }
+    // Note: Training ticks are now manually controlled by the user
+    // They can click on the training tick icons to toggle training readiness
 
     // Send to chat
     const messageData = {
@@ -740,9 +718,8 @@ export class RQ3Actor extends Actor {
     else if (success) resultText = "Success";
     else resultText = "Failure";
 
-    if (success && characteristic === 'pow') {
-      await this.update({ 'system.characteristics.pow.readyForTraining': true });
-    }
+    // Note: POW training ticks are now manually controlled by the user
+    // They can click on the training tick icon to toggle training readiness
 
     await ChatMessage.create({
       content: `
@@ -788,9 +765,8 @@ export class RQ3Actor extends Actor {
     else if (success) resultText = "Success";
     else resultText = "Failure";
 
-    if (success && characteristic === 'pow') {
-      await this.update({ 'system.characteristics.pow.readyForTraining': true });
-    }
+    // Note: POW training ticks are now manually controlled by the user
+    // They can click on the training tick icon to toggle training readiness
 
     await ChatMessage.create({
       content: `
@@ -848,9 +824,8 @@ export class RQ3Actor extends Actor {
     else if (success) resultText = "Success";
     else resultText = "Failure";
 
-    if (success && characteristic === 'pow') {
-      await this.update({ 'system.characteristics.pow.readyForTraining': true });
-    }
+    // Note: POW training ticks are now manually controlled by the user
+    // They can click on the training tick icon to toggle training readiness
 
     await ChatMessage.create({
       content: `
@@ -1020,9 +995,8 @@ export class RQ3Actor extends Actor {
     else if (success) resultText = "Success";
     else resultText = "Failure";
 
-    if (success && characteristic === 'pow') {
-      await this.update({ 'system.characteristics.pow.readyForTraining': true });
-    }
+    // Note: POW training ticks are now manually controlled by the user
+    // They can click on the training tick icon to toggle training readiness
 
     await ChatMessage.create({
       content: `

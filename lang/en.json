@@ -33,6 +33,7 @@
       "pow": "Power",
       "dex": "Dexterity",
       "app": "Appearance",
+      "luck": "Luck",
       "modifier": "Modifier"
     },
     

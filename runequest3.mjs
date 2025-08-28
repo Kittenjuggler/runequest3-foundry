@@ -81,7 +81,8 @@ Hooks.once("init", function() {
       int: "RQ3.Characteristics.int",
       pow: "RQ3.Characteristics.pow",
       dex: "RQ3.Characteristics.dex",
-      app: "RQ3.Characteristics.app"
+      app: "RQ3.Characteristics.app",
+      luck: "RQ3.Characteristics.luck"
     },
     weaponTypes: {
       "1h-sword": "RQ3.WeaponTypes.1h-sword",
@@ -1539,14 +1540,9 @@ Hooks.on("renderActorSheet", (sheet, html, data) => {
     }
   });
 
-  // Add click handlers for skill training ticks (only in edit mode)
+  // Add click handlers for skill training ticks (always available)
   html.find(".skill-training-tick").click(async (event) => {
     event.preventDefault();
-    
-    // Only allow toggling in edit mode
-    if (!sheet.editMode) {
-      return;
-    }
     
     const element = event.currentTarget;
     const skillCategory = element.dataset.skillCategory;
@@ -1608,14 +1604,9 @@ Hooks.on("renderActorSheet", (sheet, html, data) => {
     }
   });
 
-  // Add click handlers for characteristic training ticks (only in edit mode)
+  // Add click handlers for characteristic training ticks (always available)
   html.find(".characteristic-training-tick").click(async (event) => {
     event.preventDefault();
-    
-    // Only allow toggling in edit mode
-    if (!sheet.editMode) {
-      return;
-    }
     
     const element = event.currentTarget;
     const charKey = element.dataset.characteristicKey;
