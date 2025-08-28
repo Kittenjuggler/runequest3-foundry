@@ -23,10 +23,9 @@ jobs:
         # Create a temporary directory for the release
         mkdir -p release/runequest3
         
-        # Copy all necessary files (excluding development files)
+        # Copy all necessary source files (excluding development files and database files)
         cp -r lang release/runequest3/
         cp -r module release/runequest3/
-        cp -r packs release/runequest3/
         cp -r styles release/runequest3/
         cp -r templates release/runequest3/
         cp runequest3.mjs release/runequest3/

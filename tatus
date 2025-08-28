@@ -1,0 +1,5 @@
+[33mfcc3ce2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Setup Foundry VTT manifest URL installation system with GitHub Actions workflow
+[33m30007d9[m Update memory bank with compact header removal and tooltip system completion
+[33m627aed0[m Remove compact header entirely, use full header on all tabs for consistent tooltip positioning
+[33mdd21c0a[m Implement robust multi-method tooltip positioning for all header layouts
+[33m5aae8ea[m Improve tooltip positioning for compact header layout with fallback positioning and better debugging
