@@ -822,8 +822,15 @@ export class RQ3Actor extends Actor {
       return;
     }
 
-    // Show custom overlay modal instead of dialog
-    const multiplier = await this._showRollMultiplierOverlay(characteristic, char);
+    // Find the x? button element to position the tooltip
+    const buttonElement = document.querySelector(`[data-characteristic="${characteristic}"].characteristic-roll-custom`);
+    if (!buttonElement) {
+      console.error(`Could not find characteristic roll button for ${characteristic}`);
+      return;
+    }
+
+    // Show tooltip and get multiplier
+    const multiplier = await this.showCharacteristicRollTooltip(characteristic, buttonElement);
 
     if (multiplier === null) return;
 
