@@ -1441,11 +1441,28 @@ export class RQ3Actor extends Actor {
       
       console.log('RQ3 | Target rect:', targetRect);
       console.log('RQ3 | Tooltip rect:', tooltipRect);
+      console.log('RQ3 | Scroll position:', { scrollX: window.scrollX, scrollY: window.scrollY });
+      console.log('RQ3 | Page offset:', { pageXOffset: window.pageXOffset, pageYOffset: window.pageYOffset });
 
       // Calculate initial position (to the right of the target)
       let left = targetRect.right + 10;
       // Center vertically with the target element
       let top = targetRect.top + (targetRect.height / 2) - (tooltipRect.height / 2);
+      
+      // If the target element seems to be at the top-left (0,0), it might be a positioning issue
+      if (targetRect.left === 0 && targetRect.top === 0) {
+        console.warn('RQ3 | Target element appears to be at (0,0), this might indicate a positioning issue');
+        // Try to get the element's offset position as a fallback
+        const offsetLeft = targetElement.offsetLeft;
+        const offsetTop = targetElement.offsetTop;
+        console.log('RQ3 | Element offset position:', { offsetLeft, offsetTop });
+        
+        if (offsetLeft > 0 || offsetTop > 0) {
+          left = offsetLeft + targetElement.offsetWidth + 10;
+          top = offsetTop + (targetElement.offsetHeight / 2) - (tooltipRect.height / 2);
+          console.log('RQ3 | Using offset-based positioning:', { left, top });
+        }
+      }
 
       // Adjust for viewport edges
       const viewportWidth = window.innerWidth;
@@ -1460,6 +1477,13 @@ export class RQ3Actor extends Actor {
 
       // Ensure tooltip stays within viewport vertically
       top = Math.max(20, Math.min(top, viewportHeight - tooltipRect.height - 20));
+      
+      // Additional safety check: if positioning seems invalid, use fallback positioning
+      if (isNaN(left) || isNaN(top) || left < 0 || top < 0) {
+        console.warn('RQ3 | Invalid positioning detected, using fallback positioning');
+        left = Math.min(100, viewportWidth - tooltipRect.width - 20);
+        top = Math.min(100, viewportHeight - tooltipRect.height - 20);
+      }
       
       console.log('RQ3 | Final positioning:', { left, top });
 
