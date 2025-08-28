@@ -978,21 +978,31 @@ export class RQ3Actor extends Actor {
    * @param {string} characteristic - Characteristic to roll against
    */
   async rollCharacteristicCustom(characteristic) {
+    console.log('RQ3 | rollCharacteristicCustom called with characteristic:', characteristic);
+    
     const char = this.system.characteristics[characteristic];
     if (!char) {
       ui.notifications.error(`Characteristic ${characteristic} not found`);
       return;
     }
     
+    console.log('RQ3 | Characteristic data:', char);
+    
     // Find the x? button element to position the tooltip
     const buttonElement = document.querySelector(`[data-characteristic="${characteristic}"].characteristic-roll-custom`);
+    console.log('RQ3 | Button element found:', buttonElement);
+    
     if (!buttonElement) {
       console.error(`Could not find characteristic roll button for ${characteristic}`);
       return;
     }
 
+    console.log('RQ3 | About to call showCharacteristicRollTooltip');
+    
     // Show tooltip and get multiplier
     const multiplier = await this.showCharacteristicRollTooltip(characteristic, buttonElement);
+    
+    console.log('RQ3 | Tooltip returned multiplier:', multiplier);
 
     if (multiplier === null) return;
 
@@ -1369,8 +1379,12 @@ export class RQ3Actor extends Actor {
    * @returns {Promise<number|null>} Selected multiplier or null if cancelled
    */
   async showCharacteristicRollTooltip(characteristic, targetElement) {
+    console.log('RQ3 | showCharacteristicRollTooltip called with:', { characteristic, targetElement });
+    
     return new Promise((resolve) => {
       const char = this.system.characteristics[characteristic];
+      console.log('RQ3 | Characteristic data in tooltip method:', char);
+      
       if (!char) {
         console.error(`Characteristic ${characteristic} not found`);
         resolve(null);
