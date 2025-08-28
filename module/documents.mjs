@@ -1417,13 +1417,30 @@ export class RQ3Actor extends Actor {
         </div>
       `;
 
+      console.log('RQ3 | Tooltip HTML created:', tooltipHTML);
+
       // Add tooltip to document body
       const tooltipElement = $(tooltipHTML);
+      console.log('RQ3 | Tooltip element created:', tooltipElement);
+      
       $('body').append(tooltipElement);
+      console.log('RQ3 | Tooltip appended to body');
+      
+      // Verify tooltip was added to DOM
+      const immediateCheck = document.getElementById(`rq3-roll-tooltip-${characteristic}`);
+      if (!immediateCheck) {
+        console.error('RQ3 | Tooltip was not added to DOM!');
+        resolve(null);
+        return;
+      }
+      console.log('RQ3 | Tooltip verified in DOM');
 
       // Position the tooltip vertically centered with the target
       const targetRect = targetElement.getBoundingClientRect();
       const tooltipRect = tooltipElement[0].getBoundingClientRect();
+      
+      console.log('RQ3 | Target rect:', targetRect);
+      console.log('RQ3 | Tooltip rect:', tooltipRect);
 
       // Calculate initial position (to the right of the target)
       let left = targetRect.right + 10;
@@ -1433,6 +1450,8 @@ export class RQ3Actor extends Actor {
       // Adjust for viewport edges
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
+      
+      console.log('RQ3 | Viewport dimensions:', { width: viewportWidth, height: viewportHeight });
 
       // If tooltip would go off the right edge, position it to the left
       if (left + tooltipRect.width > viewportWidth - 20) {
@@ -1441,6 +1460,8 @@ export class RQ3Actor extends Actor {
 
       // Ensure tooltip stays within viewport vertically
       top = Math.max(20, Math.min(top, viewportHeight - tooltipRect.height - 20));
+      
+      console.log('RQ3 | Final positioning:', { left, top });
 
       tooltipElement.css({
         position: 'fixed !important',
@@ -1496,7 +1517,10 @@ export class RQ3Actor extends Actor {
 
       // Set up button click handlers
       tooltipElement.find('.rq3-roll-multiplier-btn').on('click', (event) => {
+        console.log('RQ3 | Multiplier button clicked:', event.currentTarget);
         const multiplier = parseInt($(event.currentTarget).data('multiplier'));
+        console.log('RQ3 | Selected multiplier:', multiplier);
+        
         const tooltip = document.getElementById(`rq3-roll-tooltip-${characteristic}`);
         if (tooltip) {
           tooltip.remove();
