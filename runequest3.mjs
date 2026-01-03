@@ -689,9 +689,12 @@ Hooks.once("ready", async function() {
   
   // Auto-create world compendiums if enabled
   const autoCreate = game.settings.get("runequest3", "autoCreateWorldCompendiums");
-  if (autoCreate) {
+  if (autoCreate && game.rq3.autoCreateWorldCompendiums) {
     console.log("RQ3 | Auto-creating organized world compendiums...");
-    await autoCreateWorldCompendiums(true);
+    await game.rq3.autoCreateWorldCompendiums(true);
+  } else if (autoCreate && !game.rq3.autoCreateWorldCompendiums) {
+    console.error("RQ3 | Auto-create enabled but compendium loader failed to load");
+    ui.notifications.error("RQ3: Could not auto-create compendiums. Check console for details.");
   }
 });
 
@@ -2629,25 +2632,25 @@ function initializeLazyLoading() {
   });
   
   Object.defineProperty(CONFIG.RQ3, 'species', {
-    get: async function() {
+    get: function() {
       if (!_speciesDataLoaded) {
         _speciesDataLoaded = true;
         console.log("RQ3 | Species data loaded on first access");
       }
-      // Load species data from JSON
-      return await loadCompendiumData('species');
+      // Load species data from JSON - callers must await this
+      return loadCompendiumData('species');
     },
     configurable: true
   });
   
   Object.defineProperty(CONFIG.RQ3, 'magic', {
-    get: async function() {
+    get: function() {
       if (!_magicDataLoaded) {
         _magicDataLoaded = true;
         console.log("RQ3 | Magic data loaded on first access");
       }
-      const magicData = await loadCompendiumData('magic');
-      return {
+      // Return a promise that callers must await
+      return loadCompendiumData('magic').then(magicData => ({
         spirit: Object.fromEntries(
           Object.entries(magicData).filter(([k, v]) => v.data?.system?.spellType === "spirit")
         ),
@@ -2657,21 +2660,25 @@ function initializeLazyLoading() {
         sorcery: Object.fromEntries(
           Object.entries(magicData).filter(([k, v]) => v.data?.system?.spellType === "sorcery")
         )
-      };
+      }));
     },
     configurable: true
   });
   
   Object.defineProperty(CONFIG.RQ3, 'equipment', {
-    get: async function() {
+    get: function() {
       if (!_equipmentDataLoaded) {
         _equipmentDataLoaded = true;
         console.log("RQ3 | Equipment data loaded on first access");
       }
-      return {
-        weapons: await loadCompendiumData('weapons'),
-        armor: await loadCompendiumData('armour')
-      };
+      // Return a promise that callers must await
+      return Promise.all([
+        loadCompendiumData('weapons'),
+        loadCompendiumData('armour')
+      ]).then(([weapons, armor]) => ({
+        weapons,
+        armor
+      }));
     },
     configurable: true
   });
