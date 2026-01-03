@@ -462,18 +462,25 @@ export async function regenerateAllCompendiums() {
   
   const proceed = await Dialog.confirm({
     title: "Regenerate All Compendiums",
-    content: `<p>This will delete and recreate all world compendiums:</p>
-              <ul>
-                <li>Weapons</li>
-                <li>Armour</li>
-                <li>Species</li>
-                <li>Magic</li>
-                <li>Equipment</li>
-              </ul>
-              <p><strong>Warning:</strong> Any custom edits in these compendiums will be lost!</p>
-              <p>Do you want to proceed?</p>`,
+    content: `<div style="margin-bottom: 1em;">
+                <p><strong>This will regenerate all world compendiums from JSON source data:</strong></p>
+                <ul>
+                  <li>Weapons</li>
+                  <li>Armour</li>
+                  <li>Species</li>
+                  <li>Magic</li>
+                  <li>Equipment</li>
+                </ul>
+              </div>
+              <div style="background: #ffe4b5; border: 1px solid #ffa500; border-radius: 4px; padding: 0.75em; margin-bottom: 1em;">
+                <p style="margin: 0; font-weight: bold; color: #b8860b;">⚠️ Important:</p>
+                <p style="margin: 0.5em 0 0 0;">Items found in JSON will be updated to match the source data. Any manual edits to these items will be overwritten.</p>
+                <p style="margin: 0.5em 0 0 0;">Items NOT in JSON (manually added) will be preserved.</p>
+              </div>
+              <p style="margin: 0;"><strong>Do you want to proceed?</strong></p>`,
     yes: () => true,
-    no: () => false
+    no: () => false,
+    defaultYes: false
   });
   
   if (!proceed) {
@@ -481,36 +488,142 @@ export async function regenerateAllCompendiums() {
     return;
   }
   
-  ui.notifications.info("Deleting existing compendiums (including old '(Organized)' versions)...");
+  ui.notifications.info("Regenerating compendiums (preserving manually added items)...");
   
-  // Delete both old "(Organized)" versions and new versions
-  const compendiumsToDelete = [
-    "Weapons",
-    "Weapons (Organized)",
-    "Armour",
-    "Armour (Organized)",
-    "Species",
-    "Species (Organized)",
-    "Magic",
-    "Magic (Organized)",
-    "Equipment"
+  // Use forceRecreate=false and skipExisting=false to merge/update instead of delete
+  await regenerateCompendiumsWithMerge();
+  
+  ui.notifications.info("All compendiums regenerated!");
+}
+
+/**
+ * Regenerate compendiums by merging with existing data
+ * This preserves manually added items while updating items from JSON
+ */
+async function regenerateCompendiumsWithMerge() {
+  if (!game.user.isGM) {
+    console.warn("RQ3 | Only GMs can regenerate compendiums");
+    return;
+  }
+  
+  const packs = [
+    { name: "weapons", label: "Weapons" },
+    { name: "armour", label: "Armour" },
+    { name: "species", label: "Species" },
+    { name: "magic", label: "Magic" },
+    { name: "equipment", label: "Equipment" }
   ];
   
-  for (const label of compendiumsToDelete) {
-    const existingPack = game.packs.find(p => p.metadata.label === label);
-    if (existingPack) {
-      try {
-        await existingPack.deleteCompendium();
-        console.log(`RQ3 | Deleted "${label}"`);
-      } catch (error) {
-        console.warn(`RQ3 | Could not delete "${label}":`, error);
+  const { loadCompendiumData } = await import("./data-loader.mjs");
+  
+  let updated = 0;
+  let added = 0;
+  let preserved = 0;
+  let errors = 0;
+  
+  for (const pack of packs) {
+    try {
+      // Find existing compendium
+      const existing = game.packs.find(p => p.metadata.label === pack.label && p.metadata.package === "world");
+      
+      if (!existing) {
+        // Compendium doesn't exist, create it fresh
+        console.log(`RQ3 | Creating new ${pack.label} compendium...`);
+        try {
+          const data = await loadCompendiumData(pack.name);
+          if (data && Object.keys(data).length > 0) {
+            await createCompendiumWithFolders(pack.name, pack.label, data);
+            added++;
+          }
+        } catch (loadError) {
+          console.warn(`RQ3 | Could not load data for ${pack.name}:`, loadError);
+          errors++;
+        }
+        continue;
       }
+      
+      // Load JSON data
+      let jsonData;
+      try {
+        jsonData = await loadCompendiumData(pack.name);
+        if (!jsonData || Object.keys(jsonData).length === 0) {
+          console.warn(`RQ3 | No JSON data for ${pack.name}, skipping`);
+          continue;
+        }
+      } catch (loadError) {
+        console.warn(`RQ3 | Could not load JSON data for ${pack.name}:`, loadError);
+        errors++;
+        continue;
+      }
+      
+      // Get existing items
+      const existingItems = await existing.getDocuments();
+      const existingItemsMap = new Map(existingItems.map(item => [item.name.toLowerCase(), item]));
+      
+      // Track items from JSON (to preserve items not in JSON)
+      const jsonItemNames = new Set(
+        Object.values(jsonData).map(itemInfo => itemInfo.data.name.toLowerCase())
+      );
+      
+      // Update or add items from JSON
+      for (const [itemKey, itemInfo] of Object.entries(jsonData)) {
+        try {
+          const itemData = foundry.utils.deepClone(itemInfo.data);
+          const itemName = itemData.name.toLowerCase();
+          const existingItem = existingItemsMap.get(itemName);
+          
+          if (existingItem) {
+            // Update existing item
+            await existingItem.update(itemData.system ? { system: itemData.system } : {});
+            console.log(`RQ3 | Updated ${itemData.name} in ${pack.label}`);
+            updated++;
+          } else {
+            // Add new item from JSON
+            const newItem = await existing.documentClass.create(itemData, { pack: existing.collection });
+            
+            // Assign to folder if specified
+            if (itemInfo.folder) {
+              // Find or create folder
+              let folder = existing.folders?.find(f => f.name === itemInfo.folder);
+              if (!folder) {
+                folder = await Folder.create({
+                  name: itemInfo.folder,
+                  type: "Item",
+                  folder: null,
+                  sorting: 'a',
+                  color: null
+                }, { pack: existing.collection });
+              }
+              if (folder) {
+                await newItem.update({ folder: folder.id });
+              }
+            }
+            
+            console.log(`RQ3 | Added ${itemData.name} to ${pack.label}`);
+            added++;
+          }
+        } catch (error) {
+          console.error(`RQ3 | Error processing ${itemInfo.data?.name || itemKey}:`, error);
+          errors++;
+        }
+      }
+      
+      // Count preserved items (items not in JSON)
+      const preservedItems = existingItems.filter(item => !jsonItemNames.has(item.name.toLowerCase()));
+      preserved += preservedItems.length;
+      if (preservedItems.length > 0) {
+        console.log(`RQ3 | Preserved ${preservedItems.length} manually added items in ${pack.label}`);
+      }
+      
+    } catch (error) {
+      console.error(`RQ3 | Error regenerating ${pack.label}:`, error);
+      errors++;
     }
   }
   
-  ui.notifications.info("Regenerating all compendiums...");
-  await autoCreateWorldCompendiums(false, false); // Don't skip existing, but we just deleted them
-  ui.notifications.info("All compendiums regenerated!");
+  const message = `Regeneration complete: ${updated} updated, ${added} added, ${preserved} preserved${errors > 0 ? `, ${errors} errors` : ''}`;
+  ui.notifications.info(message);
+  console.log(`RQ3 | ${message}`);
 }
 
 /**
