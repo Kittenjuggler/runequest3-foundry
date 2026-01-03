@@ -286,8 +286,16 @@ export class RQ3ActorSheet extends ActorSheet {
     }
 
     try {
-      // Try to find species in system compendium
-      const speciesCompendium = game.packs.get("runequest3.species");
+      // Try to find species in world compendium first, then system compendium
+      let speciesCompendium = game.packs.find(p => p.metadata.label === "Species" && p.metadata.package === "world");
+      if (!speciesCompendium) {
+        // Fallback: look for any compendium with "Species" label
+        speciesCompendium = game.packs.find(p => p.metadata.label === "Species");
+      }
+      if (!speciesCompendium) {
+        // Last fallback: system compendium
+        speciesCompendium = game.packs.get("runequest3.species");
+      }
       if (!speciesCompendium) {
         return;
       }
@@ -2646,14 +2654,19 @@ export class RQ3ActorSheet extends ActorSheet {
             defaultYes: true
           });
           
+          // If user cancelled or clicked No, don't add the species
+          if (!applyModifiers) {
+            ui.notifications.info("Species not applied.");
+            return;
+          }
+          
           // Update the species field with the species name
           await this.actor.update({
             'system.personal.species': item.name
           });
           
-          if (applyModifiers) {
-            await this._applySpeciesModifiers(item);
-          }
+          // Apply modifiers since user confirmed
+          await this._applySpeciesModifiers(item);
           
           ui.notifications.info(`Applied species: ${item.name}`);
         } else {
@@ -2794,7 +2807,16 @@ export class RQ3ActorSheet extends ActorSheet {
   async _removeSpeciesModifiers(speciesName) {
     try {
       // Find the species in the compendium to get its modifiers
-      const speciesCompendium = game.packs.get("runequest3.species");
+      // Try world compendium first, then fall back to system compendium
+      let speciesCompendium = game.packs.find(p => p.metadata.label === "Species" && p.metadata.package === "world");
+      if (!speciesCompendium) {
+        // Fallback: look for any compendium with "Species" label
+        speciesCompendium = game.packs.find(p => p.metadata.label === "Species");
+      }
+      if (!speciesCompendium) {
+        // Last fallback: system compendium
+        speciesCompendium = game.packs.get("runequest3.species");
+      }
       if (!speciesCompendium) {
         ui.notifications.warn("Species compendium not found. Cannot remove modifiers automatically.");
         return;
@@ -2943,19 +2965,26 @@ export class RQ3ActorSheet extends ActorSheet {
    * @private
    */
   async _openCompendium(compendiumName) {
-    // First try to find the system compendium by ID
-    let compendium = game.packs.get(`runequest3.${compendiumName}`);
+    // First try to find world compendium by label
+    const labelMap = {
+      'species': 'Species',
+      'armour': 'Armour',
+      'weapons': 'Weapons',
+      'equipment': 'Equipment'
+    };
+    const label = labelMap[compendiumName] || compendiumName;
+    
+    // Prioritize world compendiums
+    let compendium = game.packs.find(p => p.metadata.label === label && p.metadata.package === "world");
     
     if (!compendium) {
-      // Fallback: look for compendium by display label
-      const labelMap = {
-        'species': 'Species',
-        'armour': 'Armour',
-        'weapons': 'Weapons',
-        'equipment': 'Equipment'
-      };
-      const label = labelMap[compendiumName] || compendiumName;
+      // Fallback: look for any compendium with matching label
       compendium = game.packs.find(p => p.metadata.label === label);
+    }
+    
+    if (!compendium) {
+      // Last fallback: system compendium by ID
+      compendium = game.packs.get(`runequest3.${compendiumName}`);
     }
     
     if (!compendium) {

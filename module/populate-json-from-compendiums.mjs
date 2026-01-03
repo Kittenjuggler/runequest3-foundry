@@ -66,9 +66,28 @@ export async function populateJSONFromCompendiums() {
   
   for (const packInfo of packs) {
     try {
-      const pack = game.packs.get(packInfo.id);
+      // Try system compendium first, then world compendium
+      let pack = game.packs.get(packInfo.id);
       if (!pack) {
-        console.warn(`RQ3 | Pack ${packInfo.id} not found, skipping`);
+        // Fallback: look for world compendium by label
+        const labelMap = {
+          "weapons": "Weapons",
+          "armour": "Armour",
+          "species": "Species",
+          "spirit-magic": "Spirit Magic",
+          "divine-magic": "Divine Magic",
+          "sorcery": "Sorcery"
+        };
+        const label = labelMap[packInfo.name];
+        if (label) {
+          pack = game.packs.find(p => p.metadata.label === label && p.metadata.package === "world");
+          if (!pack) {
+            pack = game.packs.find(p => p.metadata.label === label);
+          }
+        }
+      }
+      if (!pack) {
+        console.warn(`RQ3 | Pack ${packInfo.id} or world compendium not found, skipping`);
         continue;
       }
       

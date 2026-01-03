@@ -2285,8 +2285,29 @@ Hooks.on("renderDialogV2", (dialog, html) => {
     return;
   }
   
-  // Map compendium names to item types
-  const compendiumTypeMap = {
+  // Get the actual compendium to check its label
+  const pack = game.packs.get(packId);
+  if (!pack) {
+    console.log("RQ3 | Compendium not found:", packId);
+    return;
+  }
+  
+  // Map compendium labels to item types (works for both system and world compendiums)
+  const compendiumLabelMap = {
+    'Weapons': 'weapon',
+    'Armour': 'armor',
+    'Armor': 'armor', // Alternative spelling
+    'Equipment': 'equipment',
+    'Spirit Magic': 'spell',
+    'Divine Magic': 'spell',
+    'Sorcery': 'spell',
+    'Magic': 'spell',
+    'Species': 'species',
+    'Skills': 'skill'
+  };
+  
+  // Also map system compendium IDs for backward compatibility
+  const compendiumIdMap = {
     'runequest3.weapons': 'weapon',
     'runequest3.armour': 'armor',
     'runequest3.equipment': 'equipment',
@@ -2297,10 +2318,11 @@ Hooks.on("renderDialogV2", (dialog, html) => {
     'runequest3.skills': 'skill'
   };
   
-  const defaultType = compendiumTypeMap[packId];
+  // Try label first (works for world compendiums), then ID (for system compendiums)
+  const defaultType = compendiumLabelMap[pack.metadata.label] || compendiumIdMap[packId];
   
   if (!defaultType) {
-    console.log("RQ3 | No default type mapping for", packId);
+    console.log("RQ3 | No default type mapping for", packId, "with label", pack.metadata.label);
     return;
   }
   

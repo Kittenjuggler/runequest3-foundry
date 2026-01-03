@@ -295,6 +295,10 @@ export async function createCompendiumWithFolders(packName, targetLabel, data) {
     for (const itemInfo of items) {
       try {
         const itemData = foundry.utils.deepClone(itemInfo.data);
+        if (!itemData || !itemData.name) {
+          console.warn(`RQ3 | Skipping item with missing data:`, itemInfo);
+          continue;
+        }
         const item = await target.documentClass.create(itemData, { pack: target.collection });
         
         // Assign to folder
@@ -304,7 +308,8 @@ export async function createCompendiumWithFolders(packName, targetLabel, data) {
         
         totalImported++;
       } catch (error) {
-        console.error(`RQ3 | Failed to import item ${itemInfo.data?.name}:`, error);
+        console.error(`RQ3 | Failed to import item ${itemInfo.data?.name || 'unknown'}:`, error);
+        console.error(`RQ3 | Item data:`, itemInfo);
       }
     }
     
@@ -315,10 +320,15 @@ export async function createCompendiumWithFolders(packName, targetLabel, data) {
   for (const itemInfo of itemsWithoutFolder) {
     try {
       const itemData = foundry.utils.deepClone(itemInfo.data);
+      if (!itemData || !itemData.name) {
+        console.warn(`RQ3 | Skipping item with missing data:`, itemInfo);
+        continue;
+      }
       await target.documentClass.create(itemData, { pack: target.collection });
       totalImported++;
     } catch (error) {
-      console.error(`RQ3 | Failed to import item ${itemInfo.data?.name}:`, error);
+      console.error(`RQ3 | Failed to import item ${itemInfo.data?.name || 'unknown'}:`, error);
+      console.error(`RQ3 | Item data:`, itemInfo);
     }
   }
   
@@ -411,6 +421,7 @@ export async function autoCreateWorldCompendiums(skipExisting = true, forceRecre
           continue;
         }
         
+        console.log(`RQ3 | Loaded ${Object.keys(data).length} items for ${pack.name}`);
         await createCompendiumWithFolders(pack.name, pack.label, data);
         created++;
       } catch (loadError) {
