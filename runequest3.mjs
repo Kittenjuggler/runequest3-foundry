@@ -655,10 +655,16 @@ Hooks.once("ready", async function() {
   console.log("RQ3 | Export function registered. Use: game.rq3.exportCompendium('runequest3.weapons')");
   
   // Register test function for creating compendiums with folders from JSON
-  const { testFoldersFromJSON, autoCreateWorldCompendiums, regenerateAllCompendiums } = await import("./module/compendium-folder-loader.mjs");
-  game.rq3.testFoldersFromJSON = testFoldersFromJSON;
-  game.rq3.autoCreateWorldCompendiums = autoCreateWorldCompendiums;
-  game.rq3.regenerateAllCompendiums = regenerateAllCompendiums;
+  try {
+    const { testFoldersFromJSON, autoCreateWorldCompendiums, regenerateAllCompendiums } = await import("./module/compendium-folder-loader.mjs");
+    game.rq3.testFoldersFromJSON = testFoldersFromJSON;
+    game.rq3.autoCreateWorldCompendiums = autoCreateWorldCompendiums;
+    game.rq3.regenerateAllCompendiums = regenerateAllCompendiums;
+    console.log("RQ3 | Compendium folder functions registered successfully");
+  } catch (error) {
+    console.error("RQ3 | Failed to load compendium folder loader:", error);
+    ui.notifications.error("RQ3: Failed to load compendium creation functions. Check console for details.");
+  }
   
   // Register data converter utilities
   try {
@@ -846,7 +852,7 @@ function registerSystemSettings() {
     scope: "world",
     config: true,
     type: Boolean,
-    default: false
+    default: true
   });
 }
 
