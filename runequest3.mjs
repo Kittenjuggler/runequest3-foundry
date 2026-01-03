@@ -22,8 +22,7 @@ import {
 // Import skills data
 import { RQ3_SKILLS, getAllSkills, getSkillsByCategory, getSkillById } from "./module/rq3-skills-data.mjs";
 
-// Import species data
-import { RQ3_SPECIES_DATA } from "./module/rq3-species-data.mjs";
+// Species data is now loaded from JSON via data-loader.mjs
 
 // Import magic data
 import { RQ3_SPIRIT_MAGIC_DATA } from "./module/rq3-spirit-magic-data.mjs";
@@ -1437,6 +1436,20 @@ async function migrateSpeciesCompendium() {
   console.log("RQ3 | Using embedded species data for migration");
 
   try {
+    // Load species data from JSON
+    let speciesData;
+    try {
+      speciesData = await loadCompendiumData('species');
+    } catch (error) {
+      console.warn("RQ3 | Could not load species data from JSON:", error);
+      return; // Skip migration if data can't be loaded
+    }
+    
+    if (!speciesData || Object.keys(speciesData).length === 0) {
+      console.warn("RQ3 | No species data found in JSON");
+      return;
+    }
+
     // Get existing documents to check what's already there
     const existingDocs = await speciesCompendium.getDocuments();
     const existingNames = existingDocs.map(doc => doc.name.toLowerCase());
@@ -1445,7 +1458,7 @@ async function migrateSpeciesCompendium() {
     let updatedCount = 0;
 
     // Check each species and add/update if needed
-    for (const [speciesKey, speciesInfo] of Object.entries(RQ3_SPECIES_DATA)) {
+    for (const [speciesKey, speciesInfo] of Object.entries(speciesData)) {
       const speciesName = speciesInfo.data.name.toLowerCase();
       
       // Check if this species should be available in current system version
@@ -2562,12 +2575,13 @@ function initializeLazyLoading() {
   });
   
   Object.defineProperty(CONFIG.RQ3, 'species', {
-    get: function() {
+    get: async function() {
       if (!_speciesDataLoaded) {
         _speciesDataLoaded = true;
         console.log("RQ3 | Species data loaded on first access");
       }
-      return RQ3_SPECIES_DATA;
+      // Load species data from JSON
+      return await loadCompendiumData('species');
     },
     configurable: true
   });
