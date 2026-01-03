@@ -24,14 +24,6 @@ import { RQ3_SKILLS, getAllSkills, getSkillsByCategory, getSkillById } from "./m
 
 // Species data is now loaded from JSON via data-loader.mjs
 
-// Import magic data
-import { RQ3_SPIRIT_MAGIC_DATA } from "./module/rq3-spirit-magic-data.mjs";
-import { RQ3_DIVINE_MAGIC_DATA } from "./module/rq3-divine-magic-data.mjs";
-import { RQ3_SORCERY_DATA } from "./module/rq3-sorcery-data.mjs";
-
-// Import equipment data
-import { RQ3_ARMOUR_DATA } from "./module/rq3-armour-data.mjs";
-
 // Import JSON data loader (supports both JSON and .mjs fallback)
 import { loadCompendiumData } from "./module/data-loader.mjs";
 
@@ -1516,6 +1508,23 @@ async function migrateSpiritMagicCompendium() {
     return;
   }
   
+  let spiritMagicData;
+  try {
+    const magicData = await loadCompendiumData("magic");
+    // Filter for spirit magic only
+    spiritMagicData = Object.fromEntries(
+      Object.entries(magicData).filter(([key, value]) => 
+        value.data?.system?.spellType === "spirit"
+      )
+    );
+  } catch (error) {
+    console.error("RQ3 | Failed to load spirit magic from JSON:", error);
+    ui.notifications.error("Failed to load spirit magic data. Check console for details.");
+    return;
+  }
+  
+  console.log(`RQ3 | Migrating Spirit Magic compendium. Total spells in data: ${Object.keys(spiritMagicData).length}`);
+  
   try {
     const existingDocs = await compendium.getDocuments();
     const existingNames = existingDocs.map(doc => doc.name.toLowerCase());
@@ -1523,7 +1532,7 @@ async function migrateSpiritMagicCompendium() {
     let addedCount = 0;
     let updatedCount = 0;
 
-    for (const [spellKey, spellInfo] of Object.entries(RQ3_SPIRIT_MAGIC_DATA)) {
+    for (const [spellKey, spellInfo] of Object.entries(spiritMagicData)) {
       const spellName = spellInfo.data.name.toLowerCase();
       
       if (foundry.utils.isNewerVersion(spellInfo.version, systemVersion)) {
@@ -1579,6 +1588,23 @@ async function migrateDivineMagicCompendium() {
     return;
   }
   
+  let divineMagicData;
+  try {
+    const magicData = await loadCompendiumData("magic");
+    // Filter for divine magic only
+    divineMagicData = Object.fromEntries(
+      Object.entries(magicData).filter(([key, value]) => 
+        value.data?.system?.spellType === "divine"
+      )
+    );
+  } catch (error) {
+    console.error("RQ3 | Failed to load divine magic from JSON:", error);
+    ui.notifications.error("Failed to load divine magic data. Check console for details.");
+    return;
+  }
+  
+  console.log(`RQ3 | Migrating Divine Magic compendium. Total spells in data: ${Object.keys(divineMagicData).length}`);
+  
   try {
     const existingDocs = await compendium.getDocuments();
     const existingNames = existingDocs.map(doc => doc.name.toLowerCase());
@@ -1586,7 +1612,7 @@ async function migrateDivineMagicCompendium() {
     let addedCount = 0;
     let updatedCount = 0;
 
-    for (const [spellKey, spellInfo] of Object.entries(RQ3_DIVINE_MAGIC_DATA)) {
+    for (const [spellKey, spellInfo] of Object.entries(divineMagicData)) {
       const spellName = spellInfo.data.name.toLowerCase();
       
       if (foundry.utils.isNewerVersion(spellInfo.version, systemVersion)) {
@@ -1642,6 +1668,23 @@ async function migrateSorceryCompendium() {
     return;
   }
   
+  let sorceryData;
+  try {
+    const magicData = await loadCompendiumData("magic");
+    // Filter for sorcery only
+    sorceryData = Object.fromEntries(
+      Object.entries(magicData).filter(([key, value]) => 
+        value.data?.system?.spellType === "sorcery"
+      )
+    );
+  } catch (error) {
+    console.error("RQ3 | Failed to load sorcery from JSON:", error);
+    ui.notifications.error("Failed to load sorcery data. Check console for details.");
+    return;
+  }
+  
+  console.log(`RQ3 | Migrating Sorcery compendium. Total spells in data: ${Object.keys(sorceryData).length}`);
+  
   try {
     const existingDocs = await compendium.getDocuments();
     const existingNames = existingDocs.map(doc => doc.name.toLowerCase());
@@ -1649,7 +1692,7 @@ async function migrateSorceryCompendium() {
     let addedCount = 0;
     let updatedCount = 0;
 
-    for (const [spellKey, spellInfo] of Object.entries(RQ3_SORCERY_DATA)) {
+    for (const [spellKey, spellInfo] of Object.entries(sorceryData)) {
       const spellName = spellInfo.data.name.toLowerCase();
       
       if (foundry.utils.isNewerVersion(spellInfo.version, systemVersion)) {
@@ -1789,6 +1832,17 @@ async function migrateArmourCompendium() {
     return;
   }
   
+  let armourData;
+  try {
+    armourData = await loadCompendiumData("armour");
+  } catch (error) {
+    console.error("RQ3 | Failed to load armour from JSON:", error);
+    ui.notifications.error("Failed to load armour data. Check console for details.");
+    return;
+  }
+  
+  console.log(`RQ3 | Migrating armour compendium. Total pieces in data: ${Object.keys(armourData).length}`);
+  
   try {
     const existingDocs = await compendium.getDocuments();
     const existingNames = existingDocs.map(doc => doc.name.toLowerCase());
@@ -1796,7 +1850,7 @@ async function migrateArmourCompendium() {
     let addedCount = 0;
     let updatedCount = 0;
 
-    for (const [armourKey, armourInfo] of Object.entries(RQ3_ARMOUR_DATA)) {
+    for (const [armourKey, armourInfo] of Object.entries(armourData)) {
       const armourName = armourInfo.data.name.toLowerCase();
       
       if (foundry.utils.isNewerVersion(armourInfo.version, systemVersion)) {
@@ -2587,15 +2641,22 @@ function initializeLazyLoading() {
   });
   
   Object.defineProperty(CONFIG.RQ3, 'magic', {
-    get: function() {
+    get: async function() {
       if (!_magicDataLoaded) {
         _magicDataLoaded = true;
         console.log("RQ3 | Magic data loaded on first access");
       }
+      const magicData = await loadCompendiumData('magic');
       return {
-        spirit: RQ3_SPIRIT_MAGIC_DATA,
-        divine: RQ3_DIVINE_MAGIC_DATA,
-        sorcery: RQ3_SORCERY_DATA
+        spirit: Object.fromEntries(
+          Object.entries(magicData).filter(([k, v]) => v.data?.system?.spellType === "spirit")
+        ),
+        divine: Object.fromEntries(
+          Object.entries(magicData).filter(([k, v]) => v.data?.system?.spellType === "divine")
+        ),
+        sorcery: Object.fromEntries(
+          Object.entries(magicData).filter(([k, v]) => v.data?.system?.spellType === "sorcery")
+        )
       };
     },
     configurable: true
@@ -2609,7 +2670,7 @@ function initializeLazyLoading() {
       }
       return {
         weapons: await loadCompendiumData('weapons'),
-        armor: RQ3_ARMOUR_DATA
+        armor: await loadCompendiumData('armour')
       };
     },
     configurable: true
