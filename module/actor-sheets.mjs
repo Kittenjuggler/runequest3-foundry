@@ -286,17 +286,11 @@ export class RQ3ActorSheet extends ActorSheet {
     }
 
     try {
-      // Try to find species in world compendium first, then system compendium
-      let speciesCompendium = game.packs.find(p => p.metadata.label === "Species" && p.metadata.package === "world");
+      // Find world compendium with "Species" label
+      const speciesCompendium = game.packs.find(p => p.metadata.label === "Species" && p.metadata.package === "world");
+      
       if (!speciesCompendium) {
-        // Fallback: look for any compendium with "Species" label
-        speciesCompendium = game.packs.find(p => p.metadata.label === "Species");
-      }
-      if (!speciesCompendium) {
-        // Last fallback: system compendium
-        speciesCompendium = game.packs.get("runequest3.species");
-      }
-      if (!speciesCompendium) {
+        console.error("RQ3 | Species compendium not found. Expected world compendium with label 'Species'");
         return;
       }
 
@@ -2806,19 +2800,12 @@ export class RQ3ActorSheet extends ActorSheet {
    */
   async _removeSpeciesModifiers(speciesName) {
     try {
-      // Find the species in the compendium to get its modifiers
-      // Try world compendium first, then fall back to system compendium
-      let speciesCompendium = game.packs.find(p => p.metadata.label === "Species" && p.metadata.package === "world");
+      // Find world compendium with "Species" label
+      const speciesCompendium = game.packs.find(p => p.metadata.label === "Species" && p.metadata.package === "world");
+      
       if (!speciesCompendium) {
-        // Fallback: look for any compendium with "Species" label
-        speciesCompendium = game.packs.find(p => p.metadata.label === "Species");
-      }
-      if (!speciesCompendium) {
-        // Last fallback: system compendium
-        speciesCompendium = game.packs.get("runequest3.species");
-      }
-      if (!speciesCompendium) {
-        ui.notifications.warn("Species compendium not found. Cannot remove modifiers automatically.");
+        console.error("RQ3 | Species compendium not found. Expected world compendium with label 'Species'");
+        ui.notifications.error("Species compendium not found. Cannot remove modifiers automatically.");
         return;
       }
 
@@ -2974,36 +2961,8 @@ export class RQ3ActorSheet extends ActorSheet {
     };
     const label = labelMap[compendiumName] || compendiumName;
     
-    // Prioritize world compendiums
-    let compendium = game.packs.find(p => p.metadata.label === label && p.metadata.package === "world");
-    
-    if (!compendium) {
-      // Fallback: look for any compendium with matching label
-      compendium = game.packs.find(p => p.metadata.label === label);
-    }
-    
-    if (!compendium) {
-      // Last fallback: system compendium by ID
-      compendium = game.packs.get(`runequest3.${compendiumName}`);
-    }
-    
-    if (!compendium) {
-      // Alternative labels (e.g., "RQ3 Species")
-      const altLabelMap = {
-        'species': 'RQ3 Species'
-      };
-      if (altLabelMap[compendiumName]) {
-        compendium = game.packs.find(p => p.metadata.label === altLabelMap[compendiumName]);
-      }
-    }
-    
-    if (!compendium) {
-      // Final fallback: look for any compendium with matching name
-      compendium = game.packs.find(p => 
-        p.metadata.type === "Item" && 
-        p.metadata.label.toLowerCase().includes(compendiumName.toLowerCase())
-      );
-    }
+    // Find world compendium with expected label
+    const compendium = game.packs.find(p => p.metadata.label === label && p.metadata.package === "world");
     
     if (compendium) {
       // Store the compendium ID for item creation dialogs
@@ -3026,7 +2985,8 @@ export class RQ3ActorSheet extends ActorSheet {
       ui.notifications.info(messages[compendiumName] || `Opening ${compendium.metadata.label} compendium. Drag items onto your character sheet.`);
       console.log("RQ3 | Opened compendium:", compendium.metadata.label);
     } else {
-      ui.notifications.warn(`No ${compendiumName} compendium found. Please check your system compendiums.`);
+      console.error(`RQ3 | Compendium not found: expected world compendium with label '${label}'`);
+      ui.notifications.error(`Could not find ${label} compendium. Please ensure auto-create world compendiums is enabled.`);
       console.log("RQ3 | Available compendiums:", game.packs.map(p => ({ id: p.collection, label: p.metadata.label, type: p.metadata.type })));
     }
   }

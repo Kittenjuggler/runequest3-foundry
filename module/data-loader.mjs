@@ -41,47 +41,15 @@ export async function loadCompendiumData(packName) {
     console.log(`RQ3 | Loaded ${packName} data from JSON: ${Object.keys(data).length} items`);
     return data;
   } catch (error) {
-    // For equipment, if JSON doesn't exist, return empty object instead of trying .mjs fallback
+    // For equipment, if JSON doesn't exist, return empty object
     if (packName === "equipment" && error.message?.includes("Not Found")) {
       console.log(`RQ3 | Equipment JSON file not found, returning empty data`);
       return {};
     }
-    console.warn(`RQ3 | Failed to load ${packName} from JSON, falling back to .mjs import`);
-    // Fallback to .mjs import for backward compatibility
-    return await loadMJSData(packName);
+    // No fallback - fail fast in development
+    console.error(`RQ3 | Failed to load ${packName} from JSON: ${error.message}`);
+    throw new Error(`Failed to load ${packName}.json - file may be missing or malformed`);
   }
-}
-
-/**
- * Load data from .mjs module (legacy support)
- * @param {string} packName - Name of the pack
- * @returns {Promise<Object>} The loaded data object
- */
-async function loadMJSData(packName) {
-  const moduleMap = {
-    "weapons": () => import("./rq3-weapons-data.mjs").then(m => m.RQ3_WEAPONS_DATA),
-    "armour": () => import("./rq3-armour-data.mjs").then(m => m.RQ3_ARMOUR_DATA),
-    "species": () => import("./rq3-species-data.mjs").then(m => m.RQ3_SPECIES_DATA),
-    "spirit-magic": () => import("./rq3-spirit-magic-data.mjs").then(m => m.RQ3_SPIRIT_MAGIC_DATA),
-    "divine-magic": () => import("./rq3-divine-magic-data.mjs").then(m => m.RQ3_DIVINE_MAGIC_DATA),
-    "sorcery": () => import("./rq3-sorcery-data.mjs").then(m => m.RQ3_SORCERY_DATA),
-    "magic": async () => {
-      // Combine all magic types for the unified magic compendium
-      const [spirit, divine, sorcery] = await Promise.all([
-        import("./rq3-spirit-magic-data.mjs").then(m => m.RQ3_SPIRIT_MAGIC_DATA),
-        import("./rq3-divine-magic-data.mjs").then(m => m.RQ3_DIVINE_MAGIC_DATA),
-        import("./rq3-sorcery-data.mjs").then(m => m.RQ3_SORCERY_DATA)
-      ]);
-      return { ...spirit, ...divine, ...sorcery };
-    }
-  };
-  
-  const loader = moduleMap[packName];
-  if (!loader) {
-    throw new Error(`No data loader found for pack: ${packName}`);
-  }
-  
-  return await loader();
 }
 
 /**
