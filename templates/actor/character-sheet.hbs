@@ -35,7 +35,7 @@
                   <div class="char-value-header">Orig</div>
                   <div class="char-value-header">Curr</div>
                   <div class="char-value-header">Train</div>
-                  <div class="char-buttons-header">Rolls</div>
+                  <div class="char-buttons-header"></div>
                 </div>
                 <div class="characteristic-row">
                   <div class="characteristic-name">STR</div>
@@ -51,9 +51,6 @@
                   <div class="characteristic-buttons">
                     <button class="characteristic-roll-x5" data-characteristic="str" title="Roll x5">
                       <i class="fas fa-dice-d20"></i>
-                    </button>
-                    <button class="characteristic-roll-custom" data-characteristic="str" title="Roll custom multiplier">
-                      x?
                     </button>
                   </div>
                 </div>
@@ -72,9 +69,6 @@
                     <button class="characteristic-roll-x5" data-characteristic="con" title="Roll x5">
                       <i class="fas fa-dice-d20"></i>
                     </button>
-                    <button class="characteristic-roll-custom" data-characteristic="con" title="Roll custom multiplier">
-                      x?
-                    </button>
                   </div>
                 </div>
                 <div class="characteristic-row">
@@ -91,9 +85,6 @@
                   <div class="characteristic-buttons">
                     <button class="characteristic-roll-x5" data-characteristic="siz" title="Roll x5">
                       <i class="fas fa-dice-d20"></i>
-                    </button>
-                    <button class="characteristic-roll-custom" data-characteristic="siz" title="Roll custom multiplier">
-                      x?
                     </button>
                   </div>
                 </div>
@@ -112,9 +103,6 @@
                     <button class="characteristic-roll-x5" data-characteristic="int" title="Roll x5">
                       <i class="fas fa-dice-d20"></i>
                     </button>
-                    <button class="characteristic-roll-custom" data-characteristic="int" title="Roll custom multiplier">
-                      x?
-                    </button>
                   </div>
                 </div>
               </div>
@@ -126,7 +114,7 @@
                   <div class="char-value-header">Orig</div>
                   <div class="char-value-header">Curr</div>
                   <div class="char-value-header">Train</div>
-                  <div class="char-buttons-header">Rolls</div>
+                  <div class="char-buttons-header"></div>
                 </div>
                 <div class="characteristic-row">
                   <div class="characteristic-name">POW</div>
@@ -142,9 +130,6 @@
                   <div class="characteristic-buttons">
                     <button class="characteristic-roll-x5" data-characteristic="pow" title="Roll x5">
                       <i class="fas fa-dice-d20"></i>
-                    </button>
-                    <button class="characteristic-roll-custom" data-characteristic="pow" title="Roll custom multiplier">
-                      x?
                     </button>
                   </div>
                 </div>
@@ -163,9 +148,6 @@
                     <button class="characteristic-roll-x5" data-characteristic="dex" title="Roll x5">
                       <i class="fas fa-dice-d20"></i>
                     </button>
-                    <button class="characteristic-roll-custom" data-characteristic="dex" title="Roll custom multiplier">
-                      x?
-                    </button>
                   </div>
                 </div>
                 <div class="characteristic-row">
@@ -183,9 +165,6 @@
                     <button class="characteristic-roll-x5" data-characteristic="app" title="Roll x5">
                       <i class="fas fa-dice-d20"></i>
                     </button>
-                    <button class="characteristic-roll-custom" data-characteristic="app" title="Roll custom multiplier">
-                      x?
-                    </button>
                   </div>
                 </div>
                 <div class="characteristic-row">
@@ -202,9 +181,6 @@
                   <div class="characteristic-buttons">
                     <button class="characteristic-roll-x5" data-characteristic="luck" title="Roll x5">
                       <i class="fas fa-dice-d20"></i>
-                    </button>
-                    <button class="characteristic-roll-custom" data-characteristic="luck" title="Roll custom multiplier">
-                      x?
                     </button>
                   </div>
                 </div>
@@ -364,7 +340,6 @@
                 <div class="rq3-skill-category-header">
                   Agility ({{#if skillCategoryBonuses.agility}}{{#if (gt skillCategoryBonuses.agility 0)}}+{{/if}}{{skillCategoryBonuses.agility}}{{else}}0{{/if}}%)
                 </div>
-                <div class="rq3-skill-list">
                   {{#sortSkills config.skills.agility.skills}}
                   <div class="rq3-skill-item" data-skill="{{skill.name}}" data-skill-id="{{skillKey}}">
                     <div class="rq3-skill-name-section">
@@ -409,7 +384,6 @@
                   <div class="add-custom-skill">
                     <i class="fas fa-plus add-skill-icon" data-category="agility" title="Add Custom Skill"></i>
                   </div>
-                </div>
               </div>
               
               <!-- Communication Section -->
@@ -417,7 +391,6 @@
                 <div class="rq3-skill-category-header">
                   Communication ({{#if skillCategoryBonuses.communication}}{{#if (gt skillCategoryBonuses.communication 0)}}+{{/if}}{{skillCategoryBonuses.communication}}{{else}}0{{/if}}%)
                 </div>
-                <div class="rq3-skill-list">
                   {{#sortSkills config.skills.communication.skills}}
                   <div class="rq3-skill-item" data-skill="{{skill.name}}" data-skill-id="{{skillKey}}">
                     <div class="rq3-skill-name-section">
@@ -462,7 +435,6 @@
                   <div class="add-custom-skill">
                     <i class="fas fa-plus add-skill-icon" data-category="communication" title="Add Custom Skill"></i>
                   </div>
-                </div>
               </div>
             </div>
 
@@ -474,7 +446,6 @@
                   <div class="rq3-skill-category-header">
                     {{category.label}} ({{#if (lookup ../skillCategoryBonuses categoryKey)}}{{#if (gt (lookup ../skillCategoryBonuses categoryKey) 0)}}+{{/if}}{{lookup ../skillCategoryBonuses categoryKey}}{{else}}0{{/if}}%)
                   </div>
-                  <div class="rq3-skill-list">
                     {{#sortSkills category.skills}}
                     <div class="rq3-skill-item" data-skill="{{skill.name}}" data-skill-id="{{skillKey}}">
                       <div class="rq3-skill-name-section">
@@ -519,7 +490,6 @@
                     <div class="add-custom-skill">
                       <i class="fas fa-plus add-skill-icon" data-category="knowledge" title="Add Custom Skill"></i>
                     </div>
-                  </div>
                 </div>
                 {{/if}}
               {{/each}}
@@ -532,7 +502,6 @@
                 <div class="rq3-skill-category-header">
                   Manipulation ({{#if skillCategoryBonuses.manipulation}}{{#if (gt skillCategoryBonuses.manipulation 0)}}+{{/if}}{{skillCategoryBonuses.manipulation}}{{else}}0{{/if}}%)
                 </div>
-                <div class="rq3-skill-list">
                   {{#sortSkills config.skills.manipulation.skills}}
                   <div class="rq3-skill-item" data-skill="{{skill.name}}" data-skill-id="{{skillKey}}">
                     <div class="rq3-skill-name-section">
@@ -577,7 +546,6 @@
                   <div class="add-custom-skill">
                     <i class="fas fa-plus add-skill-icon" data-category="manipulation" title="Add Custom Skill"></i>
                   </div>
-                </div>
               </div>
               
               <!-- Perception Section -->
@@ -585,7 +553,6 @@
                 <div class="rq3-skill-category-header">
                   Perception ({{#if skillCategoryBonuses.perception}}{{#if (gt skillCategoryBonuses.perception 0)}}+{{/if}}{{skillCategoryBonuses.perception}}{{else}}0{{/if}}%)
                 </div>
-                <div class="rq3-skill-list">
                   {{#sortSkills config.skills.perception.skills}}
                   <div class="rq3-skill-item" data-skill="{{skill.name}}" data-skill-id="{{skillKey}}">
                     <div class="rq3-skill-name-section">
@@ -630,7 +597,6 @@
                   <div class="add-custom-skill">
                     <i class="fas fa-plus add-skill-icon" data-category="perception" title="Add Custom Skill"></i>
                   </div>
-                </div>
               </div>
               
               <!-- Stealth Section -->
@@ -638,7 +604,6 @@
                 <div class="rq3-skill-category-header">
                   Stealth ({{#if skillCategoryBonuses.stealth}}{{#if (gt skillCategoryBonuses.stealth 0)}}+{{/if}}{{skillCategoryBonuses.stealth}}{{else}}0{{/if}}%)
                 </div>
-                <div class="rq3-skill-list">
                   {{#sortSkills config.skills.stealth.skills}}
                   <div class="rq3-skill-item" data-skill="{{skill.name}}" data-skill-id="{{skillKey}}">
                     <div class="rq3-skill-name-section">
@@ -683,7 +648,6 @@
                   <div class="add-custom-skill">
                     <i class="fas fa-plus add-skill-icon" data-category="stealth" title="Add Custom Skill"></i>
                   </div>
-                </div>
               </div>
             </div>
           </div>
@@ -694,6 +658,34 @@
     <!-- Combat Tab -->
     <div class="tab" data-group="primary" data-tab="combat">
       <div class="combat-section">
+        <!-- Combat Statistics -->
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-label">{{localize "RQ3.Labels.attackModifier"}}:</span>
+            <span class="stat-value">{{#if skillCategoryBonuses.weapon}}{{skillCategoryBonuses.weapon}}{{else}}0{{/if}}%</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">1 Hand DM:</span>
+            <span class="stat-value">{{system.derivedStats.damageModifier}}</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">2 Hand DM:</span>
+            <span class="stat-value">{{system.derivedStats.twoHandDamageModifier}}</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Dex SRM:</span>
+            <span class="stat-value">{{system.derivedStats.dexSRM}}</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Size SRM:</span>
+            <span class="stat-value">{{system.derivedStats.sizeSRM}}</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Melee SRM:</span>
+            <span class="stat-value">{{system.derivedStats.meleeSRM}}</span>
+          </div>
+        </div>
+
         <div class="combat-layout">
           <!-- Armor Visualization (Display Only) -->
           <div class="armor-visualization">
@@ -715,9 +707,9 @@
                   </div>
                 {{/if}}
                 <div class="hit-location-badges">
-                  <div class="ap-badge">
+                  <div class="ap-badge" data-hit-location="head" data-armor-id="{{system.equippedArmor.head}}" title="Click to adjust Head Armor">
                     <i class="fas fa-shield-alt ap-icon"></i>
-                    <span class="ap-value">{{#if system.equippedArmor.head}}{{#each @root.items as |item|}}{{#if (eq item._id @root.system.equippedArmor.head)}}{{item.system.hitLocations.head}}{{/if}}{{/each}}{{else}}0{{/if}}</span>
+                    <span class="ap-value">{{#if system.equippedArmor.head}}{{#each @root.items as |item|}}{{#if (eq item._id @root.system.equippedArmor.head)}}{{formatAP item.system.hitLocations.head item.system.armorDamage.head @root.system.hitLocations.head.tempArmor}}{{/if}}{{/each}}{{else}}{{#if system.hitLocations.head.tempArmor}}0+{{system.hitLocations.head.tempArmor}}/0{{else}}0/0{{/if}}{{/if}}</span>
                   </div>
                   <div class="hp-badge" data-hit-location="head" title="Click to adjust Head HP">
                     <i class="fas fa-heart hp-icon"></i>
@@ -743,9 +735,9 @@
                   </div>
                 {{/if}}
                 <div class="hit-location-badges">
-                  <div class="ap-badge">
+                  <div class="ap-badge" data-hit-location="leftArm" data-armor-id="{{system.equippedArmor.leftArm}}" title="Click to adjust Left Arm Armor">
                     <i class="fas fa-shield-alt ap-icon"></i>
-                    <span class="ap-value">{{#if system.equippedArmor.leftArm}}{{#each @root.items as |item|}}{{#if (eq item._id @root.system.equippedArmor.leftArm)}}{{item.system.hitLocations.leftArm}}{{/if}}{{/each}}{{else}}0{{/if}}</span>
+                    <span class="ap-value">{{#if system.equippedArmor.leftArm}}{{#each @root.items as |item|}}{{#if (eq item._id @root.system.equippedArmor.leftArm)}}{{formatAP item.system.hitLocations.leftArm item.system.armorDamage.leftArm @root.system.hitLocations.leftArm.tempArmor}}{{/if}}{{/each}}{{else}}{{#if system.hitLocations.leftArm.tempArmor}}0+{{system.hitLocations.leftArm.tempArmor}}/0{{else}}0/0{{/if}}{{/if}}</span>
                   </div>
                   <div class="hp-badge" data-hit-location="leftArm" title="Click to adjust Left Arm HP">
                     <i class="fas fa-heart hp-icon"></i>
@@ -771,9 +763,9 @@
                   </div>
                 {{/if}}
                 <div class="hit-location-badges">
-                  <div class="ap-badge">
+                  <div class="ap-badge" data-hit-location="rightArm" data-armor-id="{{system.equippedArmor.rightArm}}" title="Click to adjust Right Arm Armor">
                     <i class="fas fa-shield-alt ap-icon"></i>
-                    <span class="ap-value">{{#if system.equippedArmor.rightArm}}{{#each @root.items as |item|}}{{#if (eq item._id @root.system.equippedArmor.rightArm)}}{{item.system.hitLocations.rightArm}}{{/if}}{{/each}}{{else}}0{{/if}}</span>
+                    <span class="ap-value">{{#if system.equippedArmor.rightArm}}{{#each @root.items as |item|}}{{#if (eq item._id @root.system.equippedArmor.rightArm)}}{{formatAP item.system.hitLocations.rightArm item.system.armorDamage.rightArm @root.system.hitLocations.rightArm.tempArmor}}{{/if}}{{/each}}{{else}}{{#if system.hitLocations.rightArm.tempArmor}}0+{{system.hitLocations.rightArm.tempArmor}}/0{{else}}0/0{{/if}}{{/if}}</span>
                   </div>
                   <div class="hp-badge" data-hit-location="rightArm" title="Click to adjust Right Arm HP">
                     <i class="fas fa-heart hp-icon"></i>
@@ -799,9 +791,9 @@
                   </div>
                 {{/if}}
                 <div class="hit-location-badges">
-                  <div class="ap-badge">
+                  <div class="ap-badge" data-hit-location="chest" data-armor-id="{{system.equippedArmor.chest}}" title="Click to adjust Chest Armor">
                     <i class="fas fa-shield-alt ap-icon"></i>
-                    <span class="ap-value">{{#if system.equippedArmor.chest}}{{#each @root.items as |item|}}{{#if (eq item._id @root.system.equippedArmor.chest)}}{{item.system.hitLocations.chest}}{{/if}}{{/each}}{{else}}0{{/if}}</span>
+                    <span class="ap-value">{{#if system.equippedArmor.chest}}{{#each @root.items as |item|}}{{#if (eq item._id @root.system.equippedArmor.chest)}}{{formatAP item.system.hitLocations.chest item.system.armorDamage.chest @root.system.hitLocations.chest.tempArmor}}{{/if}}{{/each}}{{else}}{{#if system.hitLocations.chest.tempArmor}}0+{{system.hitLocations.chest.tempArmor}}/0{{else}}0/0{{/if}}{{/if}}</span>
                   </div>
                   <div class="hp-badge" data-hit-location="chest" title="Click to adjust Chest HP">
                     <i class="fas fa-heart hp-icon"></i>
@@ -827,9 +819,9 @@
                   </div>
                 {{/if}}
                 <div class="hit-location-badges">
-                  <div class="ap-badge">
+                  <div class="ap-badge" data-hit-location="abdomen" data-armor-id="{{system.equippedArmor.abdomen}}" title="Click to adjust Abdomen Armor">
                     <i class="fas fa-shield-alt ap-icon"></i>
-                    <span class="ap-value">{{#if system.equippedArmor.abdomen}}{{#each @root.items as |item|}}{{#if (eq item._id @root.system.equippedArmor.abdomen)}}{{item.system.hitLocations.abdomen}}{{/if}}{{/each}}{{else}}0{{/if}}</span>
+                    <span class="ap-value">{{#if system.equippedArmor.abdomen}}{{#each @root.items as |item|}}{{#if (eq item._id @root.system.equippedArmor.abdomen)}}{{formatAP item.system.hitLocations.abdomen item.system.armorDamage.abdomen @root.system.hitLocations.abdomen.tempArmor}}{{/if}}{{/each}}{{else}}{{#if system.hitLocations.abdomen.tempArmor}}0+{{system.hitLocations.abdomen.tempArmor}}/0{{else}}0/0{{/if}}{{/if}}</span>
                   </div>
                   <div class="hp-badge" data-hit-location="abdomen" title="Click to adjust Abdomen HP">
                     <i class="fas fa-heart hp-icon"></i>
@@ -855,9 +847,9 @@
                   </div>
                 {{/if}}
                 <div class="hit-location-badges">
-                  <div class="ap-badge">
+                  <div class="ap-badge" data-hit-location="leftLeg" data-armor-id="{{system.equippedArmor.leftLeg}}" title="Click to adjust Left Leg Armor">
                     <i class="fas fa-shield-alt ap-icon"></i>
-                    <span class="ap-value">{{#if system.equippedArmor.leftLeg}}{{#each @root.items as |item|}}{{#if (eq item._id @root.system.equippedArmor.leftLeg)}}{{item.system.hitLocations.leftLeg}}{{/if}}{{/each}}{{else}}0{{/if}}</span>
+                    <span class="ap-value">{{#if system.equippedArmor.leftLeg}}{{#each @root.items as |item|}}{{#if (eq item._id @root.system.equippedArmor.leftLeg)}}{{formatAP item.system.hitLocations.leftLeg item.system.armorDamage.leftLeg @root.system.hitLocations.leftLeg.tempArmor}}{{/if}}{{/each}}{{else}}{{#if system.hitLocations.leftLeg.tempArmor}}0+{{system.hitLocations.leftLeg.tempArmor}}/0{{else}}0/0{{/if}}{{/if}}</span>
                   </div>
                   <div class="hp-badge" data-hit-location="leftLeg" title="Click to adjust Left Leg HP">
                     <i class="fas fa-heart hp-icon"></i>
@@ -883,9 +875,9 @@
                   </div>
                 {{/if}}
                 <div class="hit-location-badges">
-                  <div class="ap-badge">
+                  <div class="ap-badge" data-hit-location="rightLeg" data-armor-id="{{system.equippedArmor.rightLeg}}" title="Click to adjust Right Leg Armor">
                     <i class="fas fa-shield-alt ap-icon"></i>
-                    <span class="ap-value">{{#if system.equippedArmor.rightLeg}}{{#each @root.items as |item|}}{{#if (eq item._id @root.system.equippedArmor.rightLeg)}}{{item.system.hitLocations.rightLeg}}{{/if}}{{/each}}{{else}}0{{/if}}</span>
+                    <span class="ap-value">{{#if system.equippedArmor.rightLeg}}{{#each @root.items as |item|}}{{#if (eq item._id @root.system.equippedArmor.rightLeg)}}{{formatAP item.system.hitLocations.rightLeg item.system.armorDamage.rightLeg @root.system.hitLocations.rightLeg.tempArmor}}{{/if}}{{/each}}{{else}}{{#if system.hitLocations.rightLeg.tempArmor}}0+{{system.hitLocations.rightLeg.tempArmor}}/0{{else}}0/0{{/if}}{{/if}}</span>
                   </div>
                   <div class="hp-badge" data-hit-location="rightLeg" title="Click to adjust Right Leg HP">
                     <i class="fas fa-heart hp-icon"></i>
@@ -916,46 +908,96 @@
 
           </div>
 
-          <!-- Weapons and Combat Info -->
-          <div class="combat-info">
-            <h3>Weapons & Combat</h3>
+          <!-- Second Column Content -->
+          <div class="combat-right-column">
+            <!-- Weapons and Combat Info -->
+            <div class="combat-info">
+            <h3>Equipped Weapons</h3>
         <div class="weapons-list">
           {{#each items as |item id|}}
-            {{#if (and (eq item.type "weapon") (or item.system.equipped (isEquippedWeapon item._id @root.system.equippedWeapons)))}}
-                <div class="rq3-item weapon-item">
-              <img class="rq3-item-image" src="{{itemImage item}}" title="{{item.name}}"/>
-                  <div class="weapon-details">
-              <span class="rq3-item-name">{{item.name}}</span>
-              <span class="weapon-damage">{{item.system.damage}}</span>
-                    <span class="weapon-skill">{{item.system.skill}}</span>
+            {{#if (and (eq item.type "weapon") (isEquippedWeapon item._id @root.system.equippedWeapons))}}
+              {{#if (or item.system.melee1Handed.enabled item.system.melee2Handed.enabled item.system.rangedAttack.enabled)}}
+                <div class="rq3-item weapon-item" data-item-id="{{item._id}}">
+                  <img class="rq3-item-image" src="{{itemImage item}}" title="{{item.name}}"/>
+                  <div class="weapon-info-column">
+                    <span class="rq3-item-name">{{item.name}}</span>
+                    {{#if item.system.weaponType}}
+                    <span class="weapon-subtype">{{localize (concat "RQ3.WeaponTypes." item.system.weaponType)}}</span>
+                    {{else if item.system.skill}}
+                    <span class="weapon-subtype">{{item.system.skill}}</span>
+                    {{/if}}
                   </div>
-            </div>
+                  <div class="weapon-attacks-column">
+                    {{#if item.system.melee1Handed.enabled}}
+                      <div class="weapon-attack-entry">
+                        <span class="weapon-attack-type">1 Handed:</span>
+                        <span class="weapon-damage">{{item.system.melee1Handed.damage}}</span>
+                        <span class="weapon-sr">SR {{add @root.system.derivedStats.meleeSRM item.system.melee1Handed.strikeRank}}</span>
+                        <span class="weapon-skill-value">{{getAttackSkillValue @root item.system.weaponType}}%</span>
+                        <button class="weapon-roll-button" data-weapon-id="{{item._id}}" data-weapon-name="{{item.name}}" data-weapon-type="{{item.system.weaponType}}" data-attack-type="melee1Handed" title="Roll attack with {{item.name}} (1 Handed)">
+                          <i class="fas fa-dice-d20"></i>
+                        </button>
+                      </div>
+                    {{/if}}
+                    {{#if item.system.melee2Handed.enabled}}
+                      <div class="weapon-attack-entry">
+                        <span class="weapon-attack-type">2 Handed:</span>
+                        <span class="weapon-damage">{{item.system.melee2Handed.damage}}</span>
+                        <span class="weapon-sr">SR {{add @root.system.derivedStats.meleeSRM item.system.melee2Handed.strikeRank}}</span>
+                        <span class="weapon-skill-value">{{getAttackSkillValue @root item.system.weaponType}}%</span>
+                        <button class="weapon-roll-button" data-weapon-id="{{item._id}}" data-weapon-name="{{item.name}}" data-weapon-type="{{item.system.weaponType}}" data-attack-type="melee2Handed" title="Roll attack with {{item.name}} (2 Handed)">
+                          <i class="fas fa-dice-d20"></i>
+                        </button>
+                      </div>
+                    {{/if}}
+                    {{#if item.system.rangedAttack.enabled}}
+                      <div class="weapon-attack-entry">
+                        <span class="weapon-attack-type">Ranged:</span>
+                        <span class="weapon-damage">{{item.system.rangedAttack.damage}}</span>
+                        <span class="weapon-sr">SR {{add @root.system.derivedStats.dexSRM item.system.rangedAttack.strikeRank}}</span>
+                        <span class="weapon-skill-value">{{getAttackSkillValue @root item.system.weaponType}}%</span>
+                        <button class="weapon-roll-button" data-weapon-id="{{item._id}}" data-weapon-name="{{item.name}}" data-weapon-type="{{item.system.weaponType}}" data-attack-type="rangedAttack" title="Roll attack with {{item.name}} (Ranged)">
+                          <i class="fas fa-dice-d20"></i>
+                        </button>
+                      </div>
+                    {{/if}}
+                  </div>
+                </div>
+              {{/if}}
             {{/if}}
           {{/each}}
             </div>
+            </div>
 
-            <!-- Combat Statistics -->
-            <div class="combat-stats">
-              <h4>Combat Statistics</h4>
-              <div class="stats-grid">
-                <div class="stat-item">
-                  <span class="stat-label">Damage Modifier:</span>
-                  <span class="stat-value">{{system.derivedStats.damageModifier}}</span>
+            <!-- Weapon Skills Section -->
+            <div class="weapon-skills-section">
+            <h4 class="weapon-skills-accordion-header">
+              <i class="fas fa-chevron-right weapon-skills-toggle-icon"></i>
+              {{localize "RQ3.SkillCategories.weapon"}}
+            </h4>
+            <div class="weapon-skills-content" style="display: none;">
+              <div class="rq3-skill-category">
+                {{#each config.skills.weapon.skills as |skill skillKey|}}
+                <div class="rq3-skill-item" data-skill="{{skill.name}}" data-skill-id="{{skillKey}}">
+                  <div class="rq3-skill-name-section">
+                    <i class="fas fa-check skill-training-tick {{#if (lookup (lookup @root.system.skills.weapon skillKey) "readyForTraining")}}ready-for-training{{/if}}" data-skill-category="weapon" data-skill-key="{{skillKey}}"></i>
+                    <span class="rq3-skill-name">{{localize (concat "RQ3.Skills." skillKey)}}</span>
+                  </div>
+                  <div class="rq3-skill-values">
+                    <div class="rq3-skill-invested-container">
+                      <span class="rq3-skill-invested">{{displaySkillInvestedValue @root.skillInvestedValues "weapon" skillKey}}%</span>
+                      <input type="number" class="rq3-skill-value-edit" name="system.skills.weapon.{{skillKey}}.value" value="{{lookup @root.skillInvestedValues.weapon skillKey}}" min="0" max="200" />
+                    </div>
+                    <span class="rq3-skill-total" title="Base: {{displaySkillBaseValue @root.skillBaseValues "weapon" skillKey}}% + Invested: {{displaySkillInvestedValue @root.skillInvestedValues "weapon" skillKey}}% + Attack Modifier: {{#if @root.skillCategoryBonuses.weapon}}{{@root.skillCategoryBonuses.weapon}}{{else}}0{{/if}}% = {{displaySkillTotalValue @root.skillTotalValues "weapon" skillKey}}%">{{displaySkillTotalValue @root.skillTotalValues "weapon" skillKey}}%</span>
+                    <button class="skill-roll-button" data-skill="{{skill.name}}" title="Roll {{localize (concat "RQ3.Skills." skillKey)}}">
+                      <i class="fas fa-dice-d20"></i>
+                    </button>
+                  </div>
                 </div>
-                <div class="stat-item">
-                  <span class="stat-label">Dex SRM:</span>
-                  <span class="stat-value">{{system.derivedStats.dexSRM}}</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-label">Size SRM:</span>
-                  <span class="stat-value">{{system.derivedStats.sizeSRM}}</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-label">Melee SRM:</span>
-                  <span class="stat-value">{{system.derivedStats.meleeSRM}}</span>
-                </div>
+                {{/each}}
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>
@@ -967,9 +1009,8 @@
         
         
         <!-- Equipped Armor & Hands Section -->
-        <div class="equipment-top-layout" style="display: flex; gap: 20px; margin-bottom: 20px;">
-          <div class="equipped-armor-section" style="flex: 1;">
-            <h4>Equipped Armor</h4>
+        <div class="equipment-top-layout">
+          <div class="equipped-armor-section">
             <div class="armor-slots-grid">
               <div class="armor-slot-item" data-slot="head">
                 <label>Head</label>
@@ -1135,9 +1176,9 @@
           </div>
 
           <!-- Equipped Hands Section -->
-          <div class="equipped-hands-section" style="flex: 1;">
-            <h4>Equipped Hands <i class="fas fa-trash-alt clear-hands-btn" style="float: right; font-size: 14px; cursor: pointer; color: #999; margin-left: 8px;" title="Clear both hands"></i></h4>
+          <div class="equipped-hands-section">
             <div class="hands-slots-grid">
+              <i class="fas fa-trash-alt clear-hands-btn" title="Clear both hands"></i>
               <!-- Left Hand Slot Item -->
               <div class="armor-slot-item" data-slot="leftHand">
                 <label>Left Hand</label>
@@ -1201,32 +1242,50 @@
           <!-- Worn Equipment Section -->
           <div class="worn-equipment">
             <div class="worn-subsection">
-              <h5>Worn (1/2x ENC)</h5>
+              <h5>Worn (1/2x ENC) <i class="fas fa-plus-circle compendium-opener" data-storage-location="worn" title="Add equipment"></i></h5>
               <div class="worn-items-list">
                 {{#each items as |item id|}}
                   {{#unless (or (eq item.type "skill") (eq item.type "spell") (eq item.type "rune") (eq item.type "species") (eq item.type "armor"))}}
-                    {{#if item.system.equipped}}
-                    <div class="equipment-item-row worn-item" draggable="true" data-item-id="{{item._id}}" data-item-type="{{item.type}}" data-storage-location="worn">
+                    {{! Only show top-level items (not inside containers) }}
+                    {{#if (and item.system.equipped (not item.system.containerId) (not (isEquippedWeapon item._id @root.system.equippedWeapons)))}}
+                    <div class="equipment-item-row worn-item {{#if (isContainer item)}}container-item{{/if}}" draggable="true" data-item-id="{{item._id}}" data-item-type="{{item.type}}" data-storage-location="worn">
                       <div class="item-image-column">
                         <img class="item-image" src="{{itemImage item}}" title="{{item.name}}"/>
                       </div>
                       <div class="item-info-column">
-                        <div class="item-name-line">{{item.name}}</div>
-                        <div class="item-stats-line">
-                          {{#if item.system.weight}}
-                            <span class="item-encumbrance" data-base-weight="{{item.system.weight}}" data-multiplier="0.5">E: {{wornEnc item.system.weight item.system.quantity}}</span>
+                        <div class="item-name-line">
+                          <span class="item-name">{{item.name}}</span>
+                          {{#if (eq item.type "weapon")}}
+                            <span class="item-encumbrance" data-base-weight="{{item.system.encumbrance}}" data-multiplier="0.5">E: {{wornEnc item.system.encumbrance item.system.quantity}}</span>
+                            <span class="item-value" data-base-price="{{item.system.price.value}}">V: {{formatEnc (mult item.system.price.value item.system.quantity)}}L</span>
+                          {{else if (eq item.type "armor")}}
+                            <span class="item-encumbrance" data-base-weight="{{item.system.encumbrance}}" data-multiplier="0.5">E: {{wornEnc item.system.encumbrance item.system.quantity}}</span>
+                            <span class="item-value" data-base-price="{{item.system.price.value}}">V: {{formatEnc (mult item.system.price.value item.system.quantity)}}L</span>
                           {{else}}
-                            <span class="item-encumbrance" data-base-weight="0" data-multiplier="0.5">E: 0.00</span>
+                            {{#if item.system.weight}}
+                              <span class="item-encumbrance" data-base-weight="{{item.system.weight}}" data-multiplier="0.5">E: {{wornEnc item.system.weight item.system.quantity}}</span>
+                            {{else}}
+                              <span class="item-encumbrance" data-base-weight="0" data-multiplier="0.5">E: 0.00</span>
+                            {{/if}}
+                            <span class="item-value" data-base-price="{{item.system.price.value}}">V: {{formatEnc (mult item.system.price.value item.system.quantity)}}L</span>
                           {{/if}}
-                          <span class="item-value" data-base-price="{{item.system.price.value}}">V: {{formatEnc (mult item.system.price.value item.system.quantity)}}L</span>
                         </div>
                       </div>
                       <div class="item-controls-column">
-                        <div class="item-quantity-controls">
-                          <button class="qty-up" data-action="qty-up" data-item-id="{{item._id}}" type="button">▲</button>
-                          <span class="item-quantity-display">{{item.system.quantity}}</span>
-                          <button class="qty-down" data-action="qty-down" data-item-id="{{item._id}}" type="button">▼</button>
-                        </div>
+                        {{#if (isContainer item)}}
+                          {{! Containers get a toggle arrow instead of quantity controls }}
+                          <div class="item-quantity-controls">
+                            <button class="container-toggle" data-container-id="{{item._id}}" title="Expand/Collapse Container">
+                              <i class="fas fa-chevron-{{#if (isContainerExpanded item._id @root.system.containerStates)}}down{{else}}right{{/if}}"></i>
+                            </button>
+                          </div>
+                        {{else}}
+                          <div class="item-quantity-controls">
+                            <button class="qty-down" data-action="qty-down" data-item-id="{{item._id}}" type="button">◀</button>
+                            <span class="item-quantity-display">{{item.system.quantity}}</span>
+                            <button class="qty-up" data-action="qty-up" data-item-id="{{item._id}}" type="button">▶</button>
+                          </div>
+                        {{/if}}
                         <div class="item-edit-controls">
                           <button class="edit-button" data-action="edit" data-item-id="{{item._id}}" title="Edit">
                             <i class="fas fa-edit"></i>
@@ -1237,6 +1296,59 @@
                         </div>
                       </div>
                     </div>
+                    
+                    {{! Show items inside this container if it's expanded }}
+                    {{#if (and (isContainer item) (isContainerExpanded item._id @root.system.containerStates))}}
+                      {{#each @root.items as |containedItem|}}
+                        {{#if (eq containedItem.system.containerId item._id)}}
+                        <div class="equipment-item-row worn-item container-content-item" draggable="true" data-item-id="{{containedItem._id}}" data-item-type="{{containedItem.type}}" data-storage-location="worn">
+                          <div class="item-image-column">
+                            <img class="item-image" src="{{itemImage containedItem}}" title="{{containedItem.name}}"/>
+                          </div>
+                          <div class="item-info-column">
+                            <div class="item-name-line">
+                              <span class="item-name">{{containedItem.name}}</span>
+                              {{#if (eq containedItem.type "weapon")}}
+                                <span class="item-encumbrance" data-base-weight="{{containedItem.system.encumbrance}}" data-multiplier="0.333">E: {{bagEnc containedItem.system.encumbrance containedItem.system.quantity}}</span>
+                                <span class="item-value" data-base-price="{{containedItem.system.price.value}}">V: {{formatEnc (mult containedItem.system.price.value containedItem.system.quantity)}}L</span>
+                              {{else if (eq containedItem.type "armor")}}
+                                <span class="item-encumbrance" data-base-weight="{{containedItem.system.encumbrance}}" data-multiplier="0.333">E: {{bagEnc containedItem.system.encumbrance 1}}</span>
+                                <span class="item-value" data-base-price="{{containedItem.system.price.value}}">V: {{formatEnc (mult containedItem.system.price.value containedItem.system.quantity)}}L</span>
+                              {{else}}
+                                {{#if containedItem.system.weight}}
+                                  <span class="item-encumbrance" data-base-weight="{{containedItem.system.weight}}" data-multiplier="0.333">E: {{bagEnc containedItem.system.weight containedItem.system.quantity}}</span>
+                                {{else}}
+                                  <span class="item-encumbrance" data-base-weight="0" data-multiplier="0.333">E: 0.00</span>
+                                {{/if}}
+                                <span class="item-value" data-base-price="{{containedItem.system.price.value}}">V: {{formatEnc (mult containedItem.system.price.value containedItem.system.quantity)}}L</span>
+                              {{/if}}
+                            </div>
+                          </div>
+                          <div class="item-controls-column">
+                            {{#if (eq containedItem.type "armor")}}
+                              <div class="item-quantity-controls">
+                                <span class="item-quantity-display armor-ap">AP: {{containedItem.system.armorPoints}}</span>
+                              </div>
+                            {{else}}
+                              <div class="item-quantity-controls">
+                                <button class="qty-down" data-action="qty-down" data-item-id="{{containedItem._id}}" type="button">◀</button>
+                                <span class="item-quantity-display">{{containedItem.system.quantity}}</span>
+                                <button class="qty-up" data-action="qty-up" data-item-id="{{containedItem._id}}" type="button">▶</button>
+                              </div>
+                            {{/if}}
+                            <div class="item-edit-controls">
+                              <button class="edit-button" data-action="edit" data-item-id="{{containedItem._id}}" title="Edit">
+                                <i class="fas fa-edit"></i>
+                              </button>
+                              <button class="delete-button" data-action="delete" data-item-id="{{containedItem._id}}" title="Delete">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        {{/if}}
+                      {{/each}}
+                    {{/if}}
                     {{/if}}
                   {{/unless}}
                 {{/each}}
@@ -1247,19 +1359,23 @@
           <!-- Carried Equipment Section -->
           <div class="carried-equipment">
             <div class="carried-subsection">
-              <h5>Carried (1x ENC)</h5>
+              <h5>Carried (1x ENC) <i class="fas fa-plus-circle compendium-opener" data-storage-location="carried" title="Add equipment"></i></h5>
               <div class="carried-items-list">
                 {{#each items as |item id|}}
                   {{#unless (or (eq item.type "skill") (eq item.type "spell") (eq item.type "rune") (eq item.type "species"))}}
-                    {{#if (and (eq (default item.system.storageLocation "carried") "carried") (not (isEquippedArmor item._id @root.system.equippedArmor)) (not (isEquippedWeapon item._id @root.system.equippedWeapons)) (not (and (ne item.type "armor") item.system.equipped)))}}
-                    <div class="equipment-item-row carried-item" draggable="true" data-item-id="{{item._id}}" data-item-type="{{item.type}}" data-storage-location="carried">
+                    {{! Only show top-level items (not inside containers) }}
+                    {{#if (and (eq (default item.system.storageLocation "carried") "carried") (not item.system.containerId) (not (isEquippedArmor item._id @root.system.equippedArmor)) (not (isEquippedWeapon item._id @root.system.equippedWeapons)) (not (and (ne item.type "armor") item.system.equipped)))}}
+                    <div class="equipment-item-row carried-item {{#if (isContainer item)}}container-item{{/if}}" draggable="true" data-item-id="{{item._id}}" data-item-type="{{item.type}}" data-storage-location="carried">
                       <div class="item-image-column">
                         <img class="item-image" src="{{itemImage item}}" title="{{item.name}}"/>
                       </div>
                       <div class="item-info-column">
-                        <div class="item-name-line">{{item.name}}</div>
-                        <div class="item-stats-line">
-                          {{#if (eq item.type "armor")}}
+                        <div class="item-name-line">
+                          <span class="item-name">{{item.name}}</span>
+                          {{#if (eq item.type "weapon")}}
+                            <span class="item-encumbrance" data-base-weight="{{item.system.encumbrance}}" data-multiplier="1">E: {{formatEnc item.system.encumbrance}}</span>
+                            <span class="item-value" data-base-price="{{item.system.price.value}}">V: {{formatEnc (mult item.system.price.value item.system.quantity)}}L</span>
+                          {{else if (eq item.type "armor")}}
                             <span class="item-encumbrance" data-base-weight="{{item.system.encumbrance}}" data-multiplier="1">E: {{formatEnc item.system.encumbrance}}</span>
                             <span class="item-value" data-base-price="{{item.system.price.value}}">V: {{formatEnc (mult item.system.price.value item.system.quantity)}}L</span>
                           {{else}}
@@ -1273,15 +1389,22 @@
                         </div>
                       </div>
                       <div class="item-controls-column">
-                        {{#if (eq item.type "armor")}}
+                        {{#if (isContainer item)}}
+                          {{! Containers get a toggle arrow instead of quantity controls }}
+                          <div class="item-quantity-controls">
+                            <button class="container-toggle" data-container-id="{{item._id}}" title="Expand/Collapse Container">
+                              <i class="fas fa-chevron-{{#if (isContainerExpanded item._id @root.system.containerStates)}}down{{else}}right{{/if}}"></i>
+                            </button>
+                          </div>
+                        {{else if (eq item.type "armor")}}
                           <div class="item-quantity-controls">
                             <span class="item-quantity-display armor-ap">AP: {{item.system.armorPoints}}</span>
                           </div>
                         {{else}}
                           <div class="item-quantity-controls">
-                            <button class="qty-up" data-action="qty-up" data-item-id="{{item._id}}" type="button">▲</button>
+                            <button class="qty-down" data-action="qty-down" data-item-id="{{item._id}}" type="button">◀</button>
                             <span class="item-quantity-display">{{item.system.quantity}}</span>
-                            <button class="qty-down" data-action="qty-down" data-item-id="{{item._id}}" type="button">▼</button>
+                            <button class="qty-up" data-action="qty-up" data-item-id="{{item._id}}" type="button">▶</button>
                           </div>
                         {{/if}}
                         <div class="item-edit-controls">
@@ -1294,17 +1417,62 @@
                         </div>
                       </div>
                     </div>
+                    
+                    {{! Show items inside this container if it's expanded }}
+                    {{#if (and (isContainer item) (isContainerExpanded item._id @root.system.containerStates))}}
+                      {{#each @root.items as |containedItem|}}
+                        {{#if (eq containedItem.system.containerId item._id)}}
+                        <div class="equipment-item-row carried-item container-content-item" draggable="true" data-item-id="{{containedItem._id}}" data-item-type="{{containedItem.type}}" data-storage-location="carried">
+                          <div class="item-image-column">
+                            <img class="item-image" src="{{itemImage containedItem}}" title="{{containedItem.name}}"/>
+                          </div>
+                          <div class="item-info-column">
+                            <div class="item-name-line">
+                              <span class="item-name">{{containedItem.name}}</span>
+                              {{#if (eq containedItem.type "weapon")}}
+                                <span class="item-encumbrance" data-base-weight="{{containedItem.system.encumbrance}}" data-multiplier="0.333">E: {{bagEnc containedItem.system.encumbrance containedItem.system.quantity}}</span>
+                                <span class="item-value" data-base-price="{{containedItem.system.price.value}}">V: {{formatEnc (mult containedItem.system.price.value containedItem.system.quantity)}}L</span>
+                              {{else if (eq containedItem.type "armor")}}
+                                <span class="item-encumbrance" data-base-weight="{{containedItem.system.encumbrance}}" data-multiplier="0.333">E: {{bagEnc containedItem.system.encumbrance 1}}</span>
+                                <span class="item-value" data-base-price="{{containedItem.system.price.value}}">V: {{formatEnc (mult containedItem.system.price.value containedItem.system.quantity)}}L</span>
+                              {{else}}
+                                {{#if containedItem.system.weight}}
+                                  <span class="item-encumbrance" data-base-weight="{{containedItem.system.weight}}" data-multiplier="0.333">E: {{bagEnc containedItem.system.weight containedItem.system.quantity}}</span>
+                                {{else}}
+                                  <span class="item-encumbrance" data-base-weight="0" data-multiplier="0.333">E: 0.00</span>
+                                {{/if}}
+                                <span class="item-value" data-base-price="{{containedItem.system.price.value}}">V: {{formatEnc (mult containedItem.system.price.value containedItem.system.quantity)}}L</span>
+                              {{/if}}
+                            </div>
+                          </div>
+                          <div class="item-controls-column">
+                            {{#if (eq containedItem.type "armor")}}
+                              <div class="item-quantity-controls">
+                                <span class="item-quantity-display armor-ap">AP: {{containedItem.system.armorPoints}}</span>
+                              </div>
+                            {{else}}
+                              <div class="item-quantity-controls">
+                                <button class="qty-down" data-action="qty-down" data-item-id="{{containedItem._id}}" type="button">◀</button>
+                                <span class="item-quantity-display">{{containedItem.system.quantity}}</span>
+                                <button class="qty-up" data-action="qty-up" data-item-id="{{containedItem._id}}" type="button">▶</button>
+                              </div>
+                            {{/if}}
+                            <div class="item-edit-controls">
+                              <button class="edit-button" data-action="edit" data-item-id="{{containedItem._id}}" title="Edit">
+                                <i class="fas fa-edit"></i>
+                              </button>
+                              <button class="delete-button" data-action="delete" data-item-id="{{containedItem._id}}" title="Delete">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        {{/if}}
+                      {{/each}}
+                    {{/if}}
                     {{/if}}
                   {{/unless}}
                 {{/each}}
-              </div>
-              
-              <!-- Always-present empty state drop zone for carried items -->
-              <div class="empty-carried-drop-zone" data-storage-location="carried">
-                <div class="empty-drop-message">
-                  <i class="fas fa-hand-paper"></i>
-                  <p>Drag equipment here (carried)</p>
-                </div>
               </div>
             </div>
           </div>
@@ -1312,19 +1480,23 @@
           <!-- Bag Equipment Section -->
           <div class="bag-equipment">
             <div class="bag-subsection">
-              <h5>Bag (1/3x ENC)</h5>
+              <h5>Bag (1/3x ENC) <i class="fas fa-plus-circle compendium-opener" data-storage-location="bag" title="Add equipment"></i></h5>
               <div class="bag-items-list">
                 {{#each items as |item id|}}
                   {{#unless (or (eq item.type "skill") (eq item.type "spell") (eq item.type "rune") (eq item.type "species"))}}
-                    {{#if (and (eq item.system.storageLocation "bag") (not (isEquippedArmor item._id @root.system.equippedArmor)) (not (isEquippedWeapon item._id @root.system.equippedWeapons)) (not (and (ne item.type "armor") item.system.equipped)))}}
-                    <div class="equipment-item-row bag-item" draggable="true" data-item-id="{{item._id}}" data-item-type="{{item.type}}" data-storage-location="bag">
+                    {{! Only show top-level items (not inside containers) }}
+                    {{#if (and (eq item.system.storageLocation "bag") (not item.system.containerId) (not (isEquippedArmor item._id @root.system.equippedArmor)) (not (isEquippedWeapon item._id @root.system.equippedWeapons)) (not (and (ne item.type "armor") item.system.equipped)))}}
+                    <div class="equipment-item-row bag-item {{#if (isContainer item)}}container-item{{/if}}" draggable="true" data-item-id="{{item._id}}" data-item-type="{{item.type}}" data-storage-location="bag">
                       <div class="item-image-column">
                         <img class="item-image" src="{{itemImage item}}" title="{{item.name}}"/>
                       </div>
                       <div class="item-info-column">
-                        <div class="item-name-line">{{item.name}}</div>
-                        <div class="item-stats-line">
-                          {{#if (eq item.type "armor")}}
+                        <div class="item-name-line">
+                          <span class="item-name">{{item.name}}</span>
+                          {{#if (eq item.type "weapon")}}
+                            <span class="item-encumbrance" data-base-weight="{{item.system.encumbrance}}" data-multiplier="0.333">E: {{bagEnc item.system.encumbrance item.system.quantity}}</span>
+                            <span class="item-value" data-base-price="{{item.system.price.value}}">V: {{formatEnc (mult item.system.price.value item.system.quantity)}}L</span>
+                          {{else if (eq item.type "armor")}}
                             <span class="item-encumbrance" data-base-weight="{{item.system.encumbrance}}" data-multiplier="0.333">E: {{armorBagEnc item.system.encumbrance}}</span>
                             <span class="item-value" data-base-price="{{item.system.price.value}}">V: {{formatEnc (mult item.system.price.value item.system.quantity)}}L</span>
                           {{else}}
@@ -1338,15 +1510,22 @@
                         </div>
                       </div>
                       <div class="item-controls-column">
-                        {{#if (eq item.type "armor")}}
+                        {{#if (isContainer item)}}
+                          {{! Containers get a toggle arrow instead of quantity controls }}
+                          <div class="item-quantity-controls">
+                            <button class="container-toggle" data-container-id="{{item._id}}" title="Expand/Collapse Container">
+                              <i class="fas fa-chevron-{{#if (isContainerExpanded item._id @root.system.containerStates)}}down{{else}}right{{/if}}"></i>
+                            </button>
+                          </div>
+                        {{else if (eq item.type "armor")}}
                           <div class="item-quantity-controls">
                             <span class="item-quantity-display armor-ap">AP: {{item.system.armorPoints}}</span>
                           </div>
                         {{else}}
                           <div class="item-quantity-controls">
-                            <button class="qty-up" data-action="qty-up" data-item-id="{{item._id}}" type="button">▲</button>
+                            <button class="qty-down" data-action="qty-down" data-item-id="{{item._id}}" type="button">◀</button>
                             <span class="item-quantity-display">{{item.system.quantity}}</span>
-                            <button class="qty-down" data-action="qty-down" data-item-id="{{item._id}}" type="button">▼</button>
+                            <button class="qty-up" data-action="qty-up" data-item-id="{{item._id}}" type="button">▶</button>
                           </div>
                         {{/if}}
                         <div class="item-edit-controls">
@@ -1359,17 +1538,62 @@
                         </div>
                       </div>
                     </div>
+                    
+                    {{! Show items inside this container if it's expanded }}
+                    {{#if (and (isContainer item) (isContainerExpanded item._id @root.system.containerStates))}}
+                      {{#each @root.items as |containedItem|}}
+                        {{#if (eq containedItem.system.containerId item._id)}}
+                        <div class="equipment-item-row bag-item container-content-item" draggable="true" data-item-id="{{containedItem._id}}" data-item-type="{{containedItem.type}}" data-storage-location="bag">
+                          <div class="item-image-column">
+                            <img class="item-image" src="{{itemImage containedItem}}" title="{{containedItem.name}}"/>
+                          </div>
+                          <div class="item-info-column">
+                            <div class="item-name-line">
+                              <span class="item-name">{{containedItem.name}}</span>
+                              {{#if (eq containedItem.type "weapon")}}
+                                <span class="item-encumbrance" data-base-weight="{{containedItem.system.encumbrance}}" data-multiplier="0.333">E: {{bagEnc containedItem.system.encumbrance containedItem.system.quantity}}</span>
+                                <span class="item-value" data-base-price="{{containedItem.system.price.value}}">V: {{formatEnc (mult containedItem.system.price.value containedItem.system.quantity)}}L</span>
+                              {{else if (eq containedItem.type "armor")}}
+                                <span class="item-encumbrance" data-base-weight="{{containedItem.system.encumbrance}}" data-multiplier="0.333">E: {{bagEnc containedItem.system.encumbrance 1}}</span>
+                                <span class="item-value" data-base-price="{{containedItem.system.price.value}}">V: {{formatEnc (mult containedItem.system.price.value containedItem.system.quantity)}}L</span>
+                              {{else}}
+                                {{#if containedItem.system.weight}}
+                                  <span class="item-encumbrance" data-base-weight="{{containedItem.system.weight}}" data-multiplier="0.333">E: {{bagEnc containedItem.system.weight containedItem.system.quantity}}</span>
+                                {{else}}
+                                  <span class="item-encumbrance" data-base-weight="0" data-multiplier="0.333">E: 0.00</span>
+                                {{/if}}
+                                <span class="item-value" data-base-price="{{containedItem.system.price.value}}">V: {{formatEnc (mult containedItem.system.price.value containedItem.system.quantity)}}L</span>
+                              {{/if}}
+                            </div>
+                          </div>
+                          <div class="item-controls-column">
+                            {{#if (eq containedItem.type "armor")}}
+                              <div class="item-quantity-controls">
+                                <span class="item-quantity-display armor-ap">AP: {{containedItem.system.armorPoints}}</span>
+                              </div>
+                            {{else}}
+                              <div class="item-quantity-controls">
+                                <button class="qty-down" data-action="qty-down" data-item-id="{{containedItem._id}}" type="button">◀</button>
+                                <span class="item-quantity-display">{{containedItem.system.quantity}}</span>
+                                <button class="qty-up" data-action="qty-up" data-item-id="{{containedItem._id}}" type="button">▶</button>
+                              </div>
+                            {{/if}}
+                            <div class="item-edit-controls">
+                              <button class="edit-button" data-action="edit" data-item-id="{{containedItem._id}}" title="Edit">
+                                <i class="fas fa-edit"></i>
+                              </button>
+                              <button class="delete-button" data-action="delete" data-item-id="{{containedItem._id}}" title="Delete">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        {{/if}}
+                      {{/each}}
+                    {{/if}}
                     {{/if}}
                   {{/unless}}
                 {{/each}}
-              </div>
-              
-              <!-- Always-present empty state drop zone for bag items -->
-              <div class="empty-bag-drop-zone" data-storage-location="bag">
-                <div class="empty-drop-message">
-                  <i class="fas fa-shopping-bag"></i>
-                  <p>Drag equipment here (bag)</p>
-                </div>
               </div>
             </div>
           </div>
@@ -1381,29 +1605,443 @@
     <!-- Magic Tab -->
     <div class="tab" data-group="primary" data-tab="magic">
       <div class="magic-section">
-        <h3>{{localize "RQ3.Tabs.magic"}}</h3>
-        <div class="spells-list">
-          {{#each items as |item id|}}
-            {{#if (eq item.type "spell")}}
-            <div class="rq3-item">
-              <img class="rq3-item-image" src="{{itemImage item}}" title="{{item.name}}"/>
-              <span class="rq3-item-name">{{item.name}}</span>
-              <span class="spell-cost">{{item.system.cost}} MP</span>
-              <button class="cast-spell" data-item-id="{{item._id}}">{{localize "RQ3.Buttons.cast"}}</button>
+        <!-- Magic Stats Grid -->
+        <div class="magic-stats-section">
+          <div class="magic-stats-grid">
+            <!-- Magic Rating -->
+            <div class="magic-stat-item">
+              <i class="fas fa-cog magic-stat-cog" data-magic-stat="magicRating" title="View Magic Rating"></i>
+              <div class="magic-stat-title">{{localize "RQ3.Magic.magicRating"}}</div>
+              <div class="magic-stat-value">
+                {{system.magic.magicRating.value}}%
+              </div>
             </div>
-            {{/if}}
-          {{/each}}
+
+            <!-- Magic Points -->
+            <div class="magic-stat-item">
+              <i class="fas fa-cog magic-stat-cog" data-magic-stat="magicPoints" title="Edit Max Magic Points"></i>
+              <div class="magic-stat-title">{{localize "RQ3.Magic.magicPoints"}}</div>
+              <div class="magic-stat-value-with-controls" style="display: flex; align-items: center; gap: 4px;">
+                <button class="mp-adjust-btn" data-action="decrease" data-stat="magicPoints" style="width: 20px; height: 20px; border: 1px solid var(--rq3-border); background: var(--rq3-dark); color: var(--rq3-text); border-radius: 4px; cursor: pointer; font-size: 12px; padding: 0; display: flex; align-items: center; justify-content: center;">-</button>
+                <span class="magic-stat-value">
+                  {{system.characteristics.pow.magicPoints.value}}/{{system.characteristics.pow.magicPoints.max}}
+                </span>
+                <button class="mp-adjust-btn" data-action="increase" data-stat="magicPoints" style="width: 20px; height: 20px; border: 1px solid var(--rq3-border); background: var(--rq3-dark); color: var(--rq3-text); border-radius: 4px; cursor: pointer; font-size: 12px; padding: 0; display: flex; align-items: center; justify-content: center;">+</button>
+              </div>
+            </div>
+
+            <!-- Free INT -->
+            <div class="magic-stat-item">
+              <i class="fas fa-cog magic-stat-cog" data-magic-stat="freeInt" title="Edit Free INT"></i>
+              <div class="magic-stat-title">{{localize "RQ3.Magic.freeInt"}}</div>
+              <div class="magic-stat-value">
+                {{freeIntRemaining}}/{{freeIntMax}}
+              </div>
+            </div>
+
+            <!-- Ceremony -->
+            <div class="magic-stat-item">
+              <i class="fas fa-cog magic-stat-cog" data-magic-stat="ceremony" title="Edit Ceremony"></i>
+              <div class="magic-stat-title">{{localize "RQ3.Magic.ceremony"}}</div>
+              <div class="magic-stat-value-with-roll">
+                <span class="magic-stat-value">{{add (add system.magic.ceremony.base system.magic.ceremony.invested) system.magic.magicRating.value}}%</span>
+                <i class="fas fa-dice-d20 magic-stat-roll-icon" data-magic-skill="ceremony" title="Roll Ceremony"></i>
+              </div>
+            </div>
+
+            <!-- Summon -->
+            <div class="magic-stat-item">
+              <i class="fas fa-cog magic-stat-cog" data-magic-stat="summon" title="Edit Summon"></i>
+              <div class="magic-stat-title">{{localize "RQ3.Magic.summon"}}</div>
+              <div class="magic-stat-value-with-roll">
+                <span class="magic-stat-value">{{add (add system.magic.summon.base system.magic.summon.invested) system.magic.magicRating.value}}%</span>
+                <i class="fas fa-dice-d20 magic-stat-roll-icon" data-magic-skill="summon" title="Roll Summon"></i>
+              </div>
+            </div>
+
+            <!-- Enchant -->
+            <div class="magic-stat-item">
+              <i class="fas fa-cog magic-stat-cog" data-magic-stat="enchant" title="Edit Enchant"></i>
+              <div class="magic-stat-title">{{localize "RQ3.Magic.enchant"}}</div>
+              <div class="magic-stat-value-with-roll">
+                <span class="magic-stat-value">{{add (add system.magic.enchant.base system.magic.enchant.invested) system.magic.magicRating.value}}%</span>
+                <i class="fas fa-dice-d20 magic-stat-roll-icon" data-magic-skill="enchant" title="Roll Enchant"></i>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="runes-list">
-          {{#each items as |item id|}}
-            {{#if (eq item.type "rune")}}
-            <div class="rq3-item">
-              <img class="rq3-item-image" src="{{itemImage item}}" title="{{item.name}}"/>
-              <span class="rq3-item-name">{{item.name}}</span>
-              <span class="rune-affinity">{{runeAffinity item.system.affinityValue}}</span>
+
+        <!-- Spirit Magic Section -->
+        <div class="spirit-magic magic-accordion {{#if (and system.magicVisibility (eq system.magicVisibility.spirit false) (not editMode))}}hidden-section{{/if}}" data-magic-type="spirit">
+          <div class="spirit-subsection">
+            <div class="spell-section-header accordion-header" data-accordion-target="spirit">
+              <h5>{{localize "RQ3.Magic.spirit"}} <span class="spirit-slots-remaining">(Free INT Used: {{spiritFreeIntUsed}})</span></h5>
+              <div class="header-right">
+                <div class="casting-rating">
+                  <span class="casting-rating-label">Casting Rating:</span>
+                  <span class="casting-rating-value" title="POW×5 ({{mult system.characteristics.pow.current 5}}%) - ENC ({{encPenalty}}) = {{spiritCastingRating}}%">{{spiritCastingRating}}%</span>
+                </div>
+                {{#if editMode}}
+                <button class="magic-section-visibility-toggle {{#if spiritSpells}}disabled{{/if}}" data-magic-type="spirit" title="{{#if spiritSpells}}Cannot hide section with spells{{else}}Toggle Spirit Magic Section Visibility{{/if}}" {{#if spiritSpells}}disabled{{/if}}>
+                  <i class="fas fa-{{#if (and system.magicVisibility (eq system.magicVisibility.spirit false))}}eye-slash{{else}}eye{{/if}}"></i>
+                </button>
+                {{/if}}
+                <i class="fas fa-chevron-down accordion-icon"></i>
+              </div>
             </div>
-            {{/if}}
-          {{/each}}
+            <div class="accordion-content" data-accordion-content="spirit">
+              <div class="spirit-items-list" data-spell-type="spirit" data-spell-storage="standard">
+              {{#each spiritSpellsStandard as |spell id|}}
+              <div class="equipment-item-row spell-item spirit-spell-item" data-item-id="{{spell._id}}" data-item-type="spell" data-storage-location="spirit" data-spell-storage="standard" draggable="true">
+                <img class="spell-image" src="{{itemImage spell}}" title="{{spell.name}}" alt="{{spell.name}}" onerror="this.onerror=null; this.src='icons/svg/book.svg';"/>
+                <div class="spell-details">
+                  <span class="spell-name">{{spell.name}}</span>
+                  <div class="spell-stats">
+                    <span class="spell-stat" title="Range"><i class="fas fa-crosshairs"></i> {{spell.system.range}}</span>
+                    <span class="spell-stat" title="Duration"><i class="fas fa-clock"></i> {{spell.system.duration}}</span>
+                    <span class="spell-stat" title="State"><i class="fas fa-circle"></i> {{spell.system.state}}</span>
+                  </div>
+                </div>
+                <div class="spell-controls">
+                  <span class="spirit-mp-large" title="Magic Points">
+                    <i class="fas fa-cog spirit-spell-cog" data-spell-id="{{spell._id}}" title="Edit Magic Points"></i>
+                    {{spell.system.magicPoints}} MP
+                  </span>
+                  <a class="spell-cast {{#unless spell.canCast}}disabled{{/unless}}" title="{{#if spell.canCast}}Cast Spell{{else}}Not enough MP to cast{{/if}}" style="{{#unless spell.canCast}}opacity: 0.4; cursor: not-allowed;{{/unless}}"><i class="fas fa-dice-d20"></i></a>
+                  <a class="spell-delete" title="Delete Spell"><i class="fas fa-trash"></i></a>
+                </div>
+              </div>
+              {{else}}
+              <div class="empty-spell-section">
+                <p>Drag spirit magic spells here</p>
+              </div>
+              {{/each}}
+              </div>
+              
+              <!-- INT Spirit Section -->
+              <div class="spell-storage-accordion magic-accordion collapsed" data-magic-type="spirit-int-spirit">
+                <div class="spell-storage-header accordion-header" data-accordion-target="spirit-int-spirit">
+                  <h6>{{localize "RQ3.Magic.intSpirit"}}</h6>
+                  <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content" data-accordion-content="spirit-int-spirit">
+                  <div class="spirit-items-list int-spirit-list" data-spell-type="spirit" data-spell-storage="int-spirit">
+              {{#each spiritSpellsIntSpirit as |spell id|}}
+              <div class="equipment-item-row spell-item spirit-spell-item" data-item-id="{{spell._id}}" data-item-type="spell" data-storage-location="spirit" data-spell-storage="int-spirit" draggable="true">
+                <img class="spell-image" src="{{itemImage spell}}" title="{{spell.name}}" alt="{{spell.name}}" onerror="this.onerror=null; this.src='icons/svg/book.svg';"/>
+                <div class="spell-details">
+                  <span class="spell-name">{{spell.name}}</span>
+                  <div class="spell-stats">
+                    <span class="spell-stat" title="Range"><i class="fas fa-crosshairs"></i> {{spell.system.range}}</span>
+                    <span class="spell-stat" title="Duration"><i class="fas fa-clock"></i> {{spell.system.duration}}</span>
+                    <span class="spell-stat" title="State"><i class="fas fa-circle"></i> {{spell.system.state}}</span>
+                  </div>
+                </div>
+                <div class="spell-controls">
+                  <span class="spirit-mp-large" title="Magic Points">
+                    <i class="fas fa-cog spirit-spell-cog" data-spell-id="{{spell._id}}" title="Edit Magic Points"></i>
+                    {{spell.system.magicPoints}} MP
+                  </span>
+                  <a class="spell-cast {{#unless spell.canCast}}disabled{{/unless}}" title="{{#if spell.canCast}}Cast Spell{{else}}Not enough MP to cast{{/if}}" style="{{#unless spell.canCast}}opacity: 0.4; cursor: not-allowed;{{/unless}}"><i class="fas fa-dice-d20"></i></a>
+                  <a class="spell-delete" title="Delete Spell"><i class="fas fa-trash"></i></a>
+                </div>
+              </div>
+              {{else}}
+              <div class="empty-spell-section">
+                <p>Drag spirit magic spells here (does not use Free INT)</p>
+              </div>
+              {{/each}}
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Spell Matrix Section for Spirit -->
+              <div class="spell-storage-accordion magic-accordion collapsed" data-magic-type="spirit-spell-matrix">
+                <div class="spell-storage-header accordion-header" data-accordion-target="spirit-spell-matrix">
+                  <h6>{{localize "RQ3.Magic.spellMatrix"}}</h6>
+                  <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content" data-accordion-content="spirit-spell-matrix">
+                  <div class="spirit-items-list spell-matrix-list" data-spell-type="spirit" data-spell-storage="spell-matrix">
+              {{#each spiritSpellsMatrix as |spell id|}}
+              <div class="equipment-item-row spell-item spirit-spell-item" data-item-id="{{spell._id}}" data-item-type="spell" data-storage-location="spirit" data-spell-storage="spell-matrix" draggable="true">
+                <img class="spell-image" src="{{itemImage spell}}" title="{{spell.name}}" alt="{{spell.name}}" onerror="this.onerror=null; this.src='icons/svg/book.svg';"/>
+                <div class="spell-details">
+                  <span class="spell-name">{{spell.name}}</span>
+                  <div class="spell-stats">
+                    <span class="spell-stat" title="Range"><i class="fas fa-crosshairs"></i> {{spell.system.range}}</span>
+                    <span class="spell-stat" title="Duration"><i class="fas fa-clock"></i> {{spell.system.duration}}</span>
+                    <span class="spell-stat" title="State"><i class="fas fa-circle"></i> {{spell.system.state}}</span>
+                  </div>
+                </div>
+                <div class="spell-controls">
+                  <span class="spirit-mp-large" title="Magic Points">
+                    <i class="fas fa-cog spirit-spell-cog" data-spell-id="{{spell._id}}" title="Edit Magic Points"></i>
+                    {{spell.system.magicPoints}} MP
+                  </span>
+                  <a class="spell-cast {{#unless spell.canCast}}disabled{{/unless}}" title="{{#if spell.canCast}}Cast Spell{{else}}Not enough MP to cast{{/if}}" style="{{#unless spell.canCast}}opacity: 0.4; cursor: not-allowed;{{/unless}}"><i class="fas fa-dice-d20"></i></a>
+                  <a class="spell-delete" title="Delete Spell"><i class="fas fa-trash"></i></a>
+                </div>
+              </div>
+              {{else}}
+              <div class="empty-spell-section">
+                <p>Drag spirit magic spells here (does not use Free INT)</p>
+              </div>
+              {{/each}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Divine Magic Section -->
+        <div class="divine-magic magic-accordion {{#if (and system.magicVisibility (eq system.magicVisibility.divine false) (not editMode))}}hidden-section{{/if}}" data-magic-type="divine">
+          <div class="divine-subsection">
+            <div class="spell-section-header accordion-header" data-accordion-target="divine">
+              <h5>{{localize "RQ3.Magic.divine"}}</h5>
+              <div class="header-right">
+                <div class="casting-rating">
+                  <span class="casting-rating-label">Casting Rating:</span>
+                  <span class="casting-rating-value" title="100% - ENC ({{encPenalty}}) = {{divineCastingRating}}%&#10;Note: 96-00 always fumbles">{{divineCastingRating}}%</span>
+                </div>
+                {{#if editMode}}
+                <button class="magic-section-visibility-toggle {{#if divineSpells}}disabled{{/if}}" data-magic-type="divine" title="{{#if divineSpells}}Cannot hide section with spells{{else}}Toggle Divine Magic Section Visibility{{/if}}" {{#if divineSpells}}disabled{{/if}}>
+                  <i class="fas fa-{{#if (and system.magicVisibility (eq system.magicVisibility.divine false))}}eye-slash{{else}}eye{{/if}}"></i>
+                </button>
+                {{/if}}
+                <i class="fas fa-chevron-down accordion-icon"></i>
+              </div>
+            </div>
+            <div class="accordion-content" data-accordion-content="divine">
+              <div class="divine-items-list" data-spell-type="divine">
+              {{#each divineSpells as |spell id|}}
+              <div class="equipment-item-row spell-item" data-item-id="{{spell._id}}" data-item-type="spell" data-storage-location="divine" draggable="true">
+                <img class="spell-image" src="{{itemImage spell}}" title="{{spell.name}}" alt="{{spell.name}}" onerror="this.onerror=null; this.src='icons/svg/book.svg';"/>
+                <div class="spell-details">
+                  <span class="spell-name">{{spell.name}}</span>
+                  <div class="spell-stats">
+                    <span class="spell-stat" title="Uses"><i class="fas fa-redo"></i> {{spell.system.uses}} Uses</span>
+                    <span class="spell-stat" title="Range"><i class="fas fa-crosshairs"></i> {{spell.system.range}}</span>
+                    <span class="spell-stat" title="Duration"><i class="fas fa-clock"></i> {{spell.system.duration}}</span>
+                    <span class="spell-stat" title="State"><i class="fas fa-circle"></i> {{spell.system.state}}</span>
+                    {{#if spell.system.stackable}}<span class="spell-badge" title="Stackable"><i class="fas fa-layer-group"></i></span>{{/if}}
+                    {{#if spell.system.reusable}}<span class="spell-badge" title="Reusable"><i class="fas fa-recycle"></i></span>{{/if}}
+                  </div>
+                </div>
+                <div class="spell-controls">
+                  <a class="spell-cast {{#unless spell.canCast}}disabled{{/unless}}" title="{{#if spell.canCast}}Cast Spell{{else}}Not enough MP to cast{{/if}}" style="{{#unless spell.canCast}}opacity: 0.4; cursor: not-allowed;{{/unless}}"><i class="fas fa-dice-d20"></i></a>
+                  <a class="spell-delete" title="Delete Spell"><i class="fas fa-trash"></i></a>
+                </div>
+              </div>
+              {{else}}
+              <div class="empty-spell-section">
+                <p>Drag divine magic spells here</p>
+              </div>
+              {{/each}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sorcery Section -->
+        <div class="sorcery-magic magic-accordion {{#if (and system.magicVisibility (eq system.magicVisibility.sorcery false) (not editMode))}}hidden-section{{/if}}" data-magic-type="sorcery">
+          <div class="sorcery-subsection">
+            <div class="spell-section-header accordion-header" data-accordion-target="sorcery">
+              <h5>{{localize "RQ3.Magic.sorcery"}} <span class="spirit-slots-remaining">(Free INT Used: {{sorceryFreeIntUsed}})</span></h5>
+              <div class="header-right">
+                {{#if editMode}}
+                <button class="magic-section-visibility-toggle {{#if sorcerySpells}}disabled{{/if}}" data-magic-type="sorcery" title="{{#if sorcerySpells}}Cannot hide section with spells{{else}}Toggle Sorcery Magic Section Visibility{{/if}}" {{#if sorcerySpells}}disabled{{/if}}>
+                  <i class="fas fa-{{#if (and system.magicVisibility (eq system.magicVisibility.sorcery false))}}eye-slash{{else}}eye{{/if}}"></i>
+                </button>
+                {{/if}}
+                <i class="fas fa-chevron-down accordion-icon"></i>
+              </div>
+            </div>
+            <div class="accordion-content" data-accordion-content="sorcery">
+              <!-- Sorcery Skills -->
+              <div class="sorcery-skills-grid">
+              <!-- Intensity -->
+              <div class="magic-stat-item">
+                <i class="fas fa-cog magic-stat-cog" data-magic-stat="intensity" title="Edit Intensity"></i>
+                <div class="magic-stat-title">{{localize "RQ3.Magic.intensity"}}</div>
+                <div class="magic-stat-value-with-roll">
+                  <span class="magic-stat-value">{{add (add system.magic.intensity.base system.magic.intensity.invested) system.magic.magicRating.value}}%</span>
+                  <i class="fas fa-dice-d20 magic-stat-roll-icon" data-magic-skill="intensity" title="Roll Intensity"></i>
+                </div>
+              </div>
+
+              <!-- Range -->
+              <div class="magic-stat-item">
+                <i class="fas fa-cog magic-stat-cog" data-magic-stat="range" title="Edit Range"></i>
+                <div class="magic-stat-title">{{localize "RQ3.Magic.range"}}</div>
+                <div class="magic-stat-value-with-roll">
+                  <span class="magic-stat-value">{{add (add system.magic.range.base system.magic.range.invested) system.magic.magicRating.value}}%</span>
+                  <i class="fas fa-dice-d20 magic-stat-roll-icon" data-magic-skill="range" title="Roll Range"></i>
+                </div>
+              </div>
+
+              <!-- Duration -->
+              <div class="magic-stat-item">
+                <i class="fas fa-cog magic-stat-cog" data-magic-stat="duration" title="Edit Duration"></i>
+                <div class="magic-stat-title">{{localize "RQ3.Magic.duration"}}</div>
+                <div class="magic-stat-value-with-roll">
+                  <span class="magic-stat-value">{{add (add system.magic.duration.base system.magic.duration.invested) system.magic.magicRating.value}}%</span>
+                  <i class="fas fa-dice-d20 magic-stat-roll-icon" data-magic-skill="duration" title="Roll Duration"></i>
+                </div>
+              </div>
+
+              <!-- Multispell -->
+              <div class="magic-stat-item">
+                <i class="fas fa-cog magic-stat-cog" data-magic-stat="multispell" title="Edit Multispell"></i>
+                <div class="magic-stat-title">{{localize "RQ3.Magic.multispell"}}</div>
+                <div class="magic-stat-value-with-roll">
+                  <span class="magic-stat-value">{{add (add system.magic.multispell.base system.magic.multispell.invested) system.magic.magicRating.value}}%</span>
+                  <i class="fas fa-dice-d20 magic-stat-roll-icon" data-magic-skill="multispell" title="Roll Multispell"></i>
+                </div>
+              </div>
+            </div>
+            
+            <div class="sorcery-items-list" data-spell-type="sorcery" data-spell-storage="standard">
+              {{#each sorcerySpellsStandard as |spell id|}}
+              <div class="equipment-item-row spell-item sorcery-spell-item" data-item-id="{{spell._id}}" data-item-type="spell" data-storage-location="sorcery" data-spell-storage="standard" draggable="true">
+                <img class="spell-image" src="{{itemImage spell}}" title="{{spell.name}}" alt="{{spell.name}}" onerror="this.onerror=null; this.src='icons/svg/book.svg';"/>
+                <div class="spell-details">
+                  <span class="spell-name">{{spell.name}}</span>
+                  <div class="spell-stats">
+                    <span class="spell-stat" title="Range"><i class="fas fa-crosshairs"></i> {{spell.system.range}}</span>
+                    <span class="spell-stat" title="Duration"><i class="fas fa-clock"></i> {{spell.system.duration}}</span>
+                  </div>
+                </div>
+                <div class="spell-controls">
+                  <span class="sorcery-invested-large" title="Invested Points">
+                    <i class="fas fa-cog sorcery-spell-cog" data-spell-id="{{spell._id}}" title="Edit Invested Points"></i>
+                    {{spell.system.invested}}%
+                  </span>
+                  <span class="sorcery-total-large" title="Total % (Invested + Magic Rating - Encumbrance)">{{spell.totalPercent}}%</span>
+                  <a class="spell-cast {{#unless spell.canCast}}disabled{{/unless}}" title="{{#if spell.canCast}}Cast Spell{{else}}Not enough MP to cast{{/if}}" style="{{#unless spell.canCast}}opacity: 0.4; cursor: not-allowed;{{/unless}}"><i class="fas fa-dice-d20"></i></a>
+                  <a class="spell-delete" title="Delete Spell"><i class="fas fa-trash"></i></a>
+                </div>
+              </div>
+              {{else}}
+              <div class="empty-spell-section">
+                <p>Drag sorcery spells here</p>
+              </div>
+              {{/each}}
+              </div>
+              
+              <!-- INT Spirit Section for Sorcery -->
+              <div class="spell-storage-accordion magic-accordion collapsed" data-magic-type="sorcery-int-spirit">
+                <div class="spell-storage-header accordion-header" data-accordion-target="sorcery-int-spirit">
+                  <h6>{{localize "RQ3.Magic.intSpirit"}}</h6>
+                  <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content" data-accordion-content="sorcery-int-spirit">
+                  <div class="sorcery-items-list int-spirit-list" data-spell-type="sorcery" data-spell-storage="int-spirit">
+              {{#each sorcerySpellsIntSpirit as |spell id|}}
+              <div class="equipment-item-row spell-item sorcery-spell-item" data-item-id="{{spell._id}}" data-item-type="spell" data-storage-location="sorcery" data-spell-storage="int-spirit" draggable="true">
+                <img class="spell-image" src="{{itemImage spell}}" title="{{spell.name}}" alt="{{spell.name}}" onerror="this.onerror=null; this.src='icons/svg/book.svg';"/>
+                <div class="spell-details">
+                  <span class="spell-name">{{spell.name}}</span>
+                  <div class="spell-stats">
+                    <span class="spell-stat" title="Range"><i class="fas fa-crosshairs"></i> {{spell.system.range}}</span>
+                    <span class="spell-stat" title="Duration"><i class="fas fa-clock"></i> {{spell.system.duration}}</span>
+                  </div>
+                </div>
+                <div class="spell-controls">
+                  <span class="sorcery-invested-large" title="Invested Points">
+                    <i class="fas fa-cog sorcery-spell-cog" data-spell-id="{{spell._id}}" title="Edit Invested Points"></i>
+                    {{spell.system.invested}}%
+                  </span>
+                  <span class="sorcery-total-large" title="Total % (Invested + Magic Rating - Encumbrance)">{{spell.totalPercent}}%</span>
+                  <a class="spell-cast {{#unless spell.canCast}}disabled{{/unless}}" title="{{#if spell.canCast}}Cast Spell{{else}}Not enough MP to cast{{/if}}" style="{{#unless spell.canCast}}opacity: 0.4; cursor: not-allowed;{{/unless}}"><i class="fas fa-dice-d20"></i></a>
+                  <a class="spell-delete" title="Delete Spell"><i class="fas fa-trash"></i></a>
+                </div>
+              </div>
+              {{else}}
+              <div class="empty-spell-section">
+                <p>Drag sorcery spells here (does not use Free INT)</p>
+              </div>
+              {{/each}}
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Spell Matrix Section -->
+              <div class="spell-storage-accordion magic-accordion collapsed" data-magic-type="sorcery-spell-matrix">
+                <div class="spell-storage-header accordion-header" data-accordion-target="sorcery-spell-matrix">
+                  <h6>{{localize "RQ3.Magic.spellMatrix"}}</h6>
+                  <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content" data-accordion-content="sorcery-spell-matrix">
+                  <div class="sorcery-items-list spell-matrix-list" data-spell-type="sorcery" data-spell-storage="spell-matrix">
+              {{#each sorcerySpellsMatrix as |spell id|}}
+              <div class="equipment-item-row spell-item sorcery-spell-item" data-item-id="{{spell._id}}" data-item-type="spell" data-storage-location="sorcery" data-spell-storage="spell-matrix" draggable="true">
+                <img class="spell-image" src="{{itemImage spell}}" title="{{spell.name}}" alt="{{spell.name}}" onerror="this.onerror=null; this.src='icons/svg/book.svg';"/>
+                <div class="spell-details">
+                  <span class="spell-name">{{spell.name}}</span>
+                  <div class="spell-stats">
+                    <span class="spell-stat" title="Range"><i class="fas fa-crosshairs"></i> {{spell.system.range}}</span>
+                    <span class="spell-stat" title="Duration"><i class="fas fa-clock"></i> {{spell.system.duration}}</span>
+                  </div>
+                </div>
+                <div class="spell-controls">
+                  <span class="sorcery-invested-large" title="Invested Points">
+                    <i class="fas fa-cog sorcery-spell-cog" data-spell-id="{{spell._id}}" title="Edit Invested Points"></i>
+                    {{spell.system.invested}}%
+                  </span>
+                  <span class="sorcery-total-large" title="Total % (Invested + Magic Rating - Encumbrance)">{{spell.totalPercent}}%</span>
+                  <a class="spell-cast {{#unless spell.canCast}}disabled{{/unless}}" title="{{#if spell.canCast}}Cast Spell{{else}}Not enough MP to cast{{/if}}" style="{{#unless spell.canCast}}opacity: 0.4; cursor: not-allowed;{{/unless}}"><i class="fas fa-dice-d20"></i></a>
+                  <a class="spell-delete" title="Delete Spell"><i class="fas fa-trash"></i></a>
+                </div>
+              </div>
+              {{else}}
+              <div class="empty-spell-section">
+                <p>Drag sorcery spells here (does not use Free INT)</p>
+              </div>
+              {{/each}}
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Unavailable Section -->
+              <div class="spell-storage-accordion magic-accordion collapsed" data-magic-type="sorcery-unavailable">
+                <div class="spell-storage-header accordion-header" data-accordion-target="sorcery-unavailable">
+                  <h6>{{localize "RQ3.Magic.unavailable"}}</h6>
+                  <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content" data-accordion-content="sorcery-unavailable">
+                  <div class="sorcery-items-list unavailable-list" data-spell-type="sorcery" data-spell-storage="unavailable">
+              {{#each sorcerySpellsUnavailable as |spell id|}}
+              <div class="equipment-item-row spell-item sorcery-spell-item" data-item-id="{{spell._id}}" data-item-type="spell" data-storage-location="sorcery" data-spell-storage="unavailable" draggable="true">
+                <img class="spell-image" src="{{itemImage spell}}" title="{{spell.name}}" alt="{{spell.name}}" onerror="this.onerror=null; this.src='icons/svg/book.svg';"/>
+                <div class="spell-details">
+                  <span class="spell-name">{{spell.name}}</span>
+                  <div class="spell-stats">
+                    <span class="spell-stat" title="Range"><i class="fas fa-crosshairs"></i> {{spell.system.range}}</span>
+                    <span class="spell-stat" title="Duration"><i class="fas fa-clock"></i> {{spell.system.duration}}</span>
+                  </div>
+                </div>
+                <div class="spell-controls">
+                  <span class="sorcery-invested-large" title="Invested Points">
+                    <i class="fas fa-cog sorcery-spell-cog" data-spell-id="{{spell._id}}" title="Edit Invested Points"></i>
+                    {{spell.system.invested}}%
+                  </span>
+                  <span class="sorcery-total-large" title="Total % (Invested + Magic Rating - Encumbrance)">{{spell.totalPercent}}%</span>
+                  <a class="spell-cast disabled" title="Cannot cast - spell is unavailable" style="opacity: 0.4; cursor: not-allowed;"><i class="fas fa-dice-d20"></i></a>
+                  <a class="spell-delete" title="Delete Spell"><i class="fas fa-trash"></i></a>
+                </div>
+              </div>
+              {{else}}
+              <div class="empty-spell-section">
+                <p>Drag sorcery spells here (cannot be cast)</p>
+              </div>
+              {{/each}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1411,13 +2049,12 @@
     <!-- Background Tab -->
     <div class="tab" data-group="primary" data-tab="background">
       <div class="background-section">
-        <h3>{{localize "RQ3.Tabs.background"}}</h3>
         <div class="biography-section">
-          <label>{{localize "RQ3.Labels.biography"}}</label>
+          <h5>{{localize "RQ3.Labels.biography"}}</h5>
           <textarea name="system.background.biography" rows="10">{{system.background.biography}}</textarea>
         </div>
         <div class="notes-section">
-          <label>{{localize "RQ3.Labels.notes"}}</label>
+          <h5>{{localize "RQ3.Labels.notes"}}</h5>
           <textarea name="system.background.notes" rows="6">{{system.background.notes}}</textarea>
         </div>
       </div>

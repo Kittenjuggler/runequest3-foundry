@@ -1,0 +1,20 @@
+{
+  "rope": {
+    "version": "1.0.6",
+    "folder": "Adventuring Gear",
+    "data": {
+      "name": "Rope",
+      "type": "equipment",
+      "img": "icons/equipment/hand/rope-coiled-tan.webp",
+      "system": {
+        "description": "50 feet of sturdy rope",
+        "weight": 1,
+        "price": {
+          "value": 5,
+          "currency": "lunars"
+        },
+        "quantity": 1
+      }
+    }
+  }
+}

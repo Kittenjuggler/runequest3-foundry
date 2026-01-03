@@ -3,6 +3,76 @@
  */
 export class RQ3Actor extends Actor {
 
+  /**
+   * Map weapon types to attack skills
+   * @param {string} weaponType - The weapon type
+   * @returns {string} The corresponding attack skill key
+   */
+  static getAttackSkillForWeaponType(weaponType) {
+    const weaponTypeToSkillMap = {
+      'axe': 'blade',
+      'hammer': 'blade',
+      'dagger': 'close',
+      'fist': 'close',
+      'mace': 'blunt',
+      'shield': 'shield',
+      'spear': 'spear',
+      'javelin': 'spear',
+      'sword': 'sword',
+      'tool': 'tools',
+      'bow': 'bow',
+      'crossbow': 'crossbow',
+      'dart': 'dart',
+      'sling': 'sling',
+      'staff-sling': 'staffSling',
+      'rock': 'rock',
+      'club': 'club',
+      'net': 'net'
+    };
+    
+    return weaponTypeToSkillMap[weaponType] || null;
+  }
+
+  /**
+   * Get the attack skill value for a weapon
+   * @param {string} weaponType - The weapon type
+   * @returns {number} The attack skill total value
+   */
+  getAttackSkillValue(weaponType) {
+    const skillKey = RQ3Actor.getAttackSkillForWeaponType(weaponType);
+    if (!skillKey) return 0;
+    
+    // Get the skill data
+    const skillData = this.system.skills?.weapon?.[skillKey];
+    if (!skillData) return 0;
+    
+    // Calculate category bonus (same as manipulation: INT, DEX = Primary, STR = Secondary)
+    const characteristics = this.system.characteristics;
+    const calculatePrimaryInfluence = (charValue) => charValue - 10;
+    const calculateSecondaryInfluence = (charValue) => {
+      const effectiveValue = Math.min(charValue, 30);
+      const diff = effectiveValue - 10;
+      let modifier;
+      if (diff > 0) {
+        modifier = Math.ceil(diff / 2);
+      } else {
+        modifier = Math.floor(diff / 2);
+      }
+      return Math.max(-10, Math.min(10, modifier));
+    };
+    
+    const categoryBonus = 
+      calculatePrimaryInfluence(characteristics.int?.current || 10) +
+      calculatePrimaryInfluence(characteristics.dex?.current || 10) +
+      calculateSecondaryInfluence(characteristics.str?.current || 10);
+    
+    // Calculate total: base + invested + category bonus
+    const baseValue = CONFIG.RQ3.skills.weapon.skills[skillKey]?.baseChance || 0;
+    const investedValue = skillData.value || 0;
+    
+    return Math.max(0, baseValue + investedValue + categoryBonus);
+  }
+
   /** @override */
   prepareData() {
     super.prepareData();
@@ -30,6 +100,9 @@ export class RQ3Actor extends Actor {
       
       // Calculate derived stats
       this._calculateDerivedStats();
+      
+      // Calculate magic stats
+      this._calculateMagicStats();
       
       // Calculate hit location hit points
       this._calculateHitLocationHP();
@@ -141,8 +214,8 @@ export class RQ3Actor extends Actor {
       if (this.system.characteristics.pow.magicPoints.max !== pow) {
         this.system.characteristics.pow.magicPoints.max = pow;
         
-        // Set current MP to max if it's a new character or higher than max
-        if (this.system.characteristics.pow.magicPoints.value > pow || this.system.characteristics.pow.magicPoints.value === 0) {
+        // Set current MP to max if it's higher than max (but allow it to be 0)
+        if (this.system.characteristics.pow.magicPoints.value > pow) {
           this.system.characteristics.pow.magicPoints.value = pow;
         }
       }
@@ -206,6 +279,13 @@ export class RQ3Actor extends Actor {
       else if (strSizTotal <= 56) damageModifier = "+2d6";
       else damageModifier = "+3d6";
       
+      // Calculate 2 Hand DM (one increment larger than 1 Hand DM)
+      const damageModifierProgression = ["-1d4", "-1d2", "+0", "+1d4", "+1d6", "+2d6", "+3d6"];
+      const currentIndex = damageModifierProgression.indexOf(damageModifier);
+      const twoHandDamageModifier = currentIndex < damageModifierProgression.length - 1 
+        ? damageModifierProgression[currentIndex + 1] 
+        : damageModifier; // If already at max, keep the same
+      
       // Calculate DEX Strike Rank Modifier
       let dexSRM = 0;
       if (dex <= 8) dexSRM = 3;
@@ -215,11 +295,15 @@ export class RQ3Actor extends Actor {
       else dexSRM = -1;
       
       // Calculate Size Strike Rank Modifier
+      // SIZ 01-09: SRM = 3
+      // SIZ 10-15: SRM = 2
+      // SIZ 16-19: SRM = 1
+      // SIZ 20+: SRM = 0
       let sizeSRM = 0;
-      if (siz <= 8) sizeSRM = -1;
-      else if (siz <= 16) sizeSRM = 0;
-      else if (siz <= 24) sizeSRM = 1;
-    else sizeSRM = 2;
+      if (siz <= 9) sizeSRM = 3;
+      else if (siz <= 15) sizeSRM = 2;
+      else if (siz <= 19) sizeSRM = 1;
+      else sizeSRM = 0; // siz >= 20
     
     // Calculate Melee Strike Rank Modifier (DEX SRM + Size SRM)
     const meleeSRM = dexSRM + sizeSRM;
@@ -230,12 +314,65 @@ export class RQ3Actor extends Actor {
     }
     
     this.system.derivedStats.damageModifier = damageModifier;
+    this.system.derivedStats.twoHandDamageModifier = twoHandDamageModifier;
     this.system.derivedStats.moveRate = this.system.attributes.movement.walk;
     this.system.derivedStats.dexSRM = dexSRM;
     this.system.derivedStats.sizeSRM = sizeSRM;
     this.system.derivedStats.meleeSRM = meleeSRM;
     } catch (error) {
       console.error("RQ3 | Error calculating derived stats:", error);
+    }
+  }
+
+  /**
+   * Calculate magic stats (Magic Rating, Free INT)
+   */
+  _calculateMagicStats() {
+    try {
+      // Skip if not a character
+      if (this.type !== 'character') {
+        return;
+      }
+
+      // Ensure magic object exists
+      if (!this.system.magic) {
+        this.system.magic = {
+          magicRating: { value: 0 },
+          freeInt: { base: 10, bonus: 0, current: 10 },
+          ceremony: { base: 5, invested: 0 },
+          summon: { base: 0, invested: 0 },
+          enchant: { base: 0, invested: 0 }
+        };
+      }
+
+      // Calculate Magic Rating base value
+      // Magic Rating = (INT excess) + (POW excess) + ceil((DEX excess) / 2)
+      // Excess = value - 10 (values above 10)
+      const int = this.system.characteristics.int?.current || 10;
+      const pow = this.system.characteristics.pow?.current || 10;
+      const dex = this.system.characteristics.dex?.current || 10;
+      
+      const intExcess = Math.max(0, int - 10);
+      const powExcess = Math.max(0, pow - 10);
+      const dexExcess = Math.max(0, dex - 10);
+      
+      const magicRatingBase = intExcess + powExcess + Math.ceil(dexExcess / 2);
+      this.system.magic.magicRating.value = magicRatingBase;
+      
+      // Calculate Free INT
+      // Free INT = current INT + bonus from items/spells
+      this.system.magic.freeInt.base = int;
+      const bonus = this.system.magic.freeInt.bonus || 0;
+      this.system.magic.freeInt.current = int + bonus;
+      
+      console.log('RQ3 | Magic stats calculated:', {
+        magicRating: this.system.magic.magicRating.value,
+        freeInt: this.system.magic.freeInt.current,
+        formula: `INT(${int}-10=${intExcess}) + POW(${pow}-10=${powExcess}) + ceil(DEX ${dex}-10/2=${Math.ceil(dexExcess/2)}) = ${magicRatingBase}`
+      });
+      
+    } catch (error) {
+      console.error("RQ3 | Error calculating magic stats:", error);
     }
   }
 
@@ -344,30 +481,44 @@ export class RQ3Actor extends Actor {
       let itemEncumbrance = 0;
       let encumbranceMultiplier = 1.0; // Default for carried items
 
-      // Determine encumbrance multiplier based on storage location
-      const storageLocation = item.system.storageLocation || 'carried';
-      switch (storageLocation) {
-        case 'worn':
-          encumbranceMultiplier = 0.5; // Worn items = 1/2 encumbrance
-          break;
-        case 'bag':
-          encumbranceMultiplier = 1/3; // Bag items = 1/3 encumbrance
-          break;
-        case 'carried':
-        default:
-          encumbranceMultiplier = 1.0; // Carried items = full encumbrance
-          break;
+      // Check if item is inside a container - if so, always use 1/3 multiplier
+      if (item.system.containerId) {
+        encumbranceMultiplier = 1/3; // Items in containers = 1/3 encumbrance
+      } else {
+        // Determine encumbrance multiplier based on storage location
+        const storageLocation = item.system.storageLocation || 'carried';
+        switch (storageLocation) {
+          case 'worn':
+            encumbranceMultiplier = 0.5; // Worn items = 1/2 encumbrance
+            break;
+          case 'bag':
+            encumbranceMultiplier = 1/3; // Bag items = 1/3 encumbrance
+            break;
+          case 'carried':
+          default:
+            encumbranceMultiplier = 1.0; // Carried items = full encumbrance
+            break;
+        }
       }
 
       if (item.type === 'armor') {
         // Check if armor is equipped
         const isEquipped = Object.values(this.system.equippedArmor || {}).includes(item.id);
         if (isEquipped) {
-          itemEncumbrance = (item.system.encumbrance || 0) * encumbranceMultiplier;
+          // Recalculate ENC based on character's actual SIZ when equipped
+          const characterSiz = this.system.characteristics?.siz?.value || 13; // Default to medium if missing
+          const sizeCategory = CONFIG.RQ3.getCharacterSizeCategory(characterSiz);
+          const dynamicENC = CONFIG.RQ3.calculateArmorEncumbrance(
+            item.system.armorType,
+            item.system.armorLocation,
+            sizeCategory
+          ) || item.system.encumbrance || 0; // Fallback to stored ENC if calculation fails
+          
+          itemEncumbrance = dynamicENC * encumbranceMultiplier;
           armorAndWeaponEncumbrance += itemEncumbrance;
         } else {
-          // Unequipped armor uses regular weight and storage location
-          itemEncumbrance = ((item.system.weight || 0) * (item.system.quantity || 1)) * encumbranceMultiplier;
+          // Unequipped armor uses stored encumbrance (medium size default) and storage location multiplier
+          itemEncumbrance = ((item.system.encumbrance || 0) * (item.system.quantity || 1)) * encumbranceMultiplier;
         }
       } else if (item.type === 'weapon') {
         // Check if weapon is equipped
@@ -482,6 +633,71 @@ export class RQ3Actor extends Actor {
       content: `${this.name} heals ${healing} hit points to ${location}`,
       speaker: ChatMessage.getSpeaker({ actor: this })
     });
+  }
+
+  /**
+   * Add descriptive tooltip to a roll
+   * @param {Roll} roll - The roll to add tooltip to
+   * @param {string} description - The description of the calculation
+   * @private
+   */
+  static _addRollTooltip(roll, description) {
+    if (!roll.options) roll.options = {};
+    roll.options.tooltip = description;
+  }
+
+  /**
+   * Calculate RuneQuest roll result type
+   * @param {number} rollTotal - The dice roll result (1-100)
+   * @param {number} skillValue - The skill/characteristic value to roll against
+   * @returns {Object} Object with result type and text
+   */
+  static calculateRollResult(rollTotal, skillValue) {
+    // Critical Success: 1 is always critical, or roll <= skillValue / 20
+    const criticalThreshold = Math.floor(skillValue / 20);
+    const isCritical = rollTotal === 1 || rollTotal <= criticalThreshold;
+    
+    // Special Success: 01 to 20% of normal success chance (skillValue / 5)
+    // But only if not already a critical
+    const specialThreshold = Math.floor(skillValue / 5);
+    const isSpecial = !isCritical && rollTotal <= specialThreshold;
+    
+    // Fumble: 100 is always fumble, or 5% of failure chance
+    const failureChance = 100 - skillValue;
+    const fumbleChance = Math.ceil(failureChance * 0.05);
+    const fumbleThreshold = 101 - fumbleChance;
+    const isFumble = rollTotal === 100 || rollTotal >= fumbleThreshold;
+    
+    // Normal Success: roll <= skillValue but not critical or special
+    const isSuccess = !isCritical && !isSpecial && rollTotal <= skillValue;
+    
+    // Normal Failure: roll > skillValue but not fumble
+    const isFailure = !isFumble && rollTotal > skillValue;
+    
+    // Determine result
+    let resultType = 'failure';
+    let resultText = 'Failure';
+    let resultClass = 'failure';
+    
+    if (isCritical) {
+      resultType = 'critical';
+      resultText = 'Critical Success!';
+      resultClass = 'critical';
+    } else if (isSpecial) {
+      resultType = 'special';
+      resultText = 'Special Success';
+      resultClass = 'special';
+    } else if (isFumble) {
+      resultType = 'fumble';
+      resultText = 'Fumble!';
+      resultClass = 'fumble';
+    } else if (isSuccess) {
+      resultType = 'success';
+      resultText = 'Success';
+      resultClass = 'success';
+    }
+    
+    return { resultType, resultText, resultClass, isCritical, isSpecial, isFumble, isSuccess, isFailure };
   }
 
   /**
@@ -609,12 +825,25 @@ export class RQ3Actor extends Actor {
     let categoryBonus = 0;
     const characteristics = system.characteristics;
     
+    // Primary Influence: +1% per point above 10, -1% per point below 10
     const calculatePrimaryInfluence = (charValue) => charValue - 10;
+    
+    // Secondary Influence: +1% per 2 points above 10, -1% per 2 points below 10
+    // Maximum +10% bonus (characteristic points above 30 are ignored)
+    // Round up for positive values, round down for negative values
     const calculateSecondaryInfluence = (charValue) => {
-      const effectiveValue = Math.min(charValue, 30);
-      const modifier = Math.floor((effectiveValue - 10) / 2);
-      return Math.max(-10, Math.min(10, modifier));
+      const effectiveValue = Math.min(charValue, 30); // Cap at 30
+      const difference = effectiveValue - 10;
+      let bonus;
+      if (difference >= 0) {
+        bonus = Math.ceil(difference / 2); // Round up for positive
+      } else {
+        bonus = Math.floor(difference / 2); // Round down (more negative) for negative
+      }
+      return Math.max(-10, Math.min(10, bonus)); // Clamp between -10 and +10
     };
+    
+    // Negative Influence: -1% per point above 10, +1% per point below 10
     const calculateNegativeInfluence = (charValue) => 10 - charValue;
     
     switch (categoryKey) {
@@ -646,22 +875,38 @@ export class RQ3Actor extends Actor {
                       calculateNegativeInfluence(characteristics.siz?.current || 10) +
                       calculateNegativeInfluence(characteristics.pow?.current || 10);
         break;
+      case 'weapon':
+        // Attack Modifier equals Manipulation modifier (INT, DEX = Primary, STR = Secondary)
+        categoryBonus = calculatePrimaryInfluence(characteristics.int?.current || 10) +
+                      calculatePrimaryInfluence(characteristics.dex?.current || 10) +
+                      calculateSecondaryInfluence(characteristics.str?.current || 10);
+        break;
     }
     
-    // Calculate final skill value
-    if (baseValue === 0 && investedValue === 0) {
-      skillValue = 0; // No category bonus for untrained skills
-    } else {
-      skillValue = Math.max(0, baseValue + investedValue + categoryBonus);
-    }
+    // Calculate final skill value: base + invested + category bonus
+    // Category bonus applies to all skills (including those with 0 base and 0 invested)
+    skillValue = Math.max(0, baseValue + investedValue + categoryBonus);
     
     skillValue += modifier;
 
     const roll = new Roll("1d100");
-    await roll.evaluate({async: true}); // Evaluate the roll to get roll.total
+    await roll.evaluate(); // Evaluate the roll to get roll.total
 
-    // Check for success (no longer auto-ticking training)
-    const isSuccess = roll.total <= skillValue; // Standard d100 success
+    // Add descriptive tooltip
+    const tooltipDescription = `
+      <div style="text-align: left; padding: 4px;">
+        <strong>Skill Roll: ${skillName}</strong><br/>
+        Base: ${baseValue}%<br/>
+        Invested: ${investedValue}%<br/>
+        Category Bonus: ${categoryBonus >= 0 ? '+' : ''}${categoryBonus}%<br/>
+        ${modifier !== 0 ? `Modifier: ${modifier >= 0 ? '+' : ''}${modifier}%<br/>` : ''}
+        <strong>Total: ${skillValue}%</strong>
+      </div>
+    `;
+    RQ3Actor._addRollTooltip(roll, tooltipDescription);
+
+    // Calculate RuneQuest roll result
+    const result = RQ3Actor.calculateRollResult(roll.total, skillValue);
 
     // Note: Training ticks are now manually controlled by the user
     // They can click on the training tick icons to toggle training readiness
@@ -670,12 +915,12 @@ export class RQ3Actor extends Actor {
     const messageData = {
       content: `
         <div class="rq3-skill-roll">
-          <div class="skill-name">${skillName}</div>
+          <h3>${skillName}</h3>
           <div class="roll-result">
             <strong>${roll.total}</strong> vs ${skillValue}
           </div>
-          <div class="result-text ${isSuccess ? 'success' : 'failure'}">
-            ${isSuccess ? "Success" : "Failure"}
+          <div class="result-text ${result.resultClass}">
+            ${result.resultText}
           </div>
         </div>
       `,
@@ -685,11 +930,13 @@ export class RQ3Actor extends Actor {
 
     await ChatMessage.create(messageData);
 
-    // Determine critical/fumble for return, you might have specific rules for this
-    const critical = roll.total <= Math.floor(skillValue / 20); // Example critical rule
-    const fumble = roll.total >= 96; // Example fumble rule
-
-    return { roll, success: isSuccess, critical, fumble };
+    return { 
+      roll, 
+      success: result.isSuccess || result.isSpecial || result.isCritical, 
+      critical: result.isCritical,
+      special: result.isSpecial,
+      fumble: result.isFumble 
+    };
   }
 
   /**
@@ -708,15 +955,20 @@ export class RQ3Actor extends Actor {
     const roll = new Roll("1d100");
     await roll.evaluate();
 
-    const success = roll.total <= target;
-    const critical = roll.total <= Math.floor(target / 20);
-    const fumble = roll.total >= 96;
+    // Add descriptive tooltip
+    const tooltipDescription = `
+      <div style="text-align: left; padding: 4px;">
+        <strong>Characteristic Roll: ${characteristic.toUpperCase()}</strong><br/>
+        ${characteristic.toUpperCase()}: ${char.current}<br/>
+        Multiplier: x5<br/>
+        ${modifier !== 0 ? `Modifier: ${modifier >= 0 ? '+' : ''}${modifier}<br/>` : ''}
+        <strong>Target: ${target}</strong>
+      </div>
+    `;
+    RQ3Actor._addRollTooltip(roll, tooltipDescription);
 
-    let resultText = "";
-    if (fumble) resultText = "Fumble!";
-    else if (critical) resultText = "Critical Success!";
-    else if (success) resultText = "Success";
-    else resultText = "Failure";
+    // Calculate RuneQuest roll result
+    const result = RQ3Actor.calculateRollResult(roll.total, target);
 
     // Note: POW training ticks are now manually controlled by the user
     // They can click on the training tick icon to toggle training readiness
@@ -728,8 +980,8 @@ export class RQ3Actor extends Actor {
           <div class="roll-result">
             <strong>${roll.total}</strong> vs ${target}
           </div>
-          <div class="result-text ${success ? 'success' : 'failure'}">
-            ${resultText}
+          <div class="result-text ${result.resultClass}">
+            ${result.resultText}
           </div>
         </div>
       `,
@@ -737,7 +989,13 @@ export class RQ3Actor extends Actor {
       rolls: [roll]
     });
 
-    return { roll, success, critical, fumble };
+    return { 
+      roll, 
+      success: result.isSuccess || result.isSpecial || result.isCritical, 
+      critical: result.isCritical,
+      special: result.isSpecial,
+      fumble: result.isFumble 
+    };
   }
 
   /**
@@ -755,15 +1013,19 @@ export class RQ3Actor extends Actor {
     const roll = new Roll("1d100");
     await roll.evaluate();
 
-    const success = roll.total <= target;
-    const critical = roll.total <= Math.floor(target / 20);
-    const fumble = roll.total >= 96;
+    // Add descriptive tooltip
+    const tooltipDescription = `
+      <div style="text-align: left; padding: 4px;">
+        <strong>Characteristic Roll: ${characteristic.toUpperCase()}</strong><br/>
+        ${characteristic.toUpperCase()}: ${char.current}<br/>
+        Multiplier: x5<br/>
+        <strong>Target: ${target}</strong>
+      </div>
+    `;
+    RQ3Actor._addRollTooltip(roll, tooltipDescription);
 
-    let resultText = "";
-    if (fumble) resultText = "Fumble!";
-    else if (critical) resultText = "Critical Success!";
-    else if (success) resultText = "Success";
-    else resultText = "Failure";
+    // Calculate RuneQuest roll result
+    const result = RQ3Actor.calculateRollResult(roll.total, target);
 
     // Note: POW training ticks are now manually controlled by the user
     // They can click on the training tick icon to toggle training readiness
@@ -775,8 +1037,8 @@ export class RQ3Actor extends Actor {
           <div class="roll-result">
             <strong>${roll.total}</strong> vs ${target}
           </div>
-          <div class="result-text ${success ? 'success' : 'failure'}">
-            ${resultText}
+          <div class="result-text ${result.resultClass}">
+            ${result.resultText}
           </div>
         </div>
       `,
@@ -784,68 +1046,19 @@ export class RQ3Actor extends Actor {
       rolls: [roll]
     });
 
-    return { roll, success, critical, fumble };
+    return { 
+      roll, 
+      success: result.isSuccess || result.isSpecial || result.isCritical, 
+      critical: result.isCritical,
+      special: result.isSpecial,
+      fumble: result.isFumble 
+    };
   }
 
   /**
    * Roll a characteristic check with custom multiplier
    * @param {string} characteristic - Characteristic to roll against
    */
-  async rollCharacteristicCustom(characteristic) {
-    const char = this.system.characteristics[characteristic];
-    if (!char) {
-      ui.notifications.error(`Characteristic ${characteristic} not found`);
-      return;
-    }
-
-    // Find the x? button element to position the tooltip
-    const buttonElement = document.querySelector(`[data-characteristic="${characteristic}"].characteristic-roll-custom`);
-    if (!buttonElement) {
-      console.error(`Could not find characteristic roll button for ${characteristic}`);
-      return;
-    }
-
-    // Show tooltip and get multiplier
-    const multiplier = await this.showCharacteristicRollTooltip(characteristic, buttonElement);
-
-    if (multiplier === null) return;
-
-    const target = char.current * multiplier;
-    const roll = new Roll("1d100");
-    await roll.evaluate();
-
-    const success = roll.total <= target;
-    const critical = roll.total <= Math.floor(target / 20);
-    const fumble = roll.total >= 96;
-
-    let resultText = "";
-    if (fumble) resultText = "Fumble!";
-    else if (critical) resultText = "Critical Success!";
-    else if (success) resultText = "Success";
-    else resultText = "Failure";
-
-    // Note: POW training ticks are now manually controlled by the user
-    // They can click on the training tick icon to toggle training readiness
-
-    await ChatMessage.create({
-      content: `
-        <div class="rq3-char-roll">
-          <h3>${characteristic.toUpperCase()} x${multiplier} Roll</h3>
-          <div class="roll-result">
-            <strong>${roll.total}</strong> vs ${target}
-          </div>
-          <div class="result-text ${success ? 'success' : 'failure'}">
-            ${resultText}
-          </div>
-        </div>
-      `,
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      rolls: [roll]
-    });
-
-    return { roll, success, critical, fumble };
-  }
-
   /**
    * Reset all current characteristic values to their original values
    */
@@ -952,7 +1165,7 @@ export class RQ3Actor extends Actor {
    * Roll a characteristic check with custom multiplier
    * @param {string} characteristic - Characteristic to roll against
    */
-  async rollCharacteristicCustom(characteristic) {
+  async rollCharacteristicCustom(characteristic, targetElement = null) {
     console.log('RQ3 | rollCharacteristicCustom called with characteristic:', characteristic);
     
     const char = this.system.characteristics[characteristic];
@@ -963,8 +1176,12 @@ export class RQ3Actor extends Actor {
     
     console.log('RQ3 | Characteristic data:', char);
     
-    // Find the x? button element to position the tooltip
-    const buttonElement = document.querySelector(`[data-characteristic="${characteristic}"].characteristic-roll-custom`);
+    // Use provided target element or try to find the x5 button
+    let buttonElement = targetElement;
+    if (!buttonElement) {
+      buttonElement = document.querySelector(`[data-characteristic="${characteristic}"].characteristic-roll-x5`);
+    }
+    
     console.log('RQ3 | Button element found:', buttonElement);
     
     if (!buttonElement) {
@@ -985,15 +1202,19 @@ export class RQ3Actor extends Actor {
     const roll = new Roll("1d100");
     await roll.evaluate();
 
-    const success = roll.total <= target;
-    const critical = roll.total <= Math.floor(target / 20);
-    const fumble = roll.total >= 96;
+    // Add descriptive tooltip
+    const tooltipDescription = `
+      <div style="text-align: left; padding: 4px;">
+        <strong>Characteristic Roll: ${characteristic.toUpperCase()}</strong><br/>
+        ${characteristic.toUpperCase()}: ${char.current}<br/>
+        Multiplier: x${multiplier}<br/>
+        <strong>Target: ${target}</strong>
+      </div>
+    `;
+    RQ3Actor._addRollTooltip(roll, tooltipDescription);
 
-    let resultText = "";
-    if (fumble) resultText = "Fumble!";
-    else if (critical) resultText = "Critical Success!";
-    else if (success) resultText = "Success";
-    else resultText = "Failure";
+    // Calculate RuneQuest roll result
+    const result = RQ3Actor.calculateRollResult(roll.total, target);
 
     // Note: POW training ticks are now manually controlled by the user
     // They can click on the training tick icon to toggle training readiness
@@ -1005,8 +1226,8 @@ export class RQ3Actor extends Actor {
           <div class="roll-result">
             <strong>${roll.total}</strong> vs ${target}
           </div>
-          <div class="result-text ${success ? 'success' : 'failure'}">
-            ${resultText}
+          <div class="result-text ${result.resultClass}">
+            ${result.resultText}
           </div>
         </div>
       `,
@@ -1014,7 +1235,13 @@ export class RQ3Actor extends Actor {
       rolls: [roll]
     });
 
-    return { roll, success, critical, fumble };
+    return { 
+      roll, 
+      success: result.isSuccess || result.isSpecial || result.isCritical, 
+      critical: result.isCritical,
+      special: result.isSpecial,
+      fumble: result.isFumble 
+    };
   }
 
   /**
@@ -1067,10 +1294,20 @@ export class RQ3Actor extends Actor {
       const tooltipHTML = `
         <div class="rq3-damage-tooltip" id="rq3-damage-tooltip-${hitLocation}">
           <div class="rq3-damage-tooltip-header">
-            <div class="rq3-damage-tooltip-title">${locationDisplayName} Damage</div>
+            <div class="rq3-damage-tooltip-title">${locationDisplayName}</div>
           </div>
           
           <div class="rq3-damage-tooltip-content">
+            <div class="rq3-damage-info">
+              <div class="rq3-damage-current">
+                <span>Current HP:</span>
+                <span class="rq3-hp-current-value ${statusClass}">${currentHP}/${maxHP}</span>
+              </div>
+              <div class="rq3-damage-effective">
+                <span>Damage Taken:</span>
+                <span>${damage}</span>
+              </div>
+            </div>
             <div class="rq3-damage-controls">
               <button class="rq3-damage-button" data-action="damage" data-amount="1">-</button>
               <div class="rq3-damage-value">${damage}</div>
@@ -1240,7 +1477,7 @@ export class RQ3Actor extends Actor {
       // Update display and auto-save function (now works with damage)
       const updateDisplayAndSave = async (damageChange) => {
         const oldDamage = currentDamageValue;
-        const newDamage = Math.max(0, Math.min(50, currentDamageValue + damageChange)); // Limit damage to 0-50
+        const newDamage = currentDamageValue + damageChange; // Allow damage to go negative (HP can exceed max)
         currentDamageValue = newDamage;
         
         const newCurrentHP = Math.max(0, maxHP - newDamage);
@@ -1255,6 +1492,11 @@ export class RQ3Actor extends Actor {
 
         // Update tooltip display
         tooltipElement.find('.rq3-damage-value').text(newDamage);
+        tooltipElement.find('.rq3-damage-effective span').last().text(newDamage);
+        tooltipElement.find('.rq3-hp-current-value')
+          .text(`${newCurrentHP}/${maxHP}`)
+          .removeClass('healthy injured wounded critical')
+          .addClass(newStatusClass);
         
         // Update the main HP display
         const hpElement = $(`[data-hit-location="${hitLocation}"] .hp-value`);
@@ -1328,6 +1570,262 @@ export class RQ3Actor extends Actor {
   }
 
   /**
+   * Show armor damage adjustment tooltip
+   * @param {string} hitLocation - Hit location name (head, leftArm, etc.)
+   * @param {string} armorId - ID of the armor item
+   * @param {HTMLElement} targetElement - The AP indicator element to position relative to
+   * @returns {Promise<void>}
+   */
+  async showArmorDamageTooltip(hitLocation, armorId, targetElement) {
+    console.log('RQ3 | showArmorDamageTooltip - Starting with:', { hitLocation, armorId, targetElement });
+    
+    if (!armorId) {
+      console.warn('RQ3 | No armor equipped at this location');
+      return;
+    }
+    
+    return new Promise((resolve) => {
+      const armorItem = this.items.get(armorId);
+      console.log('RQ3 | showArmorDamageTooltip - armorItem:', armorItem);
+      
+      if (!armorItem) {
+        console.error(`Armor item ${armorId} not found`);
+        resolve();
+        return;
+      }
+
+      const maxAP = armorItem.system.hitLocations[hitLocation] || 0;
+      const damage = armorItem.system.armorDamage[hitLocation] || 0;
+      const currentAP = Math.max(0, maxAP - damage);
+      const tempAP = this.system.hitLocations[hitLocation]?.tempArmor || 0;
+      const totalAP = currentAP + tempAP;
+      const percentage = maxAP > 0 ? Math.round((currentAP / maxAP) * 100) : 0;
+      
+      // Determine AP status color
+      let statusClass = 'healthy';
+      if (percentage <= 0) statusClass = 'critical';
+      else if (percentage <= 25) statusClass = 'critical';
+      else if (percentage <= 50) statusClass = 'wounded';
+      else if (percentage <= 75) statusClass = 'injured';
+
+      // Format hit location name for display
+      const locationDisplayName = this._formatHitLocationName(hitLocation);
+
+      // Create tooltip HTML
+      const tooltipHTML = `
+        <div class="rq3-damage-tooltip" id="rq3-armor-tooltip-${hitLocation}">
+          <div class="rq3-damage-tooltip-header">
+            <div class="rq3-damage-tooltip-title">${locationDisplayName} Armor - ${armorItem.name}</div>
+          </div>
+          
+          <div class="rq3-damage-tooltip-content">
+            <div class="rq3-damage-info">
+              <div class="rq3-damage-current">
+                <span>Current AP:</span>
+                <span class="rq3-hp-current-value ${statusClass}">${totalAP}/${maxAP}</span>
+              </div>
+              <div class="rq3-damage-effective">
+                <span>Armor Damage:</span>
+                <span>${damage}</span>
+              </div>
+              <div class="rq3-damage-effective">
+                <span>Temporary AP:</span>
+                <span>${tempAP}</span>
+              </div>
+            </div>
+            <div class="rq3-damage-controls">
+              <button class="rq3-damage-button" data-action="repair" data-amount="1">-</button>
+              <div class="rq3-damage-value">${damage}</div>
+              <button class="rq3-damage-button" data-action="damage" data-amount="1">+</button>
+            </div>
+            <button class="rq3-damage-reset" data-action="reset">Repair All</button>
+            <div class="rq3-damage-controls">
+              <button class="rq3-damage-button" data-action="remove-temp" data-amount="1">-</button>
+              <div class="rq3-damage-value">${tempAP}</div>
+              <button class="rq3-damage-button" data-action="add-temp" data-amount="1">+</button>
+            </div>
+            <button class="rq3-damage-reset" data-action="clear-temp">Clear Temp AP</button>
+          </div>
+        </div>
+      `;
+
+      // Add tooltip to document body
+      const tooltipElement = $(tooltipHTML);
+      console.log('RQ3 | showArmorDamageTooltip - Created tooltip element:', tooltipElement);
+      
+      $('body').append(tooltipElement);
+      
+      // Verify tooltip was added to DOM
+      const immediateCheck = document.getElementById(`rq3-armor-tooltip-${hitLocation}`);
+      if (!immediateCheck) {
+        console.error('RQ3 | showArmorDamageTooltip - Tooltip was not added to DOM!');
+        resolve();
+        return;
+      }
+
+      // Position the tooltip
+      const targetRect = targetElement.getBoundingClientRect();
+      const tooltipRect = tooltipElement[0].getBoundingClientRect();
+      
+      let left = targetRect.right + 10;
+      let top = targetRect.top + (targetRect.height / 2) - (tooltipRect.height / 2);
+      
+      // Adjust for viewport edges
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      
+      if (left + tooltipRect.width > viewportWidth) {
+        left = targetRect.left - tooltipRect.width - 10;
+      }
+      
+      if (top < 10) top = 10;
+      if (top + tooltipRect.height > viewportHeight - 10) {
+        top = viewportHeight - tooltipRect.height - 10;
+      }
+
+      tooltipElement.css({
+        left: `${left}px`,
+        top: `${top}px`,
+        display: 'block',
+        opacity: '1'
+      });
+
+      console.log('RQ3 | showArmorDamageTooltip - Positioned tooltip');
+
+      // Add click-outside handler
+      const clickOutsideHandler = (e) => {
+        const tooltip = document.getElementById(`rq3-armor-tooltip-${hitLocation}`);
+        if (tooltip && !tooltip.contains(e.target) && !targetElement.contains(e.target)) {
+          console.log('RQ3 | showArmorDamageTooltip - Click outside detected, closing tooltip');
+          tooltip.remove();
+          document.removeEventListener('click', clickOutsideHandler);
+          document.removeEventListener('keydown', escapeHandler);
+          resolve();
+        }
+      };
+
+      // Add escape key handler
+      const escapeHandler = (e) => {
+        if (e.key === 'Escape') {
+          console.log('RQ3 | showArmorDamageTooltip - Escape key pressed, closing tooltip');
+          const tooltip = document.getElementById(`rq3-armor-tooltip-${hitLocation}`);
+          if (tooltip) {
+            tooltip.remove();
+            document.removeEventListener('click', clickOutsideHandler);
+            document.removeEventListener('keydown', escapeHandler);
+            resolve();
+          }
+        }
+      };
+
+      // Delay adding handlers to avoid immediate closure
+      setTimeout(() => {
+        document.addEventListener('click', clickOutsideHandler);
+        document.addEventListener('keydown', escapeHandler);
+      }, 10);
+
+      // Track current damage and temp AP values for real-time updates
+      let currentDamageValue = damage;
+      let currentTempAP = tempAP;
+
+      // Handle damage/repair buttons
+      tooltipElement.find('.rq3-damage-button').on('click', async (e) => {
+        e.stopPropagation();
+        const action = $(e.currentTarget).data('action');
+        const amount = parseInt($(e.currentTarget).data('amount')) || 1;
+        
+        if (action === 'damage') {
+          currentDamageValue = Math.min(maxAP, currentDamageValue + amount);
+        } else if (action === 'repair') {
+          currentDamageValue = Math.max(0, currentDamageValue - amount);
+        }
+        
+        // Update the armor item
+        await armorItem.update({
+          [`system.armorDamage.${hitLocation}`]: currentDamageValue
+        });
+        
+        // Update the tooltip display
+        const newCurrentAP = Math.max(0, maxAP - currentDamageValue);
+        const newPercentage = maxAP > 0 ? Math.round((newCurrentAP / maxAP) * 100) : 0;
+        
+        let newStatusClass = 'healthy';
+        if (newPercentage <= 0) newStatusClass = 'critical';
+        else if (newPercentage <= 25) newStatusClass = 'critical';
+        else if (newPercentage <= 50) newStatusClass = 'wounded';
+        else if (newPercentage <= 75) newStatusClass = 'injured';
+        
+        tooltipElement.find('.rq3-damage-controls .rq3-damage-value').first().text(currentDamageValue);
+        tooltipElement.find('.rq3-damage-effective').first().find('span').last().text(currentDamageValue);
+        const newTotalAP = newCurrentAP + currentTempAP;
+        tooltipElement.find('.rq3-hp-current-value')
+          .text(`${newTotalAP}/${maxAP}`)
+          .removeClass('healthy injured wounded critical')
+          .addClass(newStatusClass);
+      });
+
+      // Handle temp AP buttons (using same button class as damage buttons)
+      tooltipElement.find('button[data-action="add-temp"], button[data-action="remove-temp"]').on('click', async (e) => {
+        e.stopPropagation();
+        const action = $(e.currentTarget).data('action');
+        const amount = parseInt($(e.currentTarget).data('amount')) || 1;
+        
+        if (action === 'add-temp') {
+          currentTempAP = currentTempAP + amount;
+        } else if (action === 'remove-temp') {
+          currentTempAP = Math.max(0, currentTempAP - amount);
+        }
+        
+        // Update the actor's hit location temp armor
+        await this.update({
+          [`system.hitLocations.${hitLocation}.tempArmor`]: currentTempAP
+        });
+        
+        // Update the tooltip display
+        const newCurrentAP = Math.max(0, maxAP - currentDamageValue);
+        const newTotalAP = newCurrentAP + currentTempAP;
+        tooltipElement.find('.rq3-damage-controls .rq3-damage-value').last().text(currentTempAP);
+        tooltipElement.find('.rq3-damage-effective').last().find('span').last().text(currentTempAP);
+        tooltipElement.find('.rq3-hp-current-value').text(`${newTotalAP}/${maxAP}`);
+      });
+
+      // Handle reset buttons
+      tooltipElement.find('.rq3-damage-reset').on('click', async (e) => {
+        e.stopPropagation();
+        const action = $(e.currentTarget).data('action');
+        
+        if (action === 'reset') {
+          // Reset armor damage for this location
+          await armorItem.update({
+            [`system.armorDamage.${hitLocation}`]: 0
+          });
+          
+          // Close tooltip
+          tooltipElement.remove();
+          document.removeEventListener('click', clickOutsideHandler);
+          document.removeEventListener('keydown', escapeHandler);
+          resolve();
+        } else if (action === 'clear-temp') {
+          // Clear temp AP
+          currentTempAP = 0;
+          await this.update({
+            [`system.hitLocations.${hitLocation}.tempArmor`]: 0
+          });
+          
+          // Update display
+          const newCurrentAP = Math.max(0, maxAP - currentDamageValue);
+          const newTotalAP = newCurrentAP + 0; // currentTempAP is now 0
+          tooltipElement.find('.rq3-damage-controls .rq3-damage-value').last().text(0);
+          tooltipElement.find('.rq3-damage-effective').last().find('span').last().text(0);
+          tooltipElement.find('.rq3-hp-current-value').text(`${newTotalAP}/${maxAP}`);
+        }
+      });
+
+      console.log('RQ3 | showArmorDamageTooltip - Tooltip setup complete');
+    });
+  }
+
+  /**
    * Format hit location name for display
    * @param {string} hitLocation - Hit location key
    * @returns {string} - Formatted display name
@@ -1352,9 +1850,29 @@ export class RQ3Actor extends Actor {
    * @param {HTMLElement} targetElement - The x? button element to position relative to
    * @returns {Promise<number|null>} Selected multiplier or null if cancelled
    */
-  async showCharacteristicRollTooltip(characteristic, targetElement) {
-    console.log('RQ3 | showCharacteristicRollTooltip called with:', { characteristic, targetElement });
-    
+  /**
+   * Generic multiplier tooltip component - reusable for all roll types
+   * @param {Object} config - Configuration object
+   * @param {string} config.id - Unique ID for the tooltip
+   * @param {string} config.title - Title to display
+   * @param {number} config.baseValue - Base value to multiply
+   * @param {Array<number>} config.multipliers - Array of multipliers to show
+   * @param {number} config.recommendedMultiplier - Which multiplier to mark as recommended (optional)
+   * @param {HTMLElement} config.targetElement - Element to position relative to
+   * @param {Function} config.calculateTarget - Function to calculate target value (value, multiplier) => number
+   * @returns {Promise<number|null>} Selected multiplier or null if cancelled
+   */
+  async _showMultiplierTooltip(config) {
+    const {
+      id,
+      title,
+      baseValue,
+      multipliers,
+      recommendedMultiplier,
+      targetElement,
+      calculateTarget = (value, mult) => Math.floor(value * mult)
+    } = config;
+
     return new Promise((resolve) => {
       // Store the last mouse position for fallback positioning
       let lastMouseX = 0;
@@ -1367,28 +1885,19 @@ export class RQ3Actor extends Actor {
       };
       
       document.addEventListener('mousemove', trackMouse);
-      const char = this.system.characteristics[characteristic];
-      console.log('RQ3 | Characteristic data in tooltip method:', char);
-      
-      if (!char) {
-        console.error(`Characteristic ${characteristic} not found`);
-        resolve(null);
-        return;
-      }
 
       // Create tooltip HTML
       const tooltipHTML = `
-        <div class="rq3-roll-tooltip" id="rq3-roll-tooltip-${characteristic}">
+        <div class="rq3-roll-tooltip" id="${id}">
           <div class="rq3-roll-tooltip-header">
-            <div class="rq3-roll-tooltip-title">${characteristic.toUpperCase()} Custom Roll</div>
+            <div class="rq3-roll-tooltip-title">${title}</div>
           </div>
 
           <div class="rq3-roll-tooltip-content">
             <div class="rq3-roll-multiplier-grid">
-              ${Array.from({length: 10}, (_, i) => {
-                const mult = i + 1;
-                const target = char.current * mult;
-                const isRecommended = mult === 5; // x5 is commonly used
+              ${multipliers.map(mult => {
+                const target = calculateTarget(baseValue, mult);
+                const isRecommended = mult === recommendedMultiplier;
                 return `
                   <button class="rq3-roll-multiplier-btn ${isRecommended ? 'recommended' : ''}"
                           data-multiplier="${mult}">
@@ -1402,118 +1911,81 @@ export class RQ3Actor extends Actor {
         </div>
       `;
 
-      console.log('RQ3 | Tooltip HTML created:', tooltipHTML);
-
       // Add tooltip to document body
       const tooltipElement = $(tooltipHTML);
-      console.log('RQ3 | Tooltip element created:', tooltipElement);
-      
       $('body').append(tooltipElement);
-      console.log('RQ3 | Tooltip appended to body');
       
       // Verify tooltip was added to DOM
-      const immediateCheck = document.getElementById(`rq3-roll-tooltip-${characteristic}`);
+      const immediateCheck = document.getElementById(id);
       if (!immediateCheck) {
-        console.error('RQ3 | Tooltip was not added to DOM!');
+        console.error(`RQ3 | Tooltip ${id} was not added to DOM!`);
+        document.removeEventListener('mousemove', trackMouse);
         resolve(null);
         return;
       }
-      console.log('RQ3 | Tooltip verified in DOM');
 
-      // Use a more reliable positioning method that works with all header layouts
+      // Positioning logic (same as characteristic tooltip)
       let left, top;
-      
-      // Method 1: Try getBoundingClientRect first
       const targetRect = targetElement.getBoundingClientRect();
       const tooltipRect = tooltipElement[0].getBoundingClientRect();
       
-      console.log('RQ3 | Target rect:', targetRect);
-      console.log('RQ3 | Tooltip rect:', tooltipRect);
-      
-      // Check if getBoundingClientRect gives us valid coordinates
       if (targetRect.left > 0 || targetRect.top > 0) {
-        console.log('RQ3 | Using getBoundingClientRect positioning');
         left = targetRect.right + 10;
         top = targetRect.top + (targetRect.height / 2) - (tooltipRect.height / 2);
       } else {
-        console.log('RQ3 | getBoundingClientRect failed, trying alternative methods');
-        
-        // Method 2: Try offsetLeft/offsetTop
         const offsetLeft = targetElement.offsetLeft;
         const offsetTop = targetElement.offsetTop;
-        console.log('RQ3 | Element offset position:', { offsetLeft, offsetTop });
         
         if (offsetLeft > 0 || offsetTop > 0) {
-          console.log('RQ3 | Using offset-based positioning');
           left = offsetLeft + targetElement.offsetWidth + 10;
           top = offsetTop + (targetElement.offsetHeight / 2) - (tooltipRect.height / 2);
-                 } else {
-           // Method 3: Use the button's position relative to the viewport
-           console.log('RQ3 | Using viewport-relative positioning');
-           const buttonPosition = targetElement.getBoundingClientRect();
-           const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
-           const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-           
-           left = buttonPosition.left + scrollX + targetElement.offsetWidth + 10;
-           top = buttonPosition.top + scrollY + (targetElement.offsetHeight / 2) - (tooltipRect.height / 2);
-           
-           // If this still gives us zeros, try to find the button's actual position in the document
-           if (left <= 10 && top <= 10) {
-             console.log('RQ3 | Viewport-relative positioning also failed, trying document traversal');
-             
-             // Try to find the button's position by traversing up the DOM tree
-             let currentElement = targetElement;
-             let totalLeft = 0;
-             let totalTop = 0;
-             
-             while (currentElement && currentElement !== document.body) {
-               totalLeft += currentElement.offsetLeft || 0;
-               totalTop += currentElement.offsetTop || 0;
-               currentElement = currentElement.offsetParent;
-             }
-             
-             console.log('RQ3 | Calculated position through DOM traversal:', { totalLeft, totalTop });
-             
-             if (totalLeft > 0 || totalTop > 0) {
-               left = totalLeft + targetElement.offsetWidth + 10;
-               top = totalTop + (targetElement.offsetHeight / 2) - (tooltipRect.height / 2);
-               console.log('RQ3 | Using DOM traversal positioning:', { left, top });
-             }
-           }
-         }
+        } else {
+          const buttonPosition = targetElement.getBoundingClientRect();
+          const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+          const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+          
+          left = buttonPosition.left + scrollX + targetElement.offsetWidth + 10;
+          top = buttonPosition.top + scrollY + (targetElement.offsetHeight / 2) - (tooltipRect.height / 2);
+          
+          if (left <= 10 && top <= 10) {
+            let currentElement = targetElement;
+            let totalLeft = 0;
+            let totalTop = 0;
+            
+            while (currentElement && currentElement !== document.body) {
+              totalLeft += currentElement.offsetLeft || 0;
+              totalTop += currentElement.offsetTop || 0;
+              currentElement = currentElement.offsetParent;
+            }
+            
+            if (totalLeft > 0 || totalTop > 0) {
+              left = totalLeft + targetElement.offsetWidth + 10;
+              top = totalTop + (targetElement.offsetHeight / 2) - (tooltipRect.height / 2);
+            }
+          }
+        }
       }
       
-             // Ensure we have valid coordinates
-       if (isNaN(left) || isNaN(top) || left < 0 || top < 0) {
-         console.warn('RQ3 | All positioning methods failed, using mouse position fallback');
-         // Use mouse position as last resort
-         if (lastMouseX > 0 && lastMouseY > 0) {
-           left = Math.max(20, Math.min(lastMouseX + 20, window.innerWidth - 520));
-           top = Math.max(20, Math.min(lastMouseY - 65, window.innerHeight - 150));
-           console.log('RQ3 | Using mouse position fallback:', { lastMouseX, lastMouseY, left, top });
-         } else {
-           left = Math.max(20, Math.min(window.innerWidth - 520, 100));
-           top = Math.max(20, Math.min(window.innerHeight - 150, 100));
-           console.log('RQ3 | Using safe fallback positioning:', { left, top });
-         }
-       }
+      // Ensure we have valid coordinates
+      if (isNaN(left) || isNaN(top) || left < 0 || top < 0) {
+        if (lastMouseX > 0 && lastMouseY > 0) {
+          left = Math.max(20, Math.min(lastMouseX + 20, window.innerWidth - 520));
+          top = Math.max(20, Math.min(lastMouseY - 65, window.innerHeight - 150));
+        } else {
+          left = Math.max(20, Math.min(window.innerWidth - 520, 100));
+          top = Math.max(20, Math.min(window.innerHeight - 150, 100));
+        }
+      }
       
       // Adjust for viewport edges
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
-      
-      console.log('RQ3 | Viewport dimensions:', { width: viewportWidth, height: viewportHeight });
-      console.log('RQ3 | Initial calculated position:', { left, top });
 
-      // If tooltip would go off the right edge, position it to the left
       if (left + tooltipRect.width > viewportWidth - 20) {
         left = Math.max(20, left - tooltipRect.width - targetElement.offsetWidth - 20);
       }
 
-      // Ensure tooltip stays within viewport vertically
       top = Math.max(20, Math.min(top, viewportHeight - tooltipRect.height - 20));
-      
-      console.log('RQ3 | Final positioning:', { left, top });
 
       // Position tooltip using CSS custom properties
       tooltipElement.addClass('positioned');
@@ -1522,24 +1994,19 @@ export class RQ3Actor extends Actor {
 
       // Show tooltip immediately
       tooltipElement.addClass('show');
-
+      
       // Set up click-outside functionality
       const handleClickOutside = (event) => {
-        console.log('RQ3 | Click outside handler triggered');
-        const tooltip = document.getElementById(`rq3-roll-tooltip-${characteristic}`);
+        const tooltip = document.getElementById(id);
         if (!tooltip) {
-          console.log('RQ3 | Tooltip not found in click-outside handler');
-          return; // Tooltip already closed
+          return;
         }
 
-        // Don't close if the click is on the target element that opened the tooltip
         if (event.target === targetElement || targetElement.contains(event.target)) {
-          console.log('RQ3 | Click on target element, not closing tooltip');
           return;
         }
 
         if (!tooltip.contains(event.target)) {
-          console.log('RQ3 | Click outside tooltip detected, closing tooltip');
           tooltip.remove();
           document.removeEventListener('click', handleClickOutside);
           document.removeEventListener('keydown', handleEscape);
@@ -1547,11 +2014,11 @@ export class RQ3Actor extends Actor {
           resolve(null);
         }
       };
-
+      
       // Set up escape key functionality
       const handleEscape = (event) => {
         if (event.key === 'Escape') {
-          const tooltip = document.getElementById(`rq3-roll-tooltip-${characteristic}`);
+          const tooltip = document.getElementById(id);
           if (tooltip) {
             tooltip.remove();
           }
@@ -1561,26 +2028,19 @@ export class RQ3Actor extends Actor {
           resolve(null);
         }
       };
-
-      // Add event listeners with a small delay to prevent immediate closure
-      console.log('RQ3 | Adding event listeners for click-outside and escape');
       
       // Delay the click-outside handler to prevent immediate closure
       setTimeout(() => {
         document.addEventListener('click', handleClickOutside);
-        console.log('RQ3 | Click-outside handler enabled after delay');
       }, 100);
       
       document.addEventListener('keydown', handleEscape);
-      console.log('RQ3 | Escape key handler added immediately');
 
       // Set up button click handlers
       tooltipElement.find('.rq3-roll-multiplier-btn').on('click', (event) => {
-        console.log('RQ3 | Multiplier button clicked:', event.currentTarget);
-        const multiplier = parseInt($(event.currentTarget).data('multiplier'));
-        console.log('RQ3 | Selected multiplier:', multiplier);
+        const multiplier = parseFloat($(event.currentTarget).data('multiplier'));
         
-        const tooltip = document.getElementById(`rq3-roll-tooltip-${characteristic}`);
+        const tooltip = document.getElementById(id);
         if (tooltip) {
           tooltip.remove();
         }
@@ -1591,12 +2051,9 @@ export class RQ3Actor extends Actor {
       });
 
       // Auto-close after 30 seconds
-      console.log('RQ3 | Setting up auto-close timeout for 30 seconds');
       setTimeout(() => {
-        console.log('RQ3 | Auto-close timeout triggered');
-        const tooltip = document.getElementById(`rq3-roll-tooltip-${characteristic}`);
+        const tooltip = document.getElementById(id);
         if (tooltip) {
-          console.log('RQ3 | Auto-closing tooltip');
           tooltip.remove();
           document.removeEventListener('click', handleClickOutside);
           document.removeEventListener('keydown', handleEscape);
@@ -1604,6 +2061,1380 @@ export class RQ3Actor extends Actor {
           resolve(null);
         }
       }, 30000);
+    });
+  }
+
+  /**
+   * Show spirit spell magic points selection tooltip
+   * @param {string} spellName - The name of the spell
+   * @param {number} maxMP - Maximum magic points for the spell
+   * @param {HTMLElement} targetElement - The element to position relative to
+   * @returns {Promise<number|null>} The selected MP value or null if cancelled
+   */
+  async showSpiritSpellMPTooltip(spellName, maxMP, targetElement) {
+    console.log('RQ3 | showSpiritSpellMPTooltip - Starting with:', { spellName, maxMP, targetElement });
+    
+    // Get available magic points (ignore Free INT as requested)
+    const currentMP = this.system.characteristics?.pow?.magicPoints?.value || 0;
+    
+    const mpOptions = Array.from({length: maxMP}, (_, i) => i + 1);
+    const id = `rq3-spirit-mp-tooltip-${spellName.replace(/\s+/g, '-')}`;
+    
+    return new Promise((resolve) => {
+      // Store the last mouse position for fallback positioning
+      let lastMouseX = 0;
+      let lastMouseY = 0;
+      
+      // Track mouse movement to get current position
+      const trackMouse = (e) => {
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+      };
+      
+      document.addEventListener('mousemove', trackMouse);
+
+      // Create tooltip HTML
+      const tooltipHTML = `
+        <div class="rq3-roll-tooltip" id="${id}">
+          <div class="rq3-roll-tooltip-header">
+            <div class="rq3-roll-tooltip-title">${spellName} - Select Magic Points</div>
+          </div>
+
+          <div class="rq3-roll-tooltip-content">
+            <div class="rq3-roll-multiplier-grid">
+              ${mpOptions.map(mp => {
+                const hasEnoughMP = mp <= currentMP;
+                const disabledClass = !hasEnoughMP ? 'disabled' : '';
+                const disabledAttr = !hasEnoughMP ? 'disabled' : '';
+                const opacityStyle = !hasEnoughMP ? 'opacity: 0.4; cursor: not-allowed;' : '';
+                return `
+                  <button class="rq3-roll-multiplier-btn ${disabledClass}"
+                          data-mp="${mp}"
+                          ${disabledAttr}
+                          style="${opacityStyle}">
+                    <div class="multiplier">${mp} MP</div>
+                  </button>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Add tooltip to document body
+      const tooltipElement = $(tooltipHTML);
+      $('body').append(tooltipElement);
+      
+      // Verify tooltip was added to DOM
+      const immediateCheck = document.getElementById(id);
+      if (!immediateCheck) {
+        console.error(`RQ3 | Tooltip ${id} was not added to DOM!`);
+        document.removeEventListener('mousemove', trackMouse);
+        resolve(null);
+        return;
+      }
+
+      // Positioning logic (same as multiplier tooltip)
+      let left, top;
+      const targetRect = targetElement.getBoundingClientRect();
+      const tooltipRect = tooltipElement[0].getBoundingClientRect();
+      
+      if (targetRect.left > 0 || targetRect.top > 0) {
+        left = targetRect.right + 10;
+        top = targetRect.top + (targetRect.height / 2) - (tooltipRect.height / 2);
+      } else {
+        const offsetLeft = targetElement.offsetLeft;
+        const offsetTop = targetElement.offsetTop;
+        
+        if (offsetLeft > 0 || offsetTop > 0) {
+          left = offsetLeft + targetElement.offsetWidth + 10;
+          top = offsetTop + (targetElement.offsetHeight / 2) - (tooltipRect.height / 2);
+        } else {
+          const buttonPosition = targetElement.getBoundingClientRect();
+          const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+          const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+          
+          left = buttonPosition.left + scrollX + targetElement.offsetWidth + 10;
+          top = buttonPosition.top + scrollY + (targetElement.offsetHeight / 2) - (tooltipRect.height / 2);
+          
+          if (left <= 10 && top <= 10) {
+            let currentElement = targetElement;
+            let totalLeft = 0;
+            let totalTop = 0;
+            
+            while (currentElement && currentElement !== document.body) {
+              totalLeft += currentElement.offsetLeft || 0;
+              totalTop += currentElement.offsetTop || 0;
+              currentElement = currentElement.offsetParent;
+            }
+            
+            if (totalLeft > 0 || totalTop > 0) {
+              left = totalLeft + targetElement.offsetWidth + 10;
+              top = totalTop + (targetElement.offsetHeight / 2) - (tooltipRect.height / 2);
+            }
+          }
+        }
+      }
+      
+      // Ensure we have valid coordinates
+      if (isNaN(left) || isNaN(top) || left < 0 || top < 0) {
+        if (lastMouseX > 0 && lastMouseY > 0) {
+          left = Math.max(20, Math.min(lastMouseX + 20, window.innerWidth - 520));
+          top = Math.max(20, Math.min(lastMouseY - 65, window.innerHeight - 150));
+        } else {
+          left = Math.max(20, Math.min(window.innerWidth - 520, 100));
+          top = Math.max(20, Math.min(window.innerHeight - 150, 100));
+        }
+      }
+      
+      // Adjust for viewport edges
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      if (left + tooltipRect.width > viewportWidth - 20) {
+        left = Math.max(20, left - tooltipRect.width - targetElement.offsetWidth - 20);
+      }
+
+      top = Math.max(20, Math.min(top, viewportHeight - tooltipRect.height - 20));
+
+      // Position tooltip using CSS custom properties
+      tooltipElement.addClass('positioned');
+      tooltipElement[0].style.setProperty('--tooltip-left', left + 'px');
+      tooltipElement[0].style.setProperty('--tooltip-top', top + 'px');
+
+      // Show tooltip immediately
+      tooltipElement.addClass('show');
+      
+      // Set up click-outside functionality
+      const handleClickOutside = (event) => {
+        const tooltip = document.getElementById(id);
+        if (!tooltip) {
+          return;
+        }
+
+        if (event.target === targetElement || targetElement.contains(event.target)) {
+          return;
+        }
+
+        if (!tooltip.contains(event.target)) {
+          tooltip.remove();
+          document.removeEventListener('click', handleClickOutside);
+          document.removeEventListener('keydown', handleEscape);
+          document.removeEventListener('mousemove', trackMouse);
+          resolve(null);
+        }
+      };
+      
+      // Set up escape key functionality
+      const handleEscape = (event) => {
+        if (event.key === 'Escape') {
+          const tooltip = document.getElementById(id);
+          if (tooltip) {
+            tooltip.remove();
+          }
+          document.removeEventListener('click', handleClickOutside);
+          document.removeEventListener('keydown', handleEscape);
+          document.removeEventListener('mousemove', trackMouse);
+          resolve(null);
+        }
+      };
+      
+      // Delay the click-outside handler to prevent immediate closure
+      setTimeout(() => {
+        document.addEventListener('click', handleClickOutside);
+      }, 100);
+      
+      document.addEventListener('keydown', handleEscape);
+
+      // Set up button click handlers
+      tooltipElement.find('.rq3-roll-multiplier-btn').on('click', (event) => {
+        // Don't process clicks on disabled buttons
+        if ($(event.currentTarget).prop('disabled')) {
+          return;
+        }
+        
+        const selectedMP = parseInt($(event.currentTarget).data('mp'));
+        
+        const tooltip = document.getElementById(id);
+        if (tooltip) {
+          tooltip.remove();
+        }
+        document.removeEventListener('click', handleClickOutside);
+        document.removeEventListener('keydown', handleEscape);
+        document.removeEventListener('mousemove', trackMouse);
+        resolve(selectedMP);
+      });
+
+      // Auto-close after 30 seconds
+      setTimeout(() => {
+        const tooltip = document.getElementById(id);
+        if (tooltip) {
+          tooltip.remove();
+          document.removeEventListener('click', handleClickOutside);
+          document.removeEventListener('keydown', handleEscape);
+          document.removeEventListener('mousemove', trackMouse);
+          resolve(null);
+        }
+      }, 30000);
+    });
+  }
+
+  /**
+   * Show sorcery spell MP allocation popup
+   * @param {string} spellName - The name of the spell
+   * @param {HTMLElement} targetElement - The element to position relative to
+   * @param {Object} spellItem - The spell item document
+   * @returns {Promise<Object|null>} The selected MP allocations {intensity, range, duration, multispell} or null if cancelled
+   */
+  async showSorcerySpellMPAllocationTooltip(spellName, targetElement, spellItem) {
+    console.log('RQ3 | showSorcerySpellMPAllocationTooltip - Starting with:', { spellName, targetElement, spellItem });
+    
+    const id = `rq3-sorcery-mp-allocation-tooltip-${spellName.replace(/\s+/g, '-')}`;
+    
+    // Get Free INT and skill values
+    const freeIntMax = this.system.magic?.freeInt?.current || 0;
+    
+    // Calculate current available Free INT (what's shown at top of sheet)
+    // This matches the calculation in _prepareItems: freeIntRemaining = max - (spirit MP + sorcery count)
+    // We need to include ALL spells in standard storage to match the sheet display
+    const allSpiritSpells = this.items.filter(i => 
+      i.type === 'spell' && 
+      i.system.spellType === 'spirit' &&
+      (i.system.spellStorageLocation || 'standard') === 'standard'
+    );
+    const allSpiritMP = allSpiritSpells.reduce((sum, spell) => sum + (spell.system.magicPoints || 0), 0);
+    
+    const allSorcerySpells = this.items.filter(i => 
+      i.type === 'spell' && 
+      i.system.spellType === 'sorcery' && 
+      (i.system.spellStorageLocation || 'standard') === 'standard'
+    );
+    const allSorceryCount = allSorcerySpells.length;
+    
+    // Current available Free INT = max - (all spirit MP + all sorcery count)
+    // This matches what's shown on the sheet (freeIntRemaining)
+    // The sheet counts sorcery spells as 1 Free INT each, so we do the same here
+    const freeIntCurrent = Math.max(0, freeIntMax - allSpiritMP - allSorceryCount);
+    
+    // Get available magic points
+    const currentMP = this.system.characteristics?.pow?.magicPoints?.value || 0;
+    const maxMP = this.system.characteristics?.pow?.magicPoints?.max || 0;
+    
+    const magicRating = this.system.magic?.magicRating?.value || 0;
+    const encPenalty = Math.ceil(this.system.attributes?.encumbrance?.total || 0);
+    const spellInvested = spellItem?.system?.invested || 0;
+    const spellTotalPercent = Math.max(0, spellInvested + magicRating - encPenalty);
+    
+    // Get skill % values (base + invested + Magic Rating)
+    const intensityBase = this.system.magic?.intensity?.base || 0;
+    const intensityInvested = this.system.magic?.intensity?.invested || 0;
+    const intensityPercent = intensityBase + intensityInvested + magicRating;
+    
+    const rangeBase = this.system.magic?.range?.base || 0;
+    const rangeInvested = this.system.magic?.range?.invested || 0;
+    const rangePercent = rangeBase + rangeInvested + magicRating;
+    
+    const durationBase = this.system.magic?.duration?.base || 0;
+    const durationInvested = this.system.magic?.duration?.invested || 0;
+    const durationPercent = durationBase + durationInvested + magicRating;
+    
+    const multispellBase = this.system.magic?.multispell?.base || 0;
+    const multispellInvested = this.system.magic?.multispell?.invested || 0;
+    const multispellPercent = multispellBase + multispellInvested + magicRating;
+    
+    return new Promise((resolve) => {
+      // Initial MP values: Intensity = 1, others = 0
+      let intensityMP = 1;
+      let rangeMP = 0;
+      let durationMP = 0;
+      let multispellMP = 0;
+      
+      // Store the last mouse position for fallback positioning
+      let lastMouseX = 0;
+      let lastMouseY = 0;
+      
+      // Track mouse movement to get current position
+      const trackMouse = (e) => {
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+      };
+      
+      document.addEventListener('mousemove', trackMouse);
+
+      // Get duration description based on MP allocation
+      const getDurationDescription = (mp) => {
+        const durationTable = {
+          0: "10 minutes",
+          1: "20 minutes",
+          2: "40 minutes",
+          3: "80 minutes (1 hour+)",
+          4: "160 minutes (2 hours+)",
+          5: "320 minutes (4 hours+)",
+          6: "640 minutes (10 hours+)",
+          7: "1280 minutes (21 hours+)",
+          8: "2560 minutes (1 day+)",
+          9: "5120 minutes (3 days+)",
+          10: "10240 minutes (1 week+)",
+          11: "20480 minutes (2 weeks+)",
+          12: "40960 minutes (4 weeks+)",
+          13: "81920 minutes (8 weeks+)",
+          14: "163840 minutes (16 weeks+)",
+          15: "327680 minutes (32 weeks+)",
+          16: "655360 minutes (1 year+)",
+          17: "1310720 minutes (2 years+)",
+          18: "2621440 minutes (5 years+)",
+          19: "5242880 minutes (10 years+)",
+          20: "10485760 minutes (20 years+)"
+        };
+        return durationTable[mp] || `${10 * Math.pow(2, mp)} minutes`;
+      };
+
+      // Get range description based on MP allocation
+      const getRangeDescription = (mp) => {
+        const rangeTable = {
+          0: "10m",
+          1: "20m",
+          2: "40m",
+          3: "80m",
+          4: "160m",
+          5: "320m",
+          6: "640m",
+          7: "1.28km",
+          8: "2.56km",
+          9: "5.12km",
+          10: "10.24km",
+          11: "20.48km",
+          12: "40.96km",
+          13: "81.92km",
+          14: "163.84km",
+          15: "327.68km",
+          16: "655.36km",
+          17: "1310.72km",
+          18: "2621.44km",
+          19: "5242.88km",
+          20: "10485.76km"
+        };
+        if (rangeTable[mp]) {
+          return rangeTable[mp];
+        }
+        // Fallback calculation: 10m * 2^mp
+        const meters = 10 * Math.pow(2, mp);
+        if (meters >= 1000) {
+          return `${(meters / 1000).toFixed(2)}km`;
+        }
+        return `${meters}m`;
+      };
+
+      // Calculate casting % based on lowest value
+      const calculateCastingPercent = () => {
+        const values = [spellTotalPercent]; // Start with spell's invested %
+        
+        // Add skill %s for any that have MP > 0
+        if (intensityMP > 0) values.push(intensityPercent);
+        if (rangeMP > 0) values.push(rangePercent);
+        if (durationMP > 0) values.push(durationPercent);
+        if (multispellMP > 0) values.push(multispellPercent);
+        
+        // Return the lowest value, or 0 if no values
+        return values.length > 0 ? Math.min(...values) : 0;
+      };
+
+      // Create tooltip HTML with adjustable MP sections
+      const createTooltipHTML = () => {
+        const totalMP = intensityMP + rangeMP + durationMP + multispellMP;
+        const castingPercent = calculateCastingPercent();
+        
+        // This spell's MP allocation is the Free INT cost (the 1 Intensity MP already accounts for the spell's base cost)
+        // Only count this spell if it's in standard storage
+        const spellUsesFreeInt = (spellItem?.system?.spellStorageLocation || 'standard') === 'standard';
+        const thisSpellFreeIntCost = spellUsesFreeInt ? totalMP : 0;
+        
+        // Available Free INT = current available (from sheet) - this spell's MP cost
+        // freeIntCurrent already accounts for all spells including this one, so we just subtract the MP allocation
+        const availableFreeInt = freeIntCurrent - thisSpellFreeIntCost;
+        const isOverLimit = availableFreeInt < 0;
+        
+        // Available Magic Points = current MP - this spell's MP allocation
+        const availableMP = currentMP - totalMP;
+        const isMPOverLimit = availableMP < 0;
+        
+        return `
+          <div class="rq3-roll-tooltip" id="${id}">
+            <div class="rq3-roll-tooltip-header">
+              <div class="rq3-roll-tooltip-title">${spellName} - Allocate Magic Points</div>
+            </div>
+
+            <div class="rq3-roll-tooltip-content" style="padding: 16px;">
+              <!-- Intensity Section -->
+              <div class="sorcery-mp-section" style="margin-bottom: 12px; padding: 8px; background: rgba(0, 0, 0, 0.3); border-radius: 4px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <div style="font-weight: 600; color: var(--rq3-text);">Intensity</div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <button class="sorcery-mp-decrease" data-section="intensity" style="width: 24px; height: 24px; border: 1px solid var(--rq3-border); background: var(--rq3-dark); color: var(--rq3-text); border-radius: 4px; cursor: pointer;">-</button>
+                    <span class="sorcery-mp-value" data-section="intensity" style="min-width: 30px; text-align: center; font-weight: 600; color: var(--rq3-success);">${intensityMP}</span>
+                    <button class="sorcery-mp-increase" data-section="intensity" style="width: 24px; height: 24px; border: 1px solid var(--rq3-border); background: var(--rq3-dark); color: var(--rq3-text); border-radius: 4px; cursor: pointer;">+</button>
+                  </div>
+                </div>
+                <div style="font-size: 11px; color: var(--rq3-text-light); text-align: right;">
+                  ${intensityMP > 0 ? `${intensityPercent}%` : 'N/A'}
+                </div>
+              </div>
+
+              <!-- Range Section -->
+              <div class="sorcery-mp-section" style="margin-bottom: 12px; padding: 8px; background: rgba(0, 0, 0, 0.3); border-radius: 4px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <div style="font-weight: 600; color: var(--rq3-text);">Range <span class="sorcery-range-desc" style="font-weight: 400; color: var(--rq3-text-light); font-size: 0.9em;">${getRangeDescription(rangeMP)}</span></div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <button class="sorcery-mp-decrease" data-section="range" style="width: 24px; height: 24px; border: 1px solid var(--rq3-border); background: var(--rq3-dark); color: var(--rq3-text); border-radius: 4px; cursor: pointer;">-</button>
+                    <span class="sorcery-mp-value" data-section="range" style="min-width: 30px; text-align: center; font-weight: 600; color: var(--rq3-success);">${rangeMP}</span>
+                    <button class="sorcery-mp-increase" data-section="range" style="width: 24px; height: 24px; border: 1px solid var(--rq3-border); background: var(--rq3-dark); color: var(--rq3-text); border-radius: 4px; cursor: pointer;">+</button>
+                  </div>
+                </div>
+                <div style="font-size: 11px; color: var(--rq3-text-light); text-align: right;">
+                  ${rangeMP > 0 ? `${rangePercent}%` : 'N/A'}
+                </div>
+              </div>
+
+              <!-- Duration Section -->
+              <div class="sorcery-mp-section" style="margin-bottom: 12px; padding: 8px; background: rgba(0, 0, 0, 0.3); border-radius: 4px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <div style="font-weight: 600; color: var(--rq3-text);">Duration <span class="sorcery-duration-desc" style="font-weight: 400; color: var(--rq3-text-light); font-size: 0.9em;">${getDurationDescription(durationMP)}</span></div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <button class="sorcery-mp-decrease" data-section="duration" style="width: 24px; height: 24px; border: 1px solid var(--rq3-border); background: var(--rq3-dark); color: var(--rq3-text); border-radius: 4px; cursor: pointer;">-</button>
+                    <span class="sorcery-mp-value" data-section="duration" style="min-width: 30px; text-align: center; font-weight: 600; color: var(--rq3-success);">${durationMP}</span>
+                    <button class="sorcery-mp-increase" data-section="duration" style="width: 24px; height: 24px; border: 1px solid var(--rq3-border); background: var(--rq3-dark); color: var(--rq3-text); border-radius: 4px; cursor: pointer;">+</button>
+                  </div>
+                </div>
+                <div style="font-size: 11px; color: var(--rq3-text-light); text-align: right;">
+                  ${durationMP > 0 ? `${durationPercent}%` : 'N/A'}
+                </div>
+              </div>
+
+              <!-- Multispell Section -->
+              <div class="sorcery-mp-section" style="margin-bottom: 16px; padding: 8px; background: rgba(0, 0, 0, 0.3); border-radius: 4px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <div style="font-weight: 600; color: var(--rq3-text);">Multispell</div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <button class="sorcery-mp-decrease" data-section="multispell" style="width: 24px; height: 24px; border: 1px solid var(--rq3-border); background: var(--rq3-dark); color: var(--rq3-text); border-radius: 4px; cursor: pointer;">-</button>
+                    <span class="sorcery-mp-value" data-section="multispell" style="min-width: 30px; text-align: center; font-weight: 600; color: var(--rq3-success);">${multispellMP}</span>
+                    <button class="sorcery-mp-increase" data-section="multispell" style="width: 24px; height: 24px; border: 1px solid var(--rq3-border); background: var(--rq3-dark); color: var(--rq3-text); border-radius: 4px; cursor: pointer;">+</button>
+                  </div>
+                </div>
+                <div style="font-size: 11px; color: var(--rq3-text-light); text-align: right;">
+                  ${multispellMP > 0 ? `${multispellPercent}%` : 'N/A'}
+                </div>
+              </div>
+
+              <!-- Free INT and Casting % Display -->
+              <div style="border-top: 1px solid var(--rq3-border); padding-top: 12px; margin-bottom: 12px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <div style="font-weight: 600; color: var(--rq3-text);">Available Magic Points:</div>
+                  <div style="color: ${isMPOverLimit ? 'var(--rq3-danger)' : 'var(--rq3-success)'};">
+                    <span class="sorcery-mp-available">${availableMP}</span>/<span class="sorcery-mp-current">${currentMP}</span>
+                    ${isMPOverLimit ? ' <span style="color: var(--rq3-danger);">(Exceeded!)</span>' : ''}
+                  </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <div style="font-weight: 600; color: var(--rq3-text);">Available Free INT:</div>
+                  <div style="color: ${isOverLimit ? 'var(--rq3-danger)' : 'var(--rq3-success)'};">
+                    <span class="sorcery-free-int-available">${availableFreeInt}</span>/<span class="sorcery-free-int-current">${freeIntCurrent}</span>
+                    ${isOverLimit ? ' <span style="color: var(--rq3-danger);">(Exceeded!)</span>' : ''}
+                  </div>
+                </div>
+                <div class="sorcery-free-int-breakdown" style="font-size: 11px; color: var(--rq3-text-light); margin-bottom: 4px;">
+                  ${spellUsesFreeInt ? `This spell: ${totalMP} MP = ${totalMP} Free INT` : 'This spell: Does not use Free INT'}
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div style="font-weight: 600; color: var(--rq3-text);">Casting %:</div>
+                  <div style="font-size: 18px; font-weight: 700; color: var(--rq3-success);">
+                    <span class="sorcery-casting-percent">${castingPercent}</span>%
+                  </div>
+                </div>
+              </div>
+
+              <!-- Total and Action Buttons -->
+              <div style="border-top: 1px solid var(--rq3-border); padding-top: 12px; display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-weight: 600; color: var(--rq3-text);">
+                  Total MP: <span class="sorcery-total-mp" style="color: ${(isOverLimit || isMPOverLimit) ? 'var(--rq3-danger)' : 'var(--rq3-success)'};">${totalMP}</span>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <button class="sorcery-mp-cancel" style="padding: 6px 12px; border: 1px solid var(--rq3-border); background: var(--rq3-dark); color: var(--rq3-text); border-radius: 4px; cursor: pointer;">Cancel</button>
+                  <button class="sorcery-mp-confirm" style="padding: 6px 12px; border: 1px solid var(--rq3-primary); background: ${(isOverLimit || isMPOverLimit) ? 'var(--rq3-danger)' : 'var(--rq3-primary)'}; color: white; border-radius: 4px; cursor: pointer; font-weight: 600;" ${(isOverLimit || isMPOverLimit) ? 'disabled' : ''}>Cast</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      };
+
+      // Add tooltip to document body
+      const tooltipElement = $(createTooltipHTML());
+      $('body').append(tooltipElement);
+      
+      // Verify tooltip was added to DOM
+      const immediateCheck = document.getElementById(id);
+      if (!immediateCheck) {
+        console.error(`RQ3 | Tooltip ${id} was not added to DOM!`);
+        document.removeEventListener('mousemove', trackMouse);
+        resolve(null);
+        return;
+      }
+
+      // Update MP value function
+      const updateMPValue = (section, delta) => {
+        const minValue = section === 'intensity' ? 1 : 0; // Intensity minimum is 1
+        const totalBefore = intensityMP + rangeMP + durationMP + multispellMP;
+        const totalAfter = totalBefore + delta;
+        
+        // This spell's MP allocation is the Free INT cost (the 1 Intensity MP already accounts for the spell's base cost)
+        const spellUsesFreeInt = (spellItem?.system?.spellStorageLocation || 'standard') === 'standard';
+        
+        // Check if adding would exceed available magic points
+        const availableMPAfter = currentMP - totalAfter;
+        if (delta > 0 && availableMPAfter < 0) {
+          ui.notifications.warn(`Cannot allocate more MP: Available magic points (${availableMPAfter}) would be negative.`);
+          return;
+        }
+        
+        // Check if adding would exceed Free INT
+        if (delta > 0 && spellUsesFreeInt) {
+          const currentSpellFreeIntCost = totalBefore;
+          const currentAvailableFreeInt = freeIntCurrent - currentSpellFreeIntCost;
+          const newSpellFreeIntCost = totalBefore + delta;
+          const newAvailableFreeInt = freeIntCurrent - newSpellFreeIntCost;
+          if (newAvailableFreeInt < 0) {
+            ui.notifications.warn(`Cannot allocate more MP: Available Free INT (${newAvailableFreeInt}) would be negative.`);
+            return;
+          }
+        }
+        
+        switch(section) {
+          case 'intensity':
+            intensityMP = Math.max(minValue, intensityMP + delta);
+            break;
+          case 'range':
+            rangeMP = Math.max(0, rangeMP + delta);
+            break;
+          case 'duration':
+            durationMP = Math.max(0, durationMP + delta);
+            break;
+          case 'multispell':
+            multispellMP = Math.max(0, multispellMP + delta);
+            break;
+        }
+        
+        const total = intensityMP + rangeMP + durationMP + multispellMP;
+        const castingPercent = calculateCastingPercent();
+        
+        // Calculate Free INT cost (spellUsesFreeInt already declared above)
+        const thisSpellFreeIntCost = spellUsesFreeInt ? total : 0;
+        // Available Free INT = current available (from sheet) - this spell's MP cost
+        const availableFreeInt = freeIntCurrent - thisSpellFreeIntCost;
+        const isOverLimit = availableFreeInt < 0;
+        
+        // Update MP display
+        tooltipElement.find(`.sorcery-mp-value[data-section="${section}"]`).text(
+          section === 'intensity' ? intensityMP : 
+          section === 'range' ? rangeMP :
+          section === 'duration' ? durationMP : multispellMP
+        );
+        
+        // Update skill % display for this section
+        const skillPercent = 
+          section === 'intensity' ? intensityPercent :
+          section === 'range' ? rangePercent :
+          section === 'duration' ? durationPercent : multispellPercent;
+        
+        const sectionElement = tooltipElement.find(`.sorcery-mp-section:has([data-section="${section}"])`);
+        const percentDisplay = sectionElement.find('div').last();
+        if (section === 'intensity' && intensityMP > 0) {
+          percentDisplay.text(`${intensityPercent}%`);
+        } else if (section === 'range' && rangeMP > 0) {
+          percentDisplay.text(`${rangePercent}%`);
+        } else if (section === 'duration' && durationMP > 0) {
+          percentDisplay.text(`${durationPercent}%`);
+        } else if (section === 'multispell' && multispellMP > 0) {
+          percentDisplay.text(`${multispellPercent}%`);
+        } else {
+          percentDisplay.text('N/A');
+        }
+        
+        // Update duration description if this is the duration section
+        if (section === 'duration') {
+          const durationDescElement = tooltipElement.find('.sorcery-duration-desc');
+          if (durationDescElement.length) {
+            durationDescElement.text(getDurationDescription(durationMP));
+          }
+        }
+        
+        // Update range description if this is the range section
+        if (section === 'range') {
+          const rangeDescElement = tooltipElement.find('.sorcery-range-desc');
+          if (rangeDescElement.length) {
+            rangeDescElement.text(getRangeDescription(rangeMP));
+          }
+        }
+        
+        // Update total MP
+        tooltipElement.find('.sorcery-total-mp').text(total);
+        
+        // Available Magic Points = current MP - this spell's MP allocation
+        const availableMP = currentMP - total;
+        const isMPOverLimit = availableMP < 0;
+        
+        tooltipElement.find('.sorcery-total-mp').css('color', (isOverLimit || isMPOverLimit) ? 'var(--rq3-danger)' : 'var(--rq3-success)');
+        
+        // Update Magic Points display (show available/current like Free INT)
+        const mpAvailableSpan = tooltipElement.find('.sorcery-mp-available');
+        if (mpAvailableSpan.length) {
+          mpAvailableSpan[0].textContent = availableMP;
+        }
+        const mpDisplay = tooltipElement.find('.sorcery-mp-available').parent();
+        if (mpDisplay.length) {
+          mpDisplay.css('color', isMPOverLimit ? 'var(--rq3-danger)' : 'var(--rq3-success)');
+          
+          // Update or add the exceeded message for MP
+          const mpExceededSpan = mpDisplay.find('span[style*="color: var(--rq3-danger)"]');
+          if (isMPOverLimit) {
+            if (mpExceededSpan.length === 0) {
+              mpDisplay.append(' <span style="color: var(--rq3-danger);">(Exceeded!)</span>');
+            }
+          } else {
+            mpExceededSpan.remove();
+          }
+        }
+        
+        // Update Free INT display - show available Free INT
+        const freeIntAvailableSpan = tooltipElement.find('.sorcery-free-int-available');
+        if (freeIntAvailableSpan.length) {
+          // Update the text content, preserving the element
+          freeIntAvailableSpan[0].textContent = availableFreeInt;
+        }
+        const freeIntDisplay = freeIntAvailableSpan.parent();
+        if (freeIntDisplay.length) {
+          freeIntDisplay.css('color', isOverLimit ? 'var(--rq3-danger)' : 'var(--rq3-success)');
+          
+          // Update or add the exceeded message
+          const exceededSpan = freeIntDisplay.find('span[style*="color: var(--rq3-danger)"]');
+          if (isOverLimit) {
+            if (exceededSpan.length === 0) {
+              freeIntDisplay.append(' <span style="color: var(--rq3-danger);">(Exceeded!)</span>');
+            }
+          } else {
+            exceededSpan.remove();
+          }
+        }
+        
+        // Update the breakdown text
+        const breakdownText = spellUsesFreeInt ? `This spell: ${total} MP = ${total} Free INT` : 'This spell: Does not use Free INT';
+        const breakdownElement = tooltipElement.find('.sorcery-free-int-breakdown');
+        if (breakdownElement.length) {
+          breakdownElement.text(breakdownText);
+        }
+        
+        // Update casting %
+        tooltipElement.find('.sorcery-casting-percent').text(castingPercent);
+        
+        // Update Cast button state (check both Free INT and MP limits)
+        const confirmButton = tooltipElement.find('.sorcery-mp-confirm');
+        const canCast = !isOverLimit && !isMPOverLimit;
+        if (canCast) {
+          confirmButton.css('background', 'var(--rq3-primary)');
+          confirmButton.prop('disabled', false);
+        } else {
+          confirmButton.css('background', 'var(--rq3-danger)');
+          confirmButton.prop('disabled', true);
+        }
+      };
+
+      // Set up button handlers
+      tooltipElement.find('.sorcery-mp-increase').on('click', (e) => {
+        const section = $(e.currentTarget).data('section');
+        updateMPValue(section, 1);
+      });
+
+      tooltipElement.find('.sorcery-mp-decrease').on('click', (e) => {
+        const section = $(e.currentTarget).data('section');
+        updateMPValue(section, -1);
+      });
+
+      tooltipElement.find('.sorcery-mp-cancel').on('click', () => {
+        const tooltip = document.getElementById(id);
+        if (tooltip) {
+          tooltip.remove();
+        }
+        document.removeEventListener('click', handleClickOutside);
+        document.removeEventListener('keydown', handleEscape);
+        document.removeEventListener('mousemove', trackMouse);
+        resolve(null);
+      });
+
+      tooltipElement.find('.sorcery-mp-confirm').on('click', () => {
+        const tooltip = document.getElementById(id);
+        if (tooltip) {
+          tooltip.remove();
+        }
+        document.removeEventListener('click', handleClickOutside);
+        document.removeEventListener('keydown', handleEscape);
+        document.removeEventListener('mousemove', trackMouse);
+        resolve({
+          intensity: intensityMP,
+          range: rangeMP,
+          duration: durationMP,
+          multispell: multispellMP
+        });
+      });
+
+      // Positioning logic (same as other tooltips)
+      let left, top;
+      const targetRect = targetElement.getBoundingClientRect();
+      const tooltipRect = tooltipElement[0].getBoundingClientRect();
+      
+      if (targetRect.left > 0 || targetRect.top > 0) {
+        left = targetRect.right + 10;
+        top = targetRect.top + (targetRect.height / 2) - (tooltipRect.height / 2);
+      } else {
+        const offsetLeft = targetElement.offsetLeft;
+        const offsetTop = targetElement.offsetTop;
+        
+        if (offsetLeft > 0 || offsetTop > 0) {
+          left = offsetLeft + targetElement.offsetWidth + 10;
+          top = offsetTop + (targetElement.offsetHeight / 2) - (tooltipRect.height / 2);
+        } else {
+          const buttonPosition = targetElement.getBoundingClientRect();
+          const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+          const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+          
+          left = buttonPosition.left + scrollX + targetElement.offsetWidth + 10;
+          top = buttonPosition.top + scrollY + (targetElement.offsetHeight / 2) - (tooltipRect.height / 2);
+          
+          if (left <= 10 && top <= 10) {
+            let currentElement = targetElement;
+            let totalLeft = 0;
+            let totalTop = 0;
+            
+            while (currentElement && currentElement !== document.body) {
+              totalLeft += currentElement.offsetLeft || 0;
+              totalTop += currentElement.offsetTop || 0;
+              currentElement = currentElement.offsetParent;
+            }
+            
+            if (totalLeft > 0 || totalTop > 0) {
+              left = totalLeft + targetElement.offsetWidth + 10;
+              top = totalTop + (targetElement.offsetHeight / 2) - (tooltipRect.height / 2);
+            }
+          }
+        }
+      }
+      
+      // Ensure we have valid coordinates
+      if (isNaN(left) || isNaN(top) || left < 0 || top < 0) {
+        if (lastMouseX > 0 && lastMouseY > 0) {
+          left = Math.max(20, Math.min(lastMouseX + 20, window.innerWidth - 400));
+          top = Math.max(20, Math.min(lastMouseY - 200, window.innerHeight - 400));
+        } else {
+          left = Math.max(20, Math.min(window.innerWidth - 400, 100));
+          top = Math.max(20, Math.min(window.innerHeight - 400, 100));
+        }
+      }
+      
+      // Adjust for viewport edges
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      if (left + tooltipRect.width > viewportWidth - 20) {
+        left = Math.max(20, left - tooltipRect.width - targetElement.offsetWidth - 20);
+      }
+
+      top = Math.max(20, Math.min(top, viewportHeight - tooltipRect.height - 20));
+
+      // Position tooltip using CSS custom properties
+      tooltipElement.addClass('positioned');
+      tooltipElement[0].style.setProperty('--tooltip-left', left + 'px');
+      tooltipElement[0].style.setProperty('--tooltip-top', top + 'px');
+
+      // Show tooltip immediately
+      tooltipElement.addClass('show');
+      
+      // Set up click-outside functionality
+      const handleClickOutside = (event) => {
+        const tooltip = document.getElementById(id);
+        if (!tooltip) {
+          return;
+        }
+
+        if (event.target === targetElement || targetElement.contains(event.target)) {
+          return;
+        }
+
+        if (!tooltip.contains(event.target)) {
+          tooltip.remove();
+          document.removeEventListener('click', handleClickOutside);
+          document.removeEventListener('keydown', handleEscape);
+          document.removeEventListener('mousemove', trackMouse);
+          resolve(null);
+        }
+      };
+      
+      // Set up escape key functionality
+      const handleEscape = (event) => {
+        if (event.key === 'Escape') {
+          const tooltip = document.getElementById(id);
+          if (tooltip) {
+            tooltip.remove();
+          }
+          document.removeEventListener('click', handleClickOutside);
+          document.removeEventListener('keydown', handleEscape);
+          document.removeEventListener('mousemove', trackMouse);
+          resolve(null);
+        }
+      };
+      
+      // Delay the click-outside handler to prevent immediate closure
+      setTimeout(() => {
+        document.addEventListener('click', handleClickOutside);
+      }, 100);
+      
+      document.addEventListener('keydown', handleEscape);
+
+      // Auto-close after 60 seconds (longer for more complex interaction)
+      setTimeout(() => {
+        const tooltip = document.getElementById(id);
+        if (tooltip) {
+          tooltip.remove();
+          document.removeEventListener('click', handleClickOutside);
+          document.removeEventListener('keydown', handleEscape);
+          document.removeEventListener('mousemove', trackMouse);
+          resolve(null);
+        }
+      }, 60000);
+    });
+  }
+
+  async showCharacteristicRollTooltip(characteristic, targetElement) {
+    console.log('RQ3 | showCharacteristicRollTooltip called with:', { characteristic, targetElement });
+    
+    const char = this.system.characteristics[characteristic];
+    if (!char) {
+      console.error(`Characteristic ${characteristic} not found`);
+      return null;
+    }
+
+    const multipliers = Array.from({length: 10}, (_, i) => i + 1);
+    
+    return this._showMultiplierTooltip({
+      id: `rq3-roll-tooltip-${characteristic}`,
+      title: `${characteristic.toUpperCase()} Custom Roll`,
+      baseValue: char.current,
+      multipliers: multipliers,
+      recommendedMultiplier: 5, // x5 is commonly used for characteristics
+      targetElement: targetElement,
+      calculateTarget: (value, mult) => value * mult
+    });
+  }
+
+  /**
+   * Show magic skill multiplier selection tooltip (for custom multiplier rolls on magic skills)
+   * Uses whole numbers 1-10 instead of fractional multipliers
+   * Formatted the same as characteristic roll tooltip
+   * @param {string} skillName - The name of the skill
+   * @param {number} skillValue - The base skill value
+   * @param {HTMLElement} targetElement - The element to position relative to
+   * @returns {Promise<number|null>} The selected multiplier or null if cancelled
+   */
+  async showMagicSkillMultiplierTooltip(skillName, skillValue, targetElement) {
+    console.log('RQ3 | showMagicSkillMultiplierTooltip - Starting with:', { skillName, skillValue, targetElement });
+    
+    const multipliers = Array.from({length: 10}, (_, i) => i + 1);
+    
+    return this._showMultiplierTooltip({
+      id: `rq3-magic-multiplier-tooltip-${skillName}`,
+      title: `${skillName} Custom Roll`,
+      baseValue: skillValue,
+      multipliers: multipliers,
+      recommendedMultiplier: 1, // x1 is default for magic skills
+      targetElement: targetElement,
+      calculateTarget: (value, mult) => Math.floor(value * mult)
+    });
+  }
+
+  /**
+   * Show skill multiplier selection tooltip (for custom multiplier rolls)
+   * Uses whole numbers 1-10, formatted the same as characteristic/magic tooltips
+   * @param {string} skillName - The name of the skill
+   * @param {number} skillValue - The base skill value
+   * @param {HTMLElement} targetElement - The element to position relative to
+   * @returns {Promise<number|null>} The selected multiplier or null if cancelled
+   */
+  async showSkillMultiplierTooltip(skillName, skillValue, targetElement) {
+    console.log('RQ3 | showSkillMultiplierTooltip - Starting with:', { skillName, skillValue, targetElement });
+    
+    const multipliers = Array.from({length: 10}, (_, i) => i + 1);
+    
+    return this._showMultiplierTooltip({
+      id: `rq3-skill-multiplier-tooltip-${skillName}`,
+      title: `${skillName} Custom Roll`,
+      baseValue: skillValue,
+      multipliers: multipliers,
+      recommendedMultiplier: 1, // x1 is default for skills
+      targetElement: targetElement,
+      calculateTarget: (value, mult) => Math.floor(value * mult)
+    });
+  }
+
+  /**
+   * Show magic stat adjustment tooltip
+   * @param {string} statType - The type of magic stat (magicRating, magicPoints, freeInt, ceremony, summon, enchant)
+   * @param {HTMLElement} targetElement - The element to position relative to
+   * @param {boolean} editMode - Whether edit mode is enabled
+   * @returns {Promise<void>}
+   */
+  async showMagicStatTooltip(statType, targetElement, editMode = false) {
+    console.log('RQ3 | showMagicStatTooltip - Starting with:', { statType, targetElement, editMode });
+    
+    return new Promise((resolve) => {
+      let currentValue, maxValue, baseValue, investedValue, bonusValue, title;
+      let updatePath, isPercentage = false;
+      let isReadOnly = false;
+      
+      // Get the appropriate data based on stat type
+      switch (statType) {
+        case 'magicRating':
+          // Magic Rating is purely derived - read only
+          const int = this.system.characteristics.int?.current || 10;
+          const pow = this.system.characteristics.pow?.current || 10;
+          const dex = this.system.characteristics.dex?.current || 10;
+          
+          const intExcess = Math.max(0, int - 10);
+          const powExcess = Math.max(0, pow - 10);
+          const dexExcess = Math.max(0, dex - 10);
+          const dexComponent = Math.ceil(dexExcess / 2);
+          
+          currentValue = this.system.magic.magicRating.value || 0;
+          title = 'Magic Rating';
+          isPercentage = true;
+          isReadOnly = true;
+          // Store the formula components for display
+          baseValue = `(INT ${int}-10=${intExcess}) + (POW ${pow}-10=${powExcess}) + ceil(DEX ${dex}-10/2=${dexComponent})`;
+          break;
+          
+        case 'magicPoints':
+          currentValue = this.system.characteristics.pow.magicPoints.value || 0;
+          maxValue = this.system.characteristics.pow.magicPoints.max || 0;
+          title = 'Magic Points';
+          updatePath = 'system.characteristics.pow.magicPoints.max';
+          break;
+          
+        case 'freeInt':
+          baseValue = this.system.magic.freeInt.base || 0;
+          bonusValue = this.system.magic.freeInt.bonus || 0;
+          currentValue = this.system.magic.freeInt.current || 0;
+          title = 'Free INT';
+          updatePath = 'system.magic.freeInt.bonus';
+          break;
+          
+        case 'ceremony':
+          baseValue = this.system.magic.ceremony.base || 5;
+          investedValue = this.system.magic.ceremony.invested || 0;
+          const ceremonyMagicRating = this.system.magic.magicRating.value || 0;
+          currentValue = baseValue + investedValue + ceremonyMagicRating;
+          title = 'Ceremony';
+          updatePath = 'system.magic.ceremony.invested';
+          isPercentage = true;
+          bonusValue = ceremonyMagicRating; // Reuse bonusValue to store magic rating
+          break;
+          
+        case 'summon':
+          baseValue = this.system.magic.summon.base || 0;
+          investedValue = this.system.magic.summon.invested || 0;
+          const summonMagicRating = this.system.magic.magicRating.value || 0;
+          currentValue = baseValue + investedValue + summonMagicRating;
+          title = 'Summon';
+          updatePath = 'system.magic.summon.invested';
+          isPercentage = true;
+          bonusValue = summonMagicRating; // Reuse bonusValue to store magic rating
+          break;
+          
+        case 'enchant':
+          baseValue = this.system.magic.enchant.base || 0;
+          investedValue = this.system.magic.enchant.invested || 0;
+          const enchantMagicRating = this.system.magic.magicRating.value || 0;
+          currentValue = baseValue + investedValue + enchantMagicRating;
+          title = 'Enchant';
+          updatePath = 'system.magic.enchant.invested';
+          isPercentage = true;
+          bonusValue = enchantMagicRating; // Reuse bonusValue to store magic rating
+          break;
+          
+        case 'intensity':
+          baseValue = this.system.magic.intensity.base || 0;
+          investedValue = this.system.magic.intensity.invested || 0;
+          const intensityMagicRating = this.system.magic.magicRating.value || 0;
+          currentValue = baseValue + investedValue + intensityMagicRating;
+          title = 'Intensity';
+          updatePath = 'system.magic.intensity.invested';
+          isPercentage = true;
+          bonusValue = intensityMagicRating; // Reuse bonusValue to store magic rating
+          break;
+          
+        case 'range':
+          baseValue = this.system.magic.range.base || 0;
+          investedValue = this.system.magic.range.invested || 0;
+          const rangeMagicRating = this.system.magic.magicRating.value || 0;
+          currentValue = baseValue + investedValue + rangeMagicRating;
+          title = 'Range';
+          updatePath = 'system.magic.range.invested';
+          isPercentage = true;
+          bonusValue = rangeMagicRating; // Reuse bonusValue to store magic rating
+          break;
+          
+        case 'duration':
+          baseValue = this.system.magic.duration.base || 0;
+          investedValue = this.system.magic.duration.invested || 0;
+          const durationMagicRating = this.system.magic.magicRating.value || 0;
+          currentValue = baseValue + investedValue + durationMagicRating;
+          title = 'Duration';
+          updatePath = 'system.magic.duration.invested';
+          isPercentage = true;
+          bonusValue = durationMagicRating; // Reuse bonusValue to store magic rating
+          break;
+          
+        case 'multispell':
+          baseValue = this.system.magic.multispell.base || 0;
+          investedValue = this.system.magic.multispell.invested || 0;
+          const multispellMagicRating = this.system.magic.magicRating.value || 0;
+          currentValue = baseValue + investedValue + multispellMagicRating;
+          title = 'Multispell';
+          updatePath = 'system.magic.multispell.invested';
+          isPercentage = true;
+          bonusValue = multispellMagicRating; // Reuse bonusValue to store magic rating
+          break;
+          
+        default:
+          console.error('Unknown magic stat type:', statType);
+          resolve();
+          return;
+      }
+
+      // Create tooltip HTML based on stat type
+      let tooltipHTML;
+      
+      if (statType === 'magicRating') {
+        // Magic Rating tooltip (read-only, shows formula)
+        tooltipHTML = `
+          <div class="rq3-magic-stat-tooltip rq3-damage-tooltip" id="rq3-magic-stat-tooltip-${statType}">
+            <div class="rq3-damage-tooltip-header">
+              <div class="rq3-damage-tooltip-title">${title}</div>
+            </div>
+            
+            <div class="rq3-damage-tooltip-content">
+              <div class="rq3-damage-info">
+                <div class="rq3-damage-current">
+                  <span>Formula:</span>
+                  <span style="font-size: 11px;">${baseValue}</span>
+                </div>
+                <div class="rq3-damage-effective">
+                  <span>Total:</span>
+                  <span class="rq3-hp-current-value">${currentValue}%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (statType === 'magicPoints') {
+        // Magic Points tooltip (edit max format)
+        tooltipHTML = `
+          <div class="rq3-magic-stat-tooltip rq3-damage-tooltip" id="rq3-magic-stat-tooltip-${statType}">
+            <div class="rq3-damage-tooltip-header">
+              <div class="rq3-damage-tooltip-title">${title}</div>
+            </div>
+            
+            <div class="rq3-damage-tooltip-content">
+              <div class="rq3-damage-info">
+                <div class="rq3-damage-current">
+                  <span>Current MP:</span>
+                  <span class="rq3-hp-current-value">${currentValue}/${maxValue}</span>
+                </div>
+                <div class="rq3-damage-effective">
+                  <span>Max MP:</span>
+                  <span class="rq3-hp-max-value">${maxValue}</span>
+                </div>
+              </div>
+              <div class="rq3-damage-controls">
+                <button class="rq3-damage-button" data-action="decrease" data-amount="1">-</button>
+                <div class="rq3-damage-value">${maxValue}</div>
+                <button class="rq3-damage-button" data-action="increase" data-amount="1">+</button>
+              </div>
+              <button class="rq3-damage-reset" data-action="resetCurrent">Reset to Max MP</button>
+            </div>
+          </div>
+        `;
+      } else if (statType === 'freeInt') {
+        // Free INT tooltip (base + bonus = current)
+        tooltipHTML = `
+          <div class="rq3-magic-stat-tooltip rq3-damage-tooltip" id="rq3-magic-stat-tooltip-${statType}">
+            <div class="rq3-damage-tooltip-header">
+              <div class="rq3-damage-tooltip-title">${title}</div>
+            </div>
+            
+            <div class="rq3-damage-tooltip-content">
+              <div class="rq3-damage-info">
+                <div class="rq3-damage-current">
+                  <span>Base INT:</span>
+                  <span>${baseValue}</span>
+                </div>
+                <div class="rq3-damage-effective">
+                  <span>Bonus:</span>
+                  <span>${bonusValue}</span>
+                </div>
+                <div class="rq3-damage-effective">
+                  <span>Current:</span>
+                  <span class="rq3-hp-current-value">${currentValue}</span>
+                </div>
+              </div>
+              <div class="rq3-damage-controls">
+                <button class="rq3-damage-button" data-action="decrease" data-amount="1">-</button>
+                <div class="rq3-damage-value">${bonusValue}</div>
+                <button class="rq3-damage-button" data-action="increase" data-amount="1">+</button>
+              </div>
+              <button class="rq3-damage-reset" data-action="reset">Reset Bonus</button>
+            </div>
+          </div>
+        `;
+      } else {
+        // Skill-like stats (base + invested + magic rating = total%)
+        // Always show controls, regardless of edit mode
+        tooltipHTML = `
+          <div class="rq3-magic-stat-tooltip rq3-damage-tooltip" id="rq3-magic-stat-tooltip-${statType}">
+            <div class="rq3-damage-tooltip-header">
+              <div class="rq3-damage-tooltip-title">${title}</div>
+            </div>
+            
+            <div class="rq3-damage-tooltip-content">
+              <div class="rq3-damage-info">
+                <div class="rq3-damage-current">
+                  <span>Base:</span>
+                  <span>${baseValue}%</span>
+                </div>
+                <div class="rq3-damage-effective">
+                  <span>Invested:</span>
+                  <span>${investedValue}%</span>
+                </div>
+                <div class="rq3-damage-effective">
+                  <span>Magic Rating:</span>
+                  <span>${bonusValue || 0}%</span>
+                </div>
+                <div class="rq3-damage-effective">
+                  <span>Total:</span>
+                  <span class="rq3-hp-current-value">${currentValue}%</span>
+                </div>
+              </div>
+              <div class="rq3-damage-controls">
+                <button class="rq3-damage-button" data-action="decrease" data-amount="1">-</button>
+                <div class="rq3-damage-value">${investedValue}</div>
+                <button class="rq3-damage-button" data-action="increase" data-amount="1">+</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Add tooltip to document body
+      const tooltipElement = $(tooltipHTML);
+      $('body').append(tooltipElement);
+      
+      // Verify tooltip was added to DOM
+      const immediateCheck = document.getElementById(`rq3-magic-stat-tooltip-${statType}`);
+      if (!immediateCheck) {
+        console.error('RQ3 | showMagicStatTooltip - Tooltip was not added to DOM!');
+        resolve();
+        return;
+      }
+
+      // Position the tooltip
+      const targetRect = targetElement.getBoundingClientRect();
+      const tooltipRect = tooltipElement[0].getBoundingClientRect();
+      
+      let left = targetRect.right + 10;
+      let top = targetRect.top + (targetRect.height / 2) - (tooltipRect.height / 2);
+      
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      
+      if (left + tooltipRect.width > viewportWidth - 20) {
+        left = targetRect.left - tooltipRect.width - 10;
+      }
+      
+      top = Math.max(20, Math.min(top, viewportHeight - tooltipRect.height - 20));
+      
+      tooltipElement.css({
+        position: 'fixed',
+        left: left + 'px',
+        top: top + 'px',
+        zIndex: 100000
+      });
+
+      tooltipElement.addClass('show');
+      
+      // Only add button handlers if not read-only
+      if (!isReadOnly) {
+        // Track current edited value
+        let currentEditValue = statType === 'magicPoints' ? maxValue : 
+                              statType === 'freeInt' ? bonusValue : investedValue;
+        
+        // Store magic rating for ceremony/summon/enchant
+        const magicRatingValue = (statType === 'ceremony' || statType === 'summon' || statType === 'enchant') 
+          ? (this.system.magic.magicRating.value || 0) 
+          : 0;
+        
+        // Handle button clicks
+        tooltipElement.on('click', 'button', async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          const action = $(e.currentTarget).data('action');
+          const amount = $(e.currentTarget).data('amount') || 1;
+          
+          if (action === 'increase') {
+            currentEditValue += amount;
+          } else if (action === 'decrease') {
+            currentEditValue = Math.max(0, currentEditValue - amount);
+          } else if (action === 'reset') {
+            if (statType === 'magicPoints') {
+              // Reset max to POW value
+              const pow = this.system.characteristics.pow?.current || 10;
+              currentEditValue = pow;
+            } else {
+              currentEditValue = 0;
+            }
+          } else if (action === 'resetCurrent') {
+            // Reset current MP to max MP (only for magicPoints)
+            if (statType === 'magicPoints') {
+              const maxMP = this.system.characteristics.pow.magicPoints.max || 0;
+              await this.update({
+                'system.characteristics.pow.magicPoints.value': maxMP
+              }, { render: false });
+              
+              // Update the display in the tooltip
+              tooltipElement.find('.rq3-hp-current-value').text(`${maxMP}/${maxMP}`);
+              
+              // Update the display on the sheet
+              const cogIcon = $(`[data-magic-stat="${statType}"]`);
+              if (cogIcon.length) {
+                const statItem = cogIcon.closest('.magic-stat-item');
+                if (statItem.length) {
+                  statItem.find('.magic-stat-value').text(`${maxMP}/${maxMP}`);
+                }
+              }
+              
+              return; // Don't continue with the normal update flow
+            }
+          }
+          
+          // Update the control display
+          tooltipElement.find('.rq3-damage-value').text(currentEditValue);
+          
+          // Update the breakdown section for ceremony/summon/enchant/intensity/range/duration/multispell
+          if (statType === 'ceremony' || statType === 'summon' || statType === 'enchant' || 
+              statType === 'intensity' || statType === 'range' || statType === 'duration' || statType === 'multispell') {
+            // Update the "Invested" value in the breakdown (first .rq3-damage-effective contains "Invested:")
+            const investedBreakdown = tooltipElement.find('.rq3-damage-info .rq3-damage-effective').first();
+            if (investedBreakdown.length) {
+              // Find the span that contains the value (the second span in that div)
+              investedBreakdown.find('span').eq(1).text(`${currentEditValue}%`);
+            }
+            
+            // Calculate new total with magic rating
+            const skillMagicRating = (statType === 'ceremony' || statType === 'summon' || statType === 'enchant')
+              ? magicRatingValue
+              : (this.system.magic.magicRating.value || 0);
+            const newTotal = baseValue + currentEditValue + skillMagicRating;
+            tooltipElement.find('.rq3-hp-current-value').text(`${newTotal}%`);
+          } else {
+            // Calculate new total/current value for other stats
+            let newDisplayValue;
+            if (statType === 'magicPoints') {
+              // Update max value display
+              const currentMP = this.system.characteristics.pow.magicPoints.value || 0;
+              newDisplayValue = `${currentMP}/${currentEditValue}`;
+              tooltipElement.find('.rq3-hp-current-value').text(newDisplayValue);
+              tooltipElement.find('.rq3-hp-max-value').text(currentEditValue);
+            } else if (statType === 'freeInt') {
+              newDisplayValue = baseValue + currentEditValue;
+            } else {
+              newDisplayValue = `${baseValue + currentEditValue}%`;
+            }
+            
+            tooltipElement.find('.rq3-hp-current-value').text(newDisplayValue);
+          }
+          
+          // Update the actor without re-rendering the sheet to prevent edit mode flicker
+          let updateData = {};
+          if (statType === 'freeInt') {
+            updateData[updatePath] = currentEditValue;
+            updateData['system.magic.freeInt.current'] = baseValue + currentEditValue;
+          } else if (statType === 'magicPoints') {
+            // Update max MP, and cap current if it exceeds new max
+            const currentMP = this.system.characteristics.pow.magicPoints.value || 0;
+            updateData[updatePath] = currentEditValue;
+            if (currentMP > currentEditValue) {
+              updateData['system.characteristics.pow.magicPoints.value'] = currentEditValue;
+            }
+          } else {
+            updateData[updatePath] = currentEditValue;
+          }
+          
+          // Use render: false to prevent sheet re-render and edit mode flicker
+          await this.update(updateData, { render: false });
+          
+          // Manually update the displayed value on the sheet
+          // Find the element by searching for the cog icon with matching data attribute
+          const cogIcon = $(`[data-magic-stat="${statType}"]`);
+          if (cogIcon.length) {
+            const statItem = cogIcon.closest('.magic-stat-item');
+            if (statItem.length) {
+              if (statType === 'ceremony' || statType === 'summon' || statType === 'enchant') {
+                const newTotal = baseValue + currentEditValue + magicRatingValue;
+                statItem.find('.magic-stat-value').text(`${newTotal}%`);
+              } else if (statType === 'intensity' || statType === 'range' || statType === 'duration' || statType === 'multispell') {
+                // Sorcery skills: base + invested + magic rating
+                const sorceryMagicRating = this.system.magic.magicRating.value || 0;
+                const newTotal = baseValue + currentEditValue + sorceryMagicRating;
+                statItem.find('.magic-stat-value').text(`${newTotal}%`);
+              } else if (statType === 'freeInt') {
+                // Calculate the new freeIntMax
+                const newFreeIntMax = baseValue + currentEditValue;
+                
+                // Calculate freeIntRemaining based on current spells
+                const standardSpiritSpells = this.items.filter(i => 
+                  i.type === 'spell' && 
+                  i.system.spellType === 'spirit' &&
+                  (i.system.spellStorageLocation || 'standard') === 'standard'
+                );
+                const totalSpiritMP = standardSpiritSpells.reduce((sum, spell) => sum + (spell.system.magicPoints || 0), 0);
+                
+                const standardSorcerySpells = this.items.filter(i => 
+                  i.type === 'spell' && 
+                  i.system.spellType === 'sorcery' && 
+                  (i.system.spellStorageLocation || 'standard') === 'standard'
+                );
+                const sorcerySpellCount = standardSorcerySpells.length;
+                
+                const freeIntRemaining = Math.max(0, newFreeIntMax - totalSpiritMP - sorcerySpellCount);
+                
+                // Update display to show freeIntRemaining/freeIntMax
+                statItem.find('.magic-stat-value').text(`${freeIntRemaining}/${newFreeIntMax}`);
+              } else if (statType === 'magicPoints') {
+                // Update max MP, get current MP (may have been capped)
+                const currentMP = this.system.characteristics.pow.magicPoints.value || 0;
+                statItem.find('.magic-stat-value').text(`${currentMP}/${currentEditValue}`);
+              }
+            }
+          }
+        });
+      }
+      
+      resolve();
     });
   }
 }
@@ -1614,6 +3445,39 @@ export class RQ3Actor extends Actor {
 export class RQ3Item extends Item {
 
   /** @override */
+  async _preCreate(data, options, user) {
+    // Auto-set item type based on compendium BEFORE calling super
+    const packId = this.pack || options.pack;
+    
+    if (packId) {
+      // Map compendium names to item types
+      const compendiumTypeMap = {
+        'runequest3.weapons': 'weapon',
+        'runequest3.armour': 'armor',
+        'runequest3.equipment': 'equipment',
+        'runequest3.spirit-magic': 'spell',
+        'runequest3.divine-magic': 'spell',
+        'runequest3.sorcery': 'spell',
+        'runequest3.species': 'species',
+        'runequest3.skills': 'skill'
+      };
+      
+      const defaultType = compendiumTypeMap[packId];
+      console.log(`RQ3 | _preCreate: Detected compendium ${packId}, default type should be '${defaultType}'`);
+      console.log(`RQ3 | _preCreate: Current type is '${this.type}'`);
+      
+      if (defaultType && this.type !== defaultType) {
+        // Directly modify the _source data before super._preCreate processes it
+        this._source.type = defaultType;
+        console.log(`RQ3 | _preCreate: Changed type to '${defaultType}' for compendium ${packId}`);
+      }
+    }
+    
+    // Now call super with the modified source data
+    await super._preCreate(data, options, user);
+  }
+
+  /** @override */
   prepareData() {
     super.prepareData();
   }
@@ -1621,6 +3485,11 @@ export class RQ3Item extends Item {
   /** @override */
   prepareDerivedData() {
     super.prepareDerivedData();
+    
+    // Migrate weaponType from old values to new values
+    if (this.type === "weapon" && this.system.weaponType) {
+      this._migrateWeaponType();
+    }
     
     // Calculate weapon statistics
     if (this.type === "weapon") {
@@ -1630,6 +3499,40 @@ export class RQ3Item extends Item {
     // Calculate skill base chances
     if (this.type === "skill") {
       this._prepareSkillData();
+    }
+  }
+  
+  /**
+   * Migrate old weaponType values to new values
+   * @private
+   */
+  _migrateWeaponType() {
+    const oldToNew = {
+      "1h-sword": "sword",
+      "2h-sword": "sword",
+      "1h-axe": "axe",
+      "2h-axe": "axe",
+      "spear": "spear",
+      "dagger": "dagger",
+      "mace": "mace",
+      "bow": "bow",
+      "crossbow": "crossbow",
+      "sling": "sling",
+      "javelin": "javelin",
+      "thrown": "javelin" // Default thrown to javelin, user can change if needed
+    };
+    
+    const currentType = this.system.weaponType;
+    
+    // Check if it's an old value that needs migration
+    if (oldToNew[currentType]) {
+      const newType = oldToNew[currentType];
+      console.log(`RQ3 | Migrating weaponType "${currentType}" to "${newType}" for ${this.name}`);
+      this.updateSource({ "system.weaponType": newType });
+    } else if (currentType && !["axe", "hammer", "dagger", "fist", "mace", "shield", "spear", "javelin", "sword", "tool", "bow", "crossbow", "dart", "sling", "staff-sling", "rock", "club", "net"].includes(currentType)) {
+      // If it's an invalid value that's not in our migration map, default to sword
+      console.warn(`RQ3 | Unknown weaponType "${currentType}" for ${this.name}, defaulting to "sword"`);
+      this.updateSource({ "system.weaponType": "sword" });
     }
   }
 

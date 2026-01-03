@@ -1,39 +1,53 @@
 <form class="{{cssClass}} runequest3" autocomplete="off">
   <header class="sheet-header">
-    <img class="profile-img" src="{{itemImage item}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
-    <div class="header-fields">
-      <h1 class="charname">
-        <input name="name" type="text" value="{{item.name}}" placeholder="Item Name"/>
-      </h1>
-      <div class="item-type">
-        <label>{{localize "RQ3.Labels.type"}}: {{localize (concat "RQ3.ItemTypes." item.type)}}</label>
+    <div class="header-content">
+      <img class="profile-img compendium-image" src="{{itemImage item}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+      <div class="header-fields">
+        <h1 class="charname">
+          <input name="name" type="text" value="{{item.name}}" placeholder="Item Name"/>
+        </h1>
+        <div class="item-type">
+          <label>{{localize "RQ3.Labels.type"}}: {{localize (concat "RQ3.ItemTypes." item.type)}}</label>
+        </div>
       </div>
     </div>
+    
+    {{!-- Sheet Tab Navigation --}}
+    <nav class="sheet-tabs tabs" data-group="primary">
+      <a class="item" data-tab="info">Info</a>
+      <a class="item" data-tab="data">Data</a>
+    </nav>
   </header>
 
+  {{!-- Sheet Body --}}
   <section class="sheet-body">
-    <!-- Basic Information -->
-    <div class="basic-info">
+    {{!-- Info Tab --}}
+    <div class="tab" data-group="primary" data-tab="info">
+      <div class="info-section">
+        <div class="info-display">
+          {{{enrichedDescription}}}
+        </div>
+      </div>
+    </div>
+    {{!-- End Info Tab --}}
+
+    {{!-- Data Tab --}}
+    <div class="tab" data-group="primary" data-tab="data">
+    <!-- Description Editor -->
+    <div class="description-editor">
       <div class="detail-group">
         <label>{{localize "RQ3.Labels.description"}}</label>
-        <textarea name="system.description" rows="4">{{system.description}}</textarea>
+        {{editor system.description target="system.description" button=false owner=owner editable=true engine="prosemirror"}}
       </div>
-      
-      {{#unless (or (eq item.type "skill") (eq item.type "rune"))}}
+    </div>
+
+    <!-- Basic Information -->
+    <div class="basic-info">
+      {{#unless (or (eq item.type "skill") (eq item.type "rune") (eq item.type "weapon"))}}
       <div class="item-properties">
         <div class="detail-group">
           <label>{{localize "RQ3.Labels.quantity"}}</label>
           <input type="number" name="system.quantity" value="{{system.quantity}}" min="0"/>
-        </div>
-        {{#unless (eq item.type "armor")}}
-        <div class="detail-group">
-          <label>{{localize "RQ3.Labels.weight"}}</label>
-          <input type="number" name="system.weight" value="{{system.weight}}" step="0.1" min="0"/>
-        </div>
-        {{/unless}}
-        <div class="detail-group">
-          <label>{{localize "RQ3.Labels.price"}}</label>
-          <input type="number" name="system.price.value" value="{{system.price.value}}" step="0.01" min="0"/>
         </div>
       </div>
       {{/unless}}
@@ -41,9 +55,14 @@
 
     <!-- Weapon Specific -->
     {{#if (eq item.type "weapon")}}
-    <div class="weapon-section">
+    <!-- Weapon Properties Section -->
+    <div class="item-properties-section">
       <h3>{{localize "RQ3.ItemTypes.weapon"}} {{localize "RQ3.Labels.properties"}}</h3>
-      <div class="weapon-properties">
+      <div class="item-properties">
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.quantity"}}</label>
+          <input type="number" name="system.quantity" value="{{system.quantity}}" min="0"/>
+        </div>
         <div class="detail-group">
           <label>{{localize "RQ3.Labels.weaponType"}}</label>
           <select name="system.weaponType">
@@ -53,31 +72,142 @@
           </select>
         </div>
         <div class="detail-group">
-          <label>{{localize "RQ3.Labels.damage"}}</label>
-          <input type="text" name="system.damage" value="{{system.damage}}"/>
+          <label>{{localize "RQ3.Labels.price"}}</label>
+          <input type="number" name="system.price" value="{{system.price}}" step="0.01" min="0"/>
         </div>
         <div class="detail-group">
-          <label>{{localize "RQ3.Labels.skill"}}</label>
-          <input type="text" name="system.skill" value="{{system.skill}}"/>
+          <label>{{localize "RQ3.Labels.encumbrance"}}</label>
+          <input type="number" name="system.encumbrance" value="{{system.encumbrance}}" step="0.1" min="0"/>
         </div>
         <div class="detail-group">
-          <label>{{localize "RQ3.Combat.armorPoints"}}</label>
-          <input type="number" name="system.ap" value="{{system.ap}}" min="0"/>
+          <label>{{localize "RQ3.Labels.enableMelee1Handed"}}</label>
+          <input type="checkbox" name="system.melee1Handed.enabled" {{#if system.melee1Handed.enabled}}checked{{/if}}/>
         </div>
         <div class="detail-group">
-          <label>{{localize "RQ3.Combat.weaponHP"}}</label>
-          <input type="number" name="system.hp" value="{{system.hp}}" min="0"/>
+          <label>{{localize "RQ3.Labels.enableMelee2Handed"}}</label>
+          <input type="checkbox" name="system.melee2Handed.enabled" {{#if system.melee2Handed.enabled}}checked{{/if}}/>
         </div>
         <div class="detail-group">
-          <label>{{localize "RQ3.Combat.reach"}}</label>
-          <input type="text" name="system.reach" value="{{system.reach}}"/>
-        </div>
-        <div class="detail-group">
-          <label>{{localize "RQ3.Combat.parry"}}</label>
-          <input type="text" name="system.parry" value="{{system.parry}}"/>
+          <label>{{localize "RQ3.Labels.enableRangedAttack"}}</label>
+          <input type="checkbox" name="system.rangedAttack.enabled" {{#if system.rangedAttack.enabled}}checked{{/if}}/>
         </div>
       </div>
     </div>
+    
+    <!-- Melee Attack (1 Handed) Section -->
+    {{#if system.melee1Handed.enabled}}
+    <div class="weapon-section">
+      <h3>{{localize "RQ3.Labels.meleeAttack1Handed"}}</h3>
+      <div class="weapon-properties">
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.damage"}}</label>
+          <input type="text" name="system.melee1Handed.damage" value="{{system.melee1Handed.damage}}"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.strengthRequirement"}}</label>
+          <input type="number" name="system.melee1Handed.strengthRequirement" value="{{system.melee1Handed.strengthRequirement}}" min="1" max="25"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.dexterityRequirement"}}</label>
+          <input type="number" name="system.melee1Handed.dexterityRequirement" value="{{system.melee1Handed.dexterityRequirement}}" min="1" max="25"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.weaponArmor"}}</label>
+          <input type="number" name="system.melee1Handed.armor" value="{{system.melee1Handed.armor}}" min="0"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.strikeRank"}}</label>
+          <input type="number" name="system.melee1Handed.strikeRank" value="{{system.melee1Handed.strikeRank}}" min="0"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.impale"}}</label>
+          <input type="checkbox" name="system.melee1Handed.impale" {{#if system.melee1Handed.impale}}checked{{/if}}/>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+    
+    <!-- Melee Attack (2 Handed) Section -->
+    {{#if system.melee2Handed.enabled}}
+    <div class="weapon-section">
+      <h3>{{localize "RQ3.Labels.meleeAttack2Handed"}}</h3>
+      <div class="weapon-properties">
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.damage"}}</label>
+          <input type="text" name="system.melee2Handed.damage" value="{{system.melee2Handed.damage}}"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.strengthRequirement"}}</label>
+          <input type="number" name="system.melee2Handed.strengthRequirement" value="{{system.melee2Handed.strengthRequirement}}" min="1" max="25"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.dexterityRequirement"}}</label>
+          <input type="number" name="system.melee2Handed.dexterityRequirement" value="{{system.melee2Handed.dexterityRequirement}}" min="1" max="25"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.weaponArmor"}}</label>
+          <input type="number" name="system.melee2Handed.armor" value="{{system.melee2Handed.armor}}" min="0"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.strikeRank"}}</label>
+          <input type="number" name="system.melee2Handed.strikeRank" value="{{system.melee2Handed.strikeRank}}" min="0"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.impale"}}</label>
+          <input type="checkbox" name="system.melee2Handed.impale" {{#if system.melee2Handed.impale}}checked{{/if}}/>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+    
+    <!-- Ranged Attack Section -->
+    {{#if system.rangedAttack.enabled}}
+    <div class="weapon-section">
+      <h3>{{localize "RQ3.Labels.rangedAttack"}}</h3>
+      <div class="weapon-properties">
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.damage"}}</label>
+          <input type="text" name="system.rangedAttack.damage" value="{{system.rangedAttack.damage}}"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.strengthRequirement"}}</label>
+          <input type="number" name="system.rangedAttack.strengthRequirement" value="{{system.rangedAttack.strengthRequirement}}" min="1" max="25"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.dexterityRequirement"}}</label>
+          <input type="number" name="system.rangedAttack.dexterityRequirement" value="{{system.rangedAttack.dexterityRequirement}}" min="1" max="25"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.weaponArmor"}}</label>
+          <input type="number" name="system.rangedAttack.armor" value="{{system.rangedAttack.armor}}" min="0"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.strikeRank"}}</label>
+          <input type="number" name="system.rangedAttack.strikeRank" value="{{system.rangedAttack.strikeRank}}" min="0"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.deadlyBlow"}}</label>
+          <input type="checkbox" name="system.rangedAttack.deadlyBlow" {{#if system.rangedAttack.deadlyBlow}}checked{{/if}}/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.impale"}}</label>
+          <input type="checkbox" name="system.rangedAttack.impale" {{#if system.rangedAttack.impale}}checked{{/if}}/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.minRange"}}</label>
+          <input type="number" name="system.rangedAttack.minRange" value="{{system.rangedAttack.minRange}}" min="0"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.maxRange"}}</label>
+          <input type="number" name="system.rangedAttack.maxRange" value="{{system.rangedAttack.maxRange}}" min="0"/>
+        </div>
+        <div class="detail-group">
+          <label>{{localize "RQ3.Labels.rof"}}</label>
+          <input type="number" name="system.rangedAttack.rof" value="{{system.rangedAttack.rof}}" min="0"/>
+        </div>
+      </div>
+    </div>
+    {{/if}}
     {{/if}}
 
     <!-- Armor Specific -->
@@ -259,17 +389,73 @@
             {{/each}}
           </select>
         </div>
+        
+        <div class="detail-group">
+          <label>Offensive Spell</label>
+          <input type="checkbox" name="system.offensive" {{#if system.offensive}}checked{{/if}}/>
+          <span class="hint">Check if this spell requires a hit location roll</span>
+        </div>
+        
+        <!-- Common Fields for All Spell Types -->
+        <div class="detail-group">
+          <label>Range</label>
+          <input type="text" name="system.range" value="{{system.range}}" list="range-options" placeholder="e.g., Touch, Ranged, Personal"/>
+          <datalist id="range-options">
+            <option value="Touch">
+            <option value="Ranged">
+            <option value="Personal">
+            <option value="50 meters">
+            <option value="100 meters">
+          </datalist>
+        </div>
+        <div class="detail-group">
+          <label>Duration</label>
+          <input type="text" name="system.duration" value="{{system.duration}}" list="duration-options" placeholder="e.g., Instant, Temporal"/>
+          <datalist id="duration-options">
+            <option value="Instant">
+            <option value="Temporal">
+            <option value="10 minutes">
+            <option value="1 hour">
+            <option value="1 day">
+          </datalist>
+        </div>
+        <div class="detail-group">
+          <label>State</label>
+          <select name="system.state">
+            <option value="Active" {{#if (eq system.state "Active")}}selected{{/if}}>Active</option>
+            <option value="Passive" {{#if (eq system.state "Passive")}}selected{{/if}}>Passive</option>
+          </select>
+        </div>
+        
+        <!-- Spirit Magic Specific Fields -->
+        {{#if (eq system.spellType "spirit")}}
+        <div class="detail-group">
+          <label>Magic Points</label>
+          <input type="number" name="system.magicPoints" value="{{system.magicPoints}}" min="1"/>
+        </div>
+        {{/if}}
+        
+        <!-- Divine Magic Specific Fields -->
+        {{#if (eq system.spellType "divine")}}
+        <div class="detail-group">
+          <label>Uses</label>
+          <input type="number" name="system.uses" value="{{system.uses}}" min="0"/>
+        </div>
+        <div class="detail-group">
+          <label>Stackable</label>
+          <input type="checkbox" name="system.stackable" {{#if system.stackable}}checked{{/if}}/>
+        </div>
+        <div class="detail-group">
+          <label>Reusable</label>
+          <input type="checkbox" name="system.reusable" {{#if system.reusable}}checked{{/if}}/>
+        </div>
+        {{/if}}
+        
+        <!-- Sorcery Specific Fields (keeping existing) -->
+        {{#if (eq system.spellType "sorcery")}}
         <div class="detail-group">
           <label>{{localize "RQ3.Labels.cost"}}</label>
           <input type="number" name="system.cost" value="{{system.cost}}" min="0"/>
-        </div>
-        <div class="detail-group">
-          <label>{{localize "RQ3.Labels.range"}}</label>
-          <input type="text" name="system.range" value="{{system.range}}"/>
-        </div>
-        <div class="detail-group">
-          <label>{{localize "RQ3.Labels.duration"}}</label>
-          <input type="text" name="system.duration" value="{{system.duration}}"/>
         </div>
         <div class="detail-group">
           <label>{{localize "RQ3.Magic.intensity"}}</label>
@@ -279,6 +465,7 @@
           <label>{{localize "RQ3.Magic.stackable"}}</label>
           <input type="checkbox" name="system.stackable" {{#if system.stackable}}checked{{/if}}/>
         </div>
+        {{/if}}
       </div>
       <div class="spell-components">
         <h4>{{localize "RQ3.Magic.components"}}</h4>
@@ -672,5 +859,7 @@
       </div>
     </div>
     {{/if}}
+    </div>
+    {{!-- End Data Tab --}}
   </section>
 </form> 

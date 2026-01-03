@@ -1,0 +1,3687 @@
+{
+  "brigandine__head_": {
+    "version": "1.0.6",
+    "folder": "Brigandine",
+    "data": {
+      "name": "Brigandine (Head)",
+      "type": "armor",
+      "img": "icons/equipment/head/helm-brigandine.webp",
+      "system": {
+        "armorType": "brigandine",
+        "armorLocation": "head",
+        "armorPoints": 7,
+        "encumbrance": 2.2,
+        "price": {
+          "value": 440,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of metal plates riveted to a fabric or leather backing. Provides excellent protection with good flexibility.</p>",
+        "material": "Metal plates on fabric/leather",
+        "coverage": "Head",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "0tXqXdOJDFgQs1OS",
+      "effects": [],
+      "folder": "sBW4XEuX4jcyajeN",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203568,
+        "modifiedTime": 1767354203573,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "ringmail__abdomen_": {
+    "version": "1.0.6",
+    "folder": "Ringmail",
+    "data": {
+      "name": "Ringmail (Abdomen)",
+      "type": "armor",
+      "img": "icons/equipment/waist/belt-ringmail.webp",
+      "system": {
+        "armorType": "ringmail",
+        "armorLocation": "abdomen",
+        "armorPoints": 5,
+        "encumbrance": 1,
+        "price": {
+          "value": 110,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of interlocking metal rings. Provides excellent protection while maintaining good flexibility.</p>",
+        "material": "Metal rings",
+        "coverage": "Abdomen",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "1dkFvee542tLgUuC",
+      "effects": [],
+      "folder": "rh1d1xfyPl8fbgMS",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203358,
+        "modifiedTime": 1767354203366,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "clothes__head_": {
+    "version": "1.0.6",
+    "folder": "Clothes",
+    "data": {
+      "name": "Clothes (Head)",
+      "type": "armor",
+      "img": "icons/equipment/head/hood-cloth-brown.webp",
+      "system": {
+        "armorType": "clothes",
+        "armorLocation": "head",
+        "armorPoints": 0,
+        "encumbrance": 0.25,
+        "price": {
+          "value": 0,
+          "currency": "lunars"
+        },
+        "description": "<p>Basic clothing provides no armor protection but is essential for everyday wear.</p>",
+        "material": "Cloth",
+        "coverage": "Head",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "24RL4lJx0MAlYRy6",
+      "effects": [],
+      "folder": "EpslFlCA4dHMc1xn",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354202772,
+        "modifiedTime": 1767357997234,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "bezainted__leg_": {
+    "version": "1.0.6",
+    "folder": "Bezainted",
+    "data": {
+      "name": "Bezainted (Leg)",
+      "type": "armor",
+      "img": "icons/equipment/leg/greaves-bezainted.webp",
+      "system": {
+        "armorType": "bezainted",
+        "armorLocation": "leg",
+        "armorPoints": 4,
+        "encumbrance": 1.5,
+        "price": {
+          "value": 105,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of small metal plates sewn onto a leather or fabric backing. Provides good protection with moderate flexibility.</p>",
+        "material": "Metal plates on leather",
+        "coverage": "Leg",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "2JGODHNuXQrIpBjP",
+      "effects": [],
+      "folder": "yMzvlKYT4nJeMBuR",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203307,
+        "modifiedTime": 1767354203314,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "stiff_leather__chest_": {
+    "version": "1.0.6",
+    "folder": "Stiff Leather",
+    "data": {
+      "name": "Stiff Leather (Chest)",
+      "type": "armor",
+      "img": "icons/equipment/chest/cuirass-leather-hardened.webp",
+      "system": {
+        "armorType": "stiff-leather",
+        "armorLocation": "chest",
+        "armorPoints": 2,
+        "encumbrance": 1,
+        "price": {
+          "value": 20,
+          "currency": "lunars"
+        },
+        "description": "<p>Hardened leather armor that provides better protection than soft leather. More rigid and durable.</p>",
+        "material": "Stiff leather",
+        "coverage": "Chest",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "2RBC2RZ5lBzRO8Ai",
+      "effects": [],
+      "folder": "aTP0ieJ7XEoWfCGc",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203038,
+        "modifiedTime": 1767354203042,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "lamellar__leg_": {
+    "version": "1.0.6",
+    "folder": "Lamellar",
+    "data": {
+      "name": "Lamellar (Leg)",
+      "type": "armor",
+      "img": "icons/equipment/leg/greaves-lamellar.webp",
+      "system": {
+        "armorType": "lamellar",
+        "armorLocation": "leg",
+        "armorPoints": 6,
+        "encumbrance": 3.6,
+        "price": {
+          "value": 720,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of overlapping metal or leather plates laced together. Provides excellent protection.</p>",
+        "material": "Overlapping plates",
+        "coverage": "Leg",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "55tBP1Ck1e3JL54w",
+      "effects": [],
+      "folder": "KNkuLajwlHWcmDs3",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203410,
+        "modifiedTime": 1767354203416,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "lamellar__chest_": {
+    "version": "1.0.6",
+    "folder": "Lamellar",
+    "data": {
+      "name": "Lamellar (Chest)",
+      "type": "armor",
+      "img": "icons/equipment/chest/cuirass-lamellar.webp",
+      "system": {
+        "armorType": "lamellar",
+        "armorLocation": "chest",
+        "armorPoints": 6,
+        "encumbrance": 3.6,
+        "price": {
+          "value": 720,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of overlapping metal or leather plates laced together. Provides excellent protection.</p>",
+        "material": "Overlapping plates",
+        "coverage": "Chest",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "5FdKJwLuXGyL1Lom",
+      "effects": [],
+      "folder": "KNkuLajwlHWcmDs3",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203393,
+        "modifiedTime": 1767354203398,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "bezainted__head_": {
+    "version": "1.0.6",
+    "folder": "Bezainted",
+    "data": {
+      "name": "Bezainted (Head)",
+      "type": "armor",
+      "img": "icons/equipment/head/helm-bezainted.webp",
+      "system": {
+        "armorType": "bezainted",
+        "armorLocation": "head",
+        "armorPoints": 4,
+        "encumbrance": 0.75,
+        "price": {
+          "value": 52.5,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of small metal plates sewn onto a leather or fabric backing. Provides good protection with moderate flexibility.</p>",
+        "material": "Metal plates on leather",
+        "coverage": "Head",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "5f3orNGgnUCbp8Bz",
+      "effects": [],
+      "folder": "yMzvlKYT4nJeMBuR",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203155,
+        "modifiedTime": 1767354203170,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "cuirbouilli__leg_": {
+    "version": "1.0.6",
+    "folder": "Cuirbouilli",
+    "data": {
+      "name": "Cuirbouilli (Leg)",
+      "type": "armor",
+      "img": "icons/equipment/leg/greaves-leather-boiled.webp",
+      "system": {
+        "armorType": "cuirbouilli",
+        "armorLocation": "leg",
+        "armorPoints": 3,
+        "encumbrance": 1,
+        "price": {
+          "value": 45,
+          "currency": "lunars"
+        },
+        "description": "<p>Leather that has been boiled in oil or wax to harden it. Provides good protection while remaining relatively flexible.</p>",
+        "material": "Boiled leather",
+        "coverage": "Leg",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "B65Rl1TXwxPxWqm1",
+      "effects": [],
+      "folder": "QKvCXnmNFKyOIAwj",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203118,
+        "modifiedTime": 1767354203135,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "ringmail__head_": {
+    "version": "1.0.6",
+    "folder": "Ringmail",
+    "data": {
+      "name": "Ringmail (Head)",
+      "type": "armor",
+      "img": "icons/equipment/head/helm-ringmail.webp",
+      "system": {
+        "armorType": "ringmail",
+        "armorLocation": "head",
+        "armorPoints": 5,
+        "encumbrance": 1,
+        "price": {
+          "value": 110,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of interlocking metal rings. Provides excellent protection while maintaining good flexibility.</p>",
+        "material": "Metal rings",
+        "coverage": "Head",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "COBEWJ7FLx7nnWxG",
+      "effects": [],
+      "folder": "rh1d1xfyPl8fbgMS",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203318,
+        "modifiedTime": 1767354203325,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "plate__abdomen_": {
+    "version": "1.0.6",
+    "folder": "Plate",
+    "data": {
+      "name": "Plate (Abdomen)",
+      "type": "armor",
+      "img": "icons/equipment/waist/belt-plate.webp",
+      "system": {
+        "armorType": "plate",
+        "armorLocation": "abdomen",
+        "armorPoints": 8,
+        "encumbrance": 2.5,
+        "price": {
+          "value": 675,
+          "currency": "lunars"
+        },
+        "description": "<p>Full plate armor made of solid metal plates. Provides the best protection available but is heavy and expensive.</p>",
+        "material": "Solid metal plates",
+        "coverage": "Abdomen",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "DR3jnWWhzg17C0iJ",
+      "effects": [],
+      "folder": "sTPLMC5zhuGarUhK",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203699,
+        "modifiedTime": 1767354203718,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "stiff_leather__leg_": {
+    "version": "1.0.6",
+    "folder": "Stiff Leather",
+    "data": {
+      "name": "Stiff Leather (Leg)",
+      "type": "armor",
+      "img": "icons/equipment/leg/greaves-leather-hardened.webp",
+      "system": {
+        "armorType": "stiff-leather",
+        "armorLocation": "leg",
+        "armorPoints": 2,
+        "encumbrance": 1,
+        "price": {
+          "value": 20,
+          "currency": "lunars"
+        },
+        "description": "<p>Hardened leather armor that provides better protection than soft leather. More rigid and durable.</p>",
+        "material": "Stiff leather",
+        "coverage": "Leg",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "EPqG5xOlSatUrEiy",
+      "effects": [],
+      "folder": "aTP0ieJ7XEoWfCGc",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203055,
+        "modifiedTime": 1767354203059,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "lamellar__arm_": {
+    "version": "1.0.6",
+    "folder": "Lamellar",
+    "data": {
+      "name": "Lamellar (Arm)",
+      "type": "armor",
+      "img": "icons/equipment/shoulder/shoulderpad-lamellar.webp",
+      "system": {
+        "armorType": "lamellar",
+        "armorLocation": "arm",
+        "armorPoints": 6,
+        "encumbrance": 1.8,
+        "price": {
+          "value": 360,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of overlapping metal or leather plates laced together. Provides excellent protection.</p>",
+        "material": "Overlapping plates",
+        "coverage": "Arm",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "Ebrt84VH364UETJY",
+      "effects": [],
+      "folder": "KNkuLajwlHWcmDs3",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203387,
+        "modifiedTime": 1767354203390,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "cuirbouilli__arm_": {
+    "version": "1.0.6",
+    "folder": "Cuirbouilli",
+    "data": {
+      "name": "Cuirbouilli (Arm)",
+      "type": "armor",
+      "img": "icons/equipment/shoulder/shoulderpad-leather-boiled.webp",
+      "system": {
+        "armorType": "cuirbouilli",
+        "armorLocation": "arm",
+        "armorPoints": 3,
+        "encumbrance": 0.5,
+        "price": {
+          "value": 22.5,
+          "currency": "lunars"
+        },
+        "description": "<p>Leather that has been boiled in oil or wax to harden it. Provides good protection while remaining relatively flexible.</p>",
+        "material": "Boiled leather",
+        "coverage": "Arm",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "EgOQ3mrXoOjBOJcc",
+      "effects": [],
+      "folder": "QKvCXnmNFKyOIAwj",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203074,
+        "modifiedTime": 1767354203081,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "brigandine__leg_": {
+    "version": "1.0.6",
+    "folder": "Brigandine",
+    "data": {
+      "name": "Brigandine (Leg)",
+      "type": "armor",
+      "img": "icons/equipment/leg/greaves-brigandine.webp",
+      "system": {
+        "armorType": "brigandine",
+        "armorLocation": "leg",
+        "armorPoints": 7,
+        "encumbrance": 4.4,
+        "price": {
+          "value": 880,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of metal plates riveted to a fabric or leather backing. Provides excellent protection with good flexibility.</p>",
+        "material": "Metal plates on fabric/leather",
+        "coverage": "Leg",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "FwB714kcRdZALrkn",
+      "effects": [],
+      "folder": "sBW4XEuX4jcyajeN",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203610,
+        "modifiedTime": 1767354203625,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "clothes__chest_": {
+    "version": "1.0.6",
+    "folder": "Clothes",
+    "data": {
+      "name": "Clothes (Chest)",
+      "type": "armor",
+      "img": "icons/equipment/chest/shirt-collared-brown.webp",
+      "system": {
+        "armorType": "clothes",
+        "armorLocation": "chest",
+        "armorPoints": 0,
+        "encumbrance": 0.5,
+        "price": {
+          "value": 0,
+          "currency": "lunars"
+        },
+        "description": "<p>Basic clothing provides no armor protection but is essential for everyday wear.</p>",
+        "material": "Cloth",
+        "coverage": "Chest",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "GaxXEdBUrC3h2WP9",
+      "effects": [],
+      "folder": "EpslFlCA4dHMc1xn",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354202802,
+        "modifiedTime": 1767357946762,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "chainmail__chest_": {
+    "version": "1.0.6",
+    "folder": "Chainmail",
+    "data": {
+      "name": "Chainmail (Chest)",
+      "type": "armor",
+      "img": "icons/equipment/chest/cuirass-chainmail.webp",
+      "system": {
+        "armorType": "chainmail",
+        "armorLocation": "chest",
+        "armorPoints": 7,
+        "encumbrance": 4,
+        "price": {
+          "value": 960,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of interlocked metal rings forming a mesh. Provides superior protection while maintaining flexibility.</p>",
+        "material": "Interlocked metal rings",
+        "coverage": "Chest",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "HCN180nt0PQMtR2O",
+      "effects": [],
+      "folder": "J3kwuoZXQjoIpU2H",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203534,
+        "modifiedTime": 1767354203539,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "scale__chest_": {
+    "version": "1.0.6",
+    "folder": "Scale",
+    "data": {
+      "name": "Scale (Chest)",
+      "type": "armor",
+      "img": "icons/equipment/chest/cuirass-scale.webp",
+      "system": {
+        "armorType": "scale",
+        "armorLocation": "chest",
+        "armorPoints": 6,
+        "encumbrance": 4,
+        "price": {
+          "value": 480,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of overlapping metal scales attached to a backing. Provides excellent protection with good flexibility.</p>",
+        "material": "Metal scales",
+        "coverage": "Chest",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "KunM7tXyNzI3Jhbz",
+      "effects": [],
+      "folder": "VHZXyug6sZvL1n6T",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203470,
+        "modifiedTime": 1767354203477,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "bezainted__arm_": {
+    "version": "1.0.6",
+    "folder": "Bezainted",
+    "data": {
+      "name": "Bezainted (Arm)",
+      "type": "armor",
+      "img": "icons/equipment/shoulder/shoulderpad-bezainted.webp",
+      "system": {
+        "armorType": "bezainted",
+        "armorLocation": "arm",
+        "armorPoints": 4,
+        "encumbrance": 0.75,
+        "price": {
+          "value": 52.5,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of small metal plates sewn onto a leather or fabric backing. Provides good protection with moderate flexibility.</p>",
+        "material": "Metal plates on leather",
+        "coverage": "Arm",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "L0HVljnWLQOAywCO",
+      "effects": [],
+      "folder": "yMzvlKYT4nJeMBuR",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203190,
+        "modifiedTime": 1767354203246,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "lamellar__head_": {
+    "version": "1.0.6",
+    "folder": "Lamellar",
+    "data": {
+      "name": "Lamellar (Head)",
+      "type": "armor",
+      "img": "icons/equipment/head/helm-lamellar.webp",
+      "system": {
+        "armorType": "lamellar",
+        "armorLocation": "head",
+        "armorPoints": 6,
+        "encumbrance": 1.8,
+        "price": {
+          "value": 360,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of overlapping metal or leather plates laced together. Provides excellent protection.</p>",
+        "material": "Overlapping plates",
+        "coverage": "Head",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "LCkinOldLox6SO11",
+      "effects": [],
+      "folder": "KNkuLajwlHWcmDs3",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203379,
+        "modifiedTime": 1767354203383,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "stiff_leather__arm_": {
+    "version": "1.0.6",
+    "folder": "Stiff Leather",
+    "data": {
+      "name": "Stiff Leather (Arm)",
+      "type": "armor",
+      "img": "icons/equipment/shoulder/shoulderpad-leather-hardened.webp",
+      "system": {
+        "armorType": "stiff-leather",
+        "armorLocation": "arm",
+        "armorPoints": 2,
+        "encumbrance": 0.5,
+        "price": {
+          "value": 10,
+          "currency": "lunars"
+        },
+        "description": "<p>Hardened leather armor that provides better protection than soft leather. More rigid and durable.</p>",
+        "material": "Stiff leather",
+        "coverage": "Arm",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "LYJ3QKz1woCdyySE",
+      "effects": [],
+      "folder": "aTP0ieJ7XEoWfCGc",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203029,
+        "modifiedTime": 1767354203034,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "brigandine__arm_": {
+    "version": "1.0.6",
+    "folder": "Brigandine",
+    "data": {
+      "name": "Brigandine (Arm)",
+      "type": "armor",
+      "img": "icons/equipment/shoulder/shoulderpad-brigandine.webp",
+      "system": {
+        "armorType": "brigandine",
+        "armorLocation": "arm",
+        "armorPoints": 7,
+        "encumbrance": 2.2,
+        "price": {
+          "value": 440,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of metal plates riveted to a fabric or leather backing. Provides excellent protection with good flexibility.</p>",
+        "material": "Metal plates on fabric/leather",
+        "coverage": "Arm",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "MZ4D7S8GoziWRnBr",
+      "effects": [],
+      "folder": "sBW4XEuX4jcyajeN",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203578,
+        "modifiedTime": 1767354203582,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "cuirbouilli__head_": {
+    "version": "1.0.6",
+    "folder": "Cuirbouilli",
+    "data": {
+      "name": "Cuirbouilli (Head)",
+      "type": "armor",
+      "img": "icons/equipment/head/helm-leather-boiled.webp",
+      "system": {
+        "armorType": "cuirbouilli",
+        "armorLocation": "head",
+        "armorPoints": 3,
+        "encumbrance": 0.5,
+        "price": {
+          "value": 22.5,
+          "currency": "lunars"
+        },
+        "description": "<p>Leather that has been boiled in oil or wax to harden it. Provides good protection while remaining relatively flexible.</p>",
+        "material": "Boiled leather",
+        "coverage": "Head",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "N1AiFptklnmDyGF2",
+      "effects": [],
+      "folder": "QKvCXnmNFKyOIAwj",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203064,
+        "modifiedTime": 1767354203068,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "plate__head_": {
+    "version": "1.0.6",
+    "folder": "Plate",
+    "data": {
+      "name": "Plate (Head)",
+      "type": "armor",
+      "img": "icons/equipment/head/helm-plate.webp",
+      "system": {
+        "armorType": "plate",
+        "armorLocation": "head",
+        "armorPoints": 8,
+        "encumbrance": 2.5,
+        "price": {
+          "value": 675,
+          "currency": "lunars"
+        },
+        "description": "<p>Full plate armor made of solid metal plates. Provides the best protection available but is heavy and expensive.</p>",
+        "material": "Solid metal plates",
+        "coverage": "Head",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "PgvX5PL4k7lc7VLM",
+      "effects": [],
+      "folder": "sTPLMC5zhuGarUhK",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203633,
+        "modifiedTime": 1767354203648,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "bezainted__abdomen_": {
+    "version": "1.0.6",
+    "folder": "Bezainted",
+    "data": {
+      "name": "Bezainted (Abdomen)",
+      "type": "armor",
+      "img": "icons/equipment/waist/belt-bezainted.webp",
+      "system": {
+        "armorType": "bezainted",
+        "armorLocation": "abdomen",
+        "armorPoints": 4,
+        "encumbrance": 0.75,
+        "price": {
+          "value": 52.5,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of small metal plates sewn onto a leather or fabric backing. Provides good protection with moderate flexibility.</p>",
+        "material": "Metal plates on leather",
+        "coverage": "Abdomen",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "RtERGqga3FqvOae6",
+      "effects": [],
+      "folder": "yMzvlKYT4nJeMBuR",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203292,
+        "modifiedTime": 1767354203300,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "ringmail__chest_": {
+    "version": "1.0.6",
+    "folder": "Ringmail",
+    "data": {
+      "name": "Ringmail (Chest)",
+      "type": "armor",
+      "img": "icons/equipment/chest/cuirass-ringmail.webp",
+      "system": {
+        "armorType": "ringmail",
+        "armorLocation": "chest",
+        "armorPoints": 5,
+        "encumbrance": 2,
+        "price": {
+          "value": 220,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of interlocking metal rings. Provides excellent protection while maintaining good flexibility.</p>",
+        "material": "Metal rings",
+        "coverage": "Chest",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "SKvzWUq4YeQg0Rh1",
+      "effects": [],
+      "folder": "rh1d1xfyPl8fbgMS",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203346,
+        "modifiedTime": 1767354203350,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "stiff_leather__abdomen_": {
+    "version": "1.0.6",
+    "folder": "Stiff Leather",
+    "data": {
+      "name": "Stiff Leather (Abdomen)",
+      "type": "armor",
+      "img": "icons/equipment/waist/belt-leather-hardened.webp",
+      "system": {
+        "armorType": "stiff-leather",
+        "armorLocation": "abdomen",
+        "armorPoints": 2,
+        "encumbrance": 0.5,
+        "price": {
+          "value": 10,
+          "currency": "lunars"
+        },
+        "description": "<p>Hardened leather armor that provides better protection than soft leather. More rigid and durable.</p>",
+        "material": "Stiff leather",
+        "coverage": "Abdomen",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "SyWtQjrLFBnPewhW",
+      "effects": [],
+      "folder": "aTP0ieJ7XEoWfCGc",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203047,
+        "modifiedTime": 1767354203051,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "clothes__arm_": {
+    "version": "1.0.6",
+    "folder": "Clothes",
+    "data": {
+      "name": "Clothes (Arm)",
+      "type": "armor",
+      "img": "icons/equipment/shoulder/cloak-plain-leather-brown.webp",
+      "system": {
+        "armorType": "clothes",
+        "armorLocation": "arm",
+        "armorPoints": 0,
+        "encumbrance": 0,
+        "price": {
+          "value": 0,
+          "currency": "lunars"
+        },
+        "description": "<p>Basic clothing provides no armor protection but is essential for everyday wear.</p>",
+        "material": "Cloth",
+        "coverage": "Arm",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "VNmRyKuZ5ADoxA64",
+      "effects": [],
+      "folder": "EpslFlCA4dHMc1xn",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354202786,
+        "modifiedTime": 1767357973828,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "chainmail__abdomen_": {
+    "version": "1.0.6",
+    "folder": "Chainmail",
+    "data": {
+      "name": "Chainmail (Abdomen)",
+      "type": "armor",
+      "img": "icons/equipment/waist/belt-chainmail.webp",
+      "system": {
+        "armorType": "chainmail",
+        "armorLocation": "abdomen",
+        "armorPoints": 7,
+        "encumbrance": 2,
+        "price": {
+          "value": 480,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of interlocked metal rings forming a mesh. Provides superior protection while maintaining flexibility.</p>",
+        "material": "Interlocked metal rings",
+        "coverage": "Abdomen",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "WN0nejhaDHXQ4NtG",
+      "effects": [],
+      "folder": "J3kwuoZXQjoIpU2H",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203544,
+        "modifiedTime": 1767354203551,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "brigandine__chest_": {
+    "version": "1.0.6",
+    "folder": "Brigandine",
+    "data": {
+      "name": "Brigandine (Chest)",
+      "type": "armor",
+      "img": "icons/equipment/chest/cuirass-brigandine.webp",
+      "system": {
+        "armorType": "brigandine",
+        "armorLocation": "chest",
+        "armorPoints": 7,
+        "encumbrance": 4.4,
+        "price": {
+          "value": 880,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of metal plates riveted to a fabric or leather backing. Provides excellent protection with good flexibility.</p>",
+        "material": "Metal plates on fabric/leather",
+        "coverage": "Chest",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "YAn8S3MviljIV9gp",
+      "effects": [],
+      "folder": "sBW4XEuX4jcyajeN",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203586,
+        "modifiedTime": 1767354203590,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "plate__chest_": {
+    "version": "1.0.6",
+    "folder": "Plate",
+    "data": {
+      "name": "Plate (Chest)",
+      "type": "armor",
+      "img": "icons/equipment/chest/cuirass-plate.webp",
+      "system": {
+        "armorType": "plate",
+        "armorLocation": "chest",
+        "armorPoints": 8,
+        "encumbrance": 5,
+        "price": {
+          "value": 1350,
+          "currency": "lunars"
+        },
+        "description": "<p>Full plate armor made of solid metal plates. Provides the best protection available but is heavy and expensive.</p>",
+        "material": "Solid metal plates",
+        "coverage": "Chest",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "YTPzczaDMA5eieUy",
+      "effects": [],
+      "folder": "sTPLMC5zhuGarUhK",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203668,
+        "modifiedTime": 1767354203678,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "scale__head_": {
+    "version": "1.0.6",
+    "folder": "Scale",
+    "data": {
+      "name": "Scale (Head)",
+      "type": "armor",
+      "img": "icons/equipment/head/helm-barbute-bronze.webp",
+      "system": {
+        "armorType": "scale",
+        "armorLocation": "head",
+        "armorPoints": 6,
+        "encumbrance": 2,
+        "price": {
+          "value": 240,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of overlapping metal scales attached to a backing. Provides excellent protection with good flexibility.</p>",
+        "material": "Metal scales",
+        "coverage": "Head",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "Z2F0mOe8ziB7KZNa",
+      "effects": [],
+      "folder": "VHZXyug6sZvL1n6T",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203420,
+        "modifiedTime": 1767354203423,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "ringmail__arm_": {
+    "version": "1.0.6",
+    "folder": "Ringmail",
+    "data": {
+      "name": "Ringmail (Arm)",
+      "type": "armor",
+      "img": "icons/equipment/shoulder/shoulderpad-ringmail.webp",
+      "system": {
+        "armorType": "ringmail",
+        "armorLocation": "arm",
+        "armorPoints": 5,
+        "encumbrance": 1,
+        "price": {
+          "value": 110,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of interlocking metal rings. Provides excellent protection while maintaining good flexibility.</p>",
+        "material": "Metal rings",
+        "coverage": "Arm",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "avBRsdOYsyWj194A",
+      "effects": [],
+      "folder": "rh1d1xfyPl8fbgMS",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203333,
+        "modifiedTime": 1767354203341,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "cuirbouilli__abdomen_": {
+    "version": "1.0.6",
+    "folder": "Cuirbouilli",
+    "data": {
+      "name": "Cuirbouilli (Abdomen)",
+      "type": "armor",
+      "img": "icons/equipment/waist/belt-leather-boiled.webp",
+      "system": {
+        "armorType": "cuirbouilli",
+        "armorLocation": "abdomen",
+        "armorPoints": 3,
+        "encumbrance": 0.5,
+        "price": {
+          "value": 22.5,
+          "currency": "lunars"
+        },
+        "description": "<p>Leather that has been boiled in oil or wax to harden it. Provides good protection while remaining relatively flexible.</p>",
+        "material": "Boiled leather",
+        "coverage": "Abdomen",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "boQqz7R8AsqrYWqG",
+      "effects": [],
+      "folder": "QKvCXnmNFKyOIAwj",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203100,
+        "modifiedTime": 1767354203106,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "clothes__abdomen_": {
+    "version": "1.0.6",
+    "folder": "Clothes",
+    "data": {
+      "name": "Clothes (Abdomen)",
+      "type": "armor",
+      "img": "icons/equipment/waist/sash-cloth-gold-purple.webp",
+      "system": {
+        "armorType": "clothes",
+        "armorLocation": "abdomen",
+        "armorPoints": 0,
+        "encumbrance": 0.25,
+        "price": {
+          "value": 0,
+          "currency": "lunars"
+        },
+        "description": "<p>Basic clothing provides no armor protection but is essential for everyday wear.</p>",
+        "material": "Cloth",
+        "coverage": "Abdomen",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "cRm066FxW7IzHpWd",
+      "effects": [],
+      "folder": "EpslFlCA4dHMc1xn",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354202819,
+        "modifiedTime": 1767357891011,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "scale__arm_": {
+    "version": "1.0.6",
+    "folder": "Scale",
+    "data": {
+      "name": "Scale (Arm)",
+      "type": "armor",
+      "img": "icons/equipment/shoulder/shoulderpad-scale.webp",
+      "system": {
+        "armorType": "scale",
+        "armorLocation": "arm",
+        "armorPoints": 6,
+        "encumbrance": 2,
+        "price": {
+          "value": 240,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of overlapping metal scales attached to a backing. Provides excellent protection with good flexibility.</p>",
+        "material": "Metal scales",
+        "coverage": "Arm",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "caP6vlHCHjKET1kl",
+      "effects": [],
+      "folder": "VHZXyug6sZvL1n6T",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203427,
+        "modifiedTime": 1767354203434,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "soft_leather__head_": {
+    "version": "1.0.6",
+    "folder": "Soft Leather",
+    "data": {
+      "name": "Soft Leather (Head)",
+      "type": "armor",
+      "img": "icons/equipment/head/cap-leather-brown.webp",
+      "system": {
+        "armorType": "soft-leather",
+        "armorLocation": "head",
+        "armorPoints": 1,
+        "encumbrance": 0.35,
+        "price": {
+          "value": 7,
+          "currency": "lunars"
+        },
+        "description": "<p>A rough equivalent to a leather jacket or vest. Common among primitives, nomads, and barbarians. Often worn under other armor as additional padding and protection.</p>",
+        "material": "Soft leather",
+        "coverage": "Head",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "ciC1Z8us6EnQWEcV",
+      "effects": [],
+      "folder": "Xxm72Sxc3yQdV5uG",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354202845,
+        "modifiedTime": 1767354202851,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "cuirbouilli__chest_": {
+    "version": "1.0.6",
+    "folder": "Cuirbouilli",
+    "data": {
+      "name": "Cuirbouilli (Chest)",
+      "type": "armor",
+      "img": "icons/equipment/chest/cuirass-leather-boiled.webp",
+      "system": {
+        "armorType": "cuirbouilli",
+        "armorLocation": "chest",
+        "armorPoints": 3,
+        "encumbrance": 1,
+        "price": {
+          "value": 45,
+          "currency": "lunars"
+        },
+        "description": "<p>Leather that has been boiled in oil or wax to harden it. Provides good protection while remaining relatively flexible.</p>",
+        "material": "Boiled leather",
+        "coverage": "Chest",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "cxKshrwn1Nqr6Lyy",
+      "effects": [],
+      "folder": "QKvCXnmNFKyOIAwj",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203086,
+        "modifiedTime": 1767354203093,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "chainmail__leg_": {
+    "version": "1.0.6",
+    "folder": "Chainmail",
+    "data": {
+      "name": "Chainmail (Leg)",
+      "type": "armor",
+      "img": "icons/equipment/leg/greaves-chainmail.webp",
+      "system": {
+        "armorType": "chainmail",
+        "armorLocation": "leg",
+        "armorPoints": 7,
+        "encumbrance": 4,
+        "price": {
+          "value": 960,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of interlocked metal rings forming a mesh. Provides superior protection while maintaining flexibility.</p>",
+        "material": "Interlocked metal rings",
+        "coverage": "Leg",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "eN2cGk3qZ6bwO6qe",
+      "effects": [],
+      "folder": "J3kwuoZXQjoIpU2H",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203556,
+        "modifiedTime": 1767354203561,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "soft_leather__chest_": {
+    "version": "1.0.6",
+    "folder": "Soft Leather",
+    "data": {
+      "name": "Soft Leather (Chest)",
+      "type": "armor",
+      "img": "icons/equipment/chest/vest-leather-brown.webp",
+      "system": {
+        "armorType": "soft-leather",
+        "armorLocation": "chest",
+        "armorPoints": 1,
+        "encumbrance": 0.7,
+        "price": {
+          "value": 14,
+          "currency": "lunars"
+        },
+        "description": "<p>A rough equivalent to a leather jacket or vest. Common among primitives, nomads, and barbarians. Often worn under other armor as additional padding and protection.</p>",
+        "material": "Soft leather",
+        "coverage": "Chest",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "eyYieiTWGABcU8eA",
+      "effects": [],
+      "folder": "Xxm72Sxc3yQdV5uG",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354202876,
+        "modifiedTime": 1767354202889,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "stiff_leather__head_": {
+    "version": "1.0.6",
+    "folder": "Stiff Leather",
+    "data": {
+      "name": "Stiff Leather (Head)",
+      "type": "armor",
+      "img": "icons/equipment/head/helm-leather-brown.webp",
+      "system": {
+        "armorType": "stiff-leather",
+        "armorLocation": "head",
+        "armorPoints": 2,
+        "encumbrance": 0.5,
+        "price": {
+          "value": 10,
+          "currency": "lunars"
+        },
+        "description": "<p>Hardened leather armor that provides better protection than soft leather. More rigid and durable.</p>",
+        "material": "Stiff leather",
+        "coverage": "Head",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "kHYBkz8yhp1JreZH",
+      "effects": [],
+      "folder": "aTP0ieJ7XEoWfCGc",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203015,
+        "modifiedTime": 1767354203025,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "clothes__leg_": {
+    "version": "1.0.6",
+    "folder": "Clothes",
+    "data": {
+      "name": "Clothes (Leg)",
+      "type": "armor",
+      "img": "icons/equipment/leg/pants-copper-fabric-pants.webp",
+      "system": {
+        "armorType": "clothes",
+        "armorLocation": "leg",
+        "armorPoints": 0,
+        "encumbrance": 0,
+        "price": {
+          "value": 0,
+          "currency": "lunars"
+        },
+        "description": "<p>Basic clothing provides no armor protection but is essential for everyday wear.</p>",
+        "material": "Cloth",
+        "coverage": "Leg",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "oa6GjBtE1hqCjzum",
+      "effects": [],
+      "folder": "EpslFlCA4dHMc1xn",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354202833,
+        "modifiedTime": 1767358068196,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "chainmail__arm_": {
+    "version": "1.0.6",
+    "folder": "Chainmail",
+    "data": {
+      "name": "Chainmail (Arm)",
+      "type": "armor",
+      "img": "icons/equipment/shoulder/shoulderpad-chainmail.webp",
+      "system": {
+        "armorType": "chainmail",
+        "armorLocation": "arm",
+        "armorPoints": 7,
+        "encumbrance": 2,
+        "price": {
+          "value": 480,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of interlocked metal rings forming a mesh. Provides superior protection while maintaining flexibility.</p>",
+        "material": "Interlocked metal rings",
+        "coverage": "Arm",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "puKNUG7hR0qhGl6T",
+      "effects": [],
+      "folder": "J3kwuoZXQjoIpU2H",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203524,
+        "modifiedTime": 1767354203529,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "soft_leather__leg_": {
+    "version": "1.0.6",
+    "folder": "Soft Leather",
+    "data": {
+      "name": "Soft Leather (Leg)",
+      "type": "armor",
+      "img": "icons/equipment/leg/pants-brown-orange-leather-pants.webp",
+      "system": {
+        "armorType": "soft-leather",
+        "armorLocation": "leg",
+        "armorPoints": 1,
+        "encumbrance": 0,
+        "price": {
+          "value": 0,
+          "currency": "lunars"
+        },
+        "description": "<p>A rough equivalent to a leather jacket or vest. Common among primitives, nomads, and barbarians. Often worn under other armor as additional padding and protection.</p>",
+        "material": "Soft leather",
+        "coverage": "Leg",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "qQHL7YT3aEl11Mp0",
+      "effects": [],
+      "folder": "Xxm72Sxc3yQdV5uG",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354202920,
+        "modifiedTime": 1767357851680,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "scale__leg_": {
+    "version": "1.0.6",
+    "folder": "Scale",
+    "data": {
+      "name": "Scale (Leg)",
+      "type": "armor",
+      "img": "icons/equipment/leg/greaves-scale.webp",
+      "system": {
+        "armorType": "scale",
+        "armorLocation": "leg",
+        "armorPoints": 6,
+        "encumbrance": 4,
+        "price": {
+          "value": 480,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of overlapping metal scales attached to a backing. Provides excellent protection with good flexibility.</p>",
+        "material": "Metal scales",
+        "coverage": "Leg",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "qfe8LnfQNcUb7vrQ",
+      "effects": [],
+      "folder": "VHZXyug6sZvL1n6T",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203508,
+        "modifiedTime": 1767354203513,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "plate__leg_": {
+    "version": "1.0.6",
+    "folder": "Plate",
+    "data": {
+      "name": "Plate (Leg)",
+      "type": "armor",
+      "img": "icons/equipment/leg/greaves-plate.webp",
+      "system": {
+        "armorType": "plate",
+        "armorLocation": "leg",
+        "armorPoints": 8,
+        "encumbrance": 5,
+        "price": {
+          "value": 1350,
+          "currency": "lunars"
+        },
+        "description": "<p>Full plate armor made of solid metal plates. Provides the best protection available but is heavy and expensive.</p>",
+        "material": "Solid metal plates",
+        "coverage": "Leg",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "roMy8wkRtlhbRQQw",
+      "effects": [],
+      "folder": "sTPLMC5zhuGarUhK",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203731,
+        "modifiedTime": 1767354203752,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "scale__abdomen_": {
+    "version": "1.0.6",
+    "folder": "Scale",
+    "data": {
+      "name": "Scale (Abdomen)",
+      "type": "armor",
+      "img": "icons/equipment/waist/belt-scale.webp",
+      "system": {
+        "armorType": "scale",
+        "armorLocation": "abdomen",
+        "armorPoints": 6,
+        "encumbrance": 2,
+        "price": {
+          "value": 240,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of overlapping metal scales attached to a backing. Provides excellent protection with good flexibility.</p>",
+        "material": "Metal scales",
+        "coverage": "Abdomen",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "seSDyS1yoxrsEmIE",
+      "effects": [],
+      "folder": "VHZXyug6sZvL1n6T",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203486,
+        "modifiedTime": 1767354203504,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "ringmail__leg_": {
+    "version": "1.0.6",
+    "folder": "Ringmail",
+    "data": {
+      "name": "Ringmail (Leg)",
+      "type": "armor",
+      "img": "icons/equipment/leg/greaves-ringmail.webp",
+      "system": {
+        "armorType": "ringmail",
+        "armorLocation": "leg",
+        "armorPoints": 5,
+        "encumbrance": 2,
+        "price": {
+          "value": 220,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of interlocking metal rings. Provides excellent protection while maintaining good flexibility.</p>",
+        "material": "Metal rings",
+        "coverage": "Leg",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "td0mj0zJbgAsPoc5",
+      "effects": [],
+      "folder": "rh1d1xfyPl8fbgMS",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203372,
+        "modifiedTime": 1767354203376,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "soft_leather__arm_": {
+    "version": "1.0.6",
+    "folder": "Soft Leather",
+    "data": {
+      "name": "Soft Leather (Arm)",
+      "type": "armor",
+      "img": "icons/equipment/shoulder/shoulderpad-segmented-leather.webp",
+      "system": {
+        "armorType": "soft-leather",
+        "armorLocation": "arm",
+        "armorPoints": 1,
+        "encumbrance": 0,
+        "price": {
+          "value": 0,
+          "currency": "lunars"
+        },
+        "description": "<p>A rough equivalent to a leather jacket or vest. Common among primitives, nomads, and barbarians. Often worn under other armor as additional padding and protection.</p>",
+        "material": "Soft leather",
+        "coverage": "Arm",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "uqxTeOQ4OBEXuzks",
+      "effects": [],
+      "folder": "Xxm72Sxc3yQdV5uG",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354202857,
+        "modifiedTime": 1767357822013,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "soft_leather__abdomen_": {
+    "version": "1.0.6",
+    "folder": "Soft Leather",
+    "data": {
+      "name": "Soft Leather (Abdomen)",
+      "type": "armor",
+      "img": "icons/equipment/waist/belt-leather-brown.webp",
+      "system": {
+        "armorType": "soft-leather",
+        "armorLocation": "abdomen",
+        "armorPoints": 1,
+        "encumbrance": 0.35,
+        "price": {
+          "value": 7,
+          "currency": "lunars"
+        },
+        "description": "<p>A rough equivalent to a leather jacket or vest. Common among primitives, nomads, and barbarians. Often worn under other armor as additional padding and protection.</p>",
+        "material": "Soft leather",
+        "coverage": "Abdomen",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 1,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "v1swJBul55eOuQBR",
+      "effects": [],
+      "folder": "Xxm72Sxc3yQdV5uG",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354202899,
+        "modifiedTime": 1767357702807,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "brigandine__abdomen_": {
+    "version": "1.0.6",
+    "folder": "Brigandine",
+    "data": {
+      "name": "Brigandine (Abdomen)",
+      "type": "armor",
+      "img": "icons/equipment/waist/belt-brigandine.webp",
+      "system": {
+        "armorType": "brigandine",
+        "armorLocation": "abdomen",
+        "armorPoints": 7,
+        "encumbrance": 2.2,
+        "price": {
+          "value": 440,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of metal plates riveted to a fabric or leather backing. Provides excellent protection with good flexibility.</p>",
+        "material": "Metal plates on fabric/leather",
+        "coverage": "Abdomen",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "vc2LmKj1MXg5ad7x",
+      "effects": [],
+      "folder": "sBW4XEuX4jcyajeN",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203593,
+        "modifiedTime": 1767354203600,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "lamellar__abdomen_": {
+    "version": "1.0.6",
+    "folder": "Lamellar",
+    "data": {
+      "name": "Lamellar (Abdomen)",
+      "type": "armor",
+      "img": "icons/equipment/waist/belt-lamellar.webp",
+      "system": {
+        "armorType": "lamellar",
+        "armorLocation": "abdomen",
+        "armorPoints": 6,
+        "encumbrance": 1.8,
+        "price": {
+          "value": 360,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of overlapping metal or leather plates laced together. Provides excellent protection.</p>",
+        "material": "Overlapping plates",
+        "coverage": "Abdomen",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "wBizdriLqD8Y2aA5",
+      "effects": [],
+      "folder": "KNkuLajwlHWcmDs3",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203401,
+        "modifiedTime": 1767354203406,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "bezainted__chest_": {
+    "version": "1.0.6",
+    "folder": "Bezainted",
+    "data": {
+      "name": "Bezainted (Chest)",
+      "type": "armor",
+      "img": "icons/equipment/chest/cuirass-bezainted.webp",
+      "system": {
+        "armorType": "bezainted",
+        "armorLocation": "chest",
+        "armorPoints": 4,
+        "encumbrance": 1.5,
+        "price": {
+          "value": 105,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of small metal plates sewn onto a leather or fabric backing. Provides good protection with moderate flexibility.</p>",
+        "material": "Metal plates on leather",
+        "coverage": "Chest",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "z0yDdNQvLygmQ9Cg",
+      "effects": [],
+      "folder": "yMzvlKYT4nJeMBuR",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203278,
+        "modifiedTime": 1767354203285,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "plate__arm_": {
+    "version": "1.0.6",
+    "folder": "Plate",
+    "data": {
+      "name": "Plate (Arm)",
+      "type": "armor",
+      "img": "icons/equipment/shoulder/shoulderpad-plate.webp",
+      "system": {
+        "armorType": "plate",
+        "armorLocation": "arm",
+        "armorPoints": 8,
+        "encumbrance": 2.5,
+        "price": {
+          "value": 675,
+          "currency": "lunars"
+        },
+        "description": "<p>Full plate armor made of solid metal plates. Provides the best protection available but is heavy and expensive.</p>",
+        "material": "Solid metal plates",
+        "coverage": "Arm",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "z7dC14o6Bc70E2Lx",
+      "effects": [],
+      "folder": "sTPLMC5zhuGarUhK",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203655,
+        "modifiedTime": 1767354203660,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  },
+  "chainmail__head_": {
+    "version": "1.0.6",
+    "folder": "Chainmail",
+    "data": {
+      "name": "Chainmail (Head)",
+      "type": "armor",
+      "img": "icons/equipment/head/helm-chainmail.webp",
+      "system": {
+        "armorType": "chainmail",
+        "armorLocation": "head",
+        "armorPoints": 7,
+        "encumbrance": 2,
+        "price": {
+          "value": 480,
+          "currency": "lunars"
+        },
+        "description": "<p>Armor made of interlocked metal rings forming a mesh. Provides superior protection while maintaining flexibility.</p>",
+        "material": "Interlocked metal rings",
+        "coverage": "Head",
+        "weight": 0,
+        "quantity": 1,
+        "equipped": false,
+        "storageLocation": "carried",
+        "containerId": "",
+        "hitLocations": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "armorDamage": {
+          "head": 0,
+          "leftArm": 0,
+          "rightArm": 0,
+          "chest": 0,
+          "abdomen": 0,
+          "leftLeg": 0,
+          "rightLeg": 0
+        },
+        "parryBonus": 0,
+        "size": ""
+      },
+      "_id": "zs3FjiUT83w7TJq1",
+      "effects": [],
+      "folder": "J3kwuoZXQjoIpU2H",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "TvrnW1yZ2ENwCQu6": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "runequest3",
+        "systemVersion": "1.0.6",
+        "createdTime": 1767354203517,
+        "modifiedTime": 1767354203520,
+        "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+      }
+    }
+  }
+}

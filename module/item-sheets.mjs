@@ -7,9 +7,9 @@ export class RQ3ItemSheet extends ItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["runequest3", "sheet", "item"],
-      width: 520,
-      height: 480,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
+      width: 600,
+      height: 900,
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "info" }]
     });
   }
 
@@ -42,7 +42,22 @@ export class RQ3ItemSheet extends ItemSheet {
     // Add configuration data
     context.config = CONFIG.RQ3;
 
+    // Enrich description HTML for display in Info tab
+    context.enrichedDescription = await TextEditor.enrichHTML(this.item.system.description, {
+      async: true,
+      secrets: this.item.isOwner,
+      relativeTo: this.item
+    });
+
     return context;
+  }
+
+  /* -------------------------------------------- */
+
+  /** @override */
+  _getSubmitData(updateData = {}) {
+    const data = super._getSubmitData(updateData);
+    return data;
   }
 
   /* -------------------------------------------- */

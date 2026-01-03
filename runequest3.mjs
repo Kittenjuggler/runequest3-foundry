@@ -34,6 +34,9 @@ import { RQ3_SORCERY_DATA } from "./module/rq3-sorcery-data.mjs";
 import { RQ3_WEAPONS_DATA } from "./module/rq3-weapons-data.mjs";
 import { RQ3_ARMOUR_DATA } from "./module/rq3-armour-data.mjs";
 
+// Import JSON data loader (supports both JSON and .mjs fallback)
+import { loadCompendiumData } from "./module/data-loader.mjs";
+
 // Performance optimization: Lazy loading for large data structures
 let _skillsDataLoaded = false;
 let _speciesDataLoaded = false;
@@ -46,6 +49,10 @@ let _equipmentDataLoaded = false;
 
 Hooks.once("init", function() {
   console.log("RQ3 | Initializing RuneQuest 3rd Edition System");
+  
+  // Initialize global RQ3 namespace for system data
+  game.rq3 = game.rq3 || {};
+  game.rq3.lastOpenedCompendium = null;
 
   // Assign custom document classes
   CONFIG.Actor.documentClass = RQ3Actor;
@@ -85,18 +92,35 @@ Hooks.once("init", function() {
       luck: "RQ3.Characteristics.luck"
     },
     weaponTypes: {
-      "1h-sword": "RQ3.WeaponTypes.1h-sword",
-      "2h-sword": "RQ3.WeaponTypes.2h-sword",
-      "1h-axe": "RQ3.WeaponTypes.1h-axe",
-      "2h-axe": "RQ3.WeaponTypes.2h-axe",
-      "spear": "RQ3.WeaponTypes.spear",
+      "axe": "RQ3.WeaponTypes.axe",
+      "hammer": "RQ3.WeaponTypes.hammer",
       "dagger": "RQ3.WeaponTypes.dagger",
+      "fist": "RQ3.WeaponTypes.fist",
       "mace": "RQ3.WeaponTypes.mace",
+      "shield": "RQ3.WeaponTypes.shield",
+      "spear": "RQ3.WeaponTypes.spear",
+      "javelin": "RQ3.WeaponTypes.javelin",
+      "sword": "RQ3.WeaponTypes.sword",
+      "tool": "RQ3.WeaponTypes.tool",
       "bow": "RQ3.WeaponTypes.bow",
       "crossbow": "RQ3.WeaponTypes.crossbow",
+      "dart": "RQ3.WeaponTypes.dart",
       "sling": "RQ3.WeaponTypes.sling",
-      "javelin": "RQ3.WeaponTypes.javelin",
-      "thrown": "RQ3.WeaponTypes.thrown"
+      "staff-sling": "RQ3.WeaponTypes.staff-sling",
+      "rock": "RQ3.WeaponTypes.rock",
+      "club": "RQ3.WeaponTypes.club",
+      "net": "RQ3.WeaponTypes.net"
+    },
+    weaponCategories: {
+      "melee": "RQ3.WeaponCategories.melee",
+      "ranged": "RQ3.WeaponCategories.ranged",
+      "thrown": "RQ3.WeaponCategories.thrown",
+      "siege": "RQ3.WeaponCategories.siege"
+    },
+    weaponHands: {
+      "1-handed": "RQ3.WeaponHands.1-handed",
+      "2-handed": "RQ3.WeaponHands.2-handed",
+      "1-or-2-handed": "RQ3.WeaponHands.1-or-2-handed"
     },
     armorTypes: {
       "clothes": "RQ3.ArmorTypes.clothes",
@@ -241,7 +265,8 @@ Hooks.once("init", function() {
       "knowledge": "RQ3.SkillCategories.knowledge",
       "manipulation": "RQ3.SkillCategories.manipulation",
       "perception": "RQ3.SkillCategories.perception",
-      "stealth": "RQ3.SkillCategories.stealth"
+      "stealth": "RQ3.SkillCategories.stealth",
+      "weapon": "RQ3.SkillCategories.weapon"
     },
     skills: RQ3_SKILLS,
     skillsData: {
@@ -550,7 +575,7 @@ Hooks.once("init", function() {
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 
-Hooks.once("ready", function() {
+Hooks.once("ready", async function() {
   console.log("RQ3 | System ready");
   
   // Register sheet application classes
@@ -594,6 +619,84 @@ Hooks.once("ready", function() {
   initializeLazyLoading();
   
   console.log("RQ3 | Ready hook completed");
+  
+  // Register a global macro for exporting compendiums
+  game.rq3.exportCompendium = async function(packId) {
+    try {
+      const pack = game.packs.get(packId);
+      if (!pack) {
+        ui.notifications.error("Compendium not found!");
+        return;
+      }
+      
+      ui.notifications.info(`Exporting ${pack.metadata.label}...`);
+      
+      const items = await pack.getDocuments();
+      const data = items.map(item => item.toObject());
+      
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${pack.metadata.id}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      ui.notifications.info(`Exported ${items.length} items from ${pack.metadata.label}`);
+      console.log(`RQ3 | Exported ${items.length} items from ${pack.metadata.label}`);
+    } catch (error) {
+      console.error("RQ3 | Error exporting compendium:", error);
+      ui.notifications.error(`Failed to export: ${error.message}`);
+    }
+  };
+  
+  console.log("RQ3 | Export function registered. Use: game.rq3.exportCompendium('runequest3.weapons')");
+  
+  // Register test function for creating compendiums with folders from JSON
+  const { testFoldersFromJSON, autoCreateWorldCompendiums, regenerateAllCompendiums } = await import("./module/compendium-folder-loader.mjs");
+  game.rq3.testFoldersFromJSON = testFoldersFromJSON;
+  game.rq3.autoCreateWorldCompendiums = autoCreateWorldCompendiums;
+  game.rq3.regenerateAllCompendiums = regenerateAllCompendiums;
+  
+  // Register data converter utilities
+  try {
+    const { convertAllDataToJSON } = await import("./scripts/convert-to-json.mjs");
+    game.rq3.convertAllDataToJSON = convertAllDataToJSON;
+    console.log("RQ3 | Data converter registered. Use: game.rq3.convertAllDataToJSON()");
+  } catch (error) {
+    console.warn("RQ3 | Could not load data converter:", error);
+  }
+  
+  try {
+    const { populateJSONFromCompendiums } = await import("./module/populate-json-from-compendiums.mjs");
+    game.rq3.populateJSONFromCompendiums = populateJSONFromCompendiums;
+    console.log("RQ3 | Compendium exporter registered. Use: game.rq3.populateJSONFromCompendiums()");
+  } catch (error) {
+    console.warn("RQ3 | Could not load compendium exporter:", error);
+  }
+  
+  try {
+    const { writeJSONFiles } = await import("./module/write-json-files.mjs");
+    game.rq3.writeJSONFiles = writeJSONFiles;
+    console.log("RQ3 | File writer registered. Use: game.rq3.writeJSONFiles() to write directly to data folder");
+  } catch (error) {
+    console.warn("RQ3 | Could not load file writer:", error);
+  }
+  
+  console.log("RQ3 | Folder functions registered:");
+  console.log("  - game.rq3.regenerateAllCompendiums() - Quick command to regenerate all compendiums");
+  console.log("  - game.rq3.autoCreateWorldCompendiums() - Create missing compendiums");
+  console.log("  - game.rq3.testFoldersFromJSON() - Test with weapons only");
+  console.log("  - game.rq3.exportAllDataAsJSON() - Export all data as JSON (for file conversion)");
+  
+  // Auto-create world compendiums if enabled
+  const autoCreate = game.settings.get("runequest3", "autoCreateWorldCompendiums");
+  if (autoCreate) {
+    console.log("RQ3 | Auto-creating organized world compendiums...");
+    await autoCreateWorldCompendiums(true);
+  }
 });
 
 /* -------------------------------------------- */
@@ -684,6 +787,66 @@ function registerSystemSettings() {
     config: false, // Hidden setting
     type: String,
     default: "0.0.0"
+  });
+
+  // Spirit Magic compendium version tracking
+  game.settings.register("runequest3", "spiritMagicCompendiumVersion", {
+    name: "Spirit Magic Compendium Version",
+    hint: "Tracks the last version of spirit magic compendium content applied",
+    scope: "world",
+    config: false,
+    type: String,
+    default: "0.0.0"
+  });
+
+  // Divine Magic compendium version tracking
+  game.settings.register("runequest3", "divineMagicCompendiumVersion", {
+    name: "Divine Magic Compendium Version",
+    hint: "Tracks the last version of divine magic compendium content applied",
+    scope: "world",
+    config: false,
+    type: String,
+    default: "0.0.0"
+  });
+
+  // Sorcery compendium version tracking
+  game.settings.register("runequest3", "sorceryCompendiumVersion", {
+    name: "Sorcery Compendium Version",
+    hint: "Tracks the last version of sorcery compendium content applied",
+    scope: "world",
+    config: false,
+    type: String,
+    default: "0.0.0"
+  });
+
+  // Weapons compendium version tracking
+  game.settings.register("runequest3", "weaponsCompendiumVersion", {
+    name: "Weapons Compendium Version",
+    hint: "Tracks the last version of weapons compendium content applied",
+    scope: "world",
+    config: false,
+    type: String,
+    default: "0.0.0"
+  });
+
+  // Armour compendium version tracking
+  game.settings.register("runequest3", "armourCompendiumVersion", {
+    name: "Armour Compendium Version",
+    hint: "Tracks the last version of armour compendium content applied",
+    scope: "world",
+    config: false,
+    type: String,
+    default: "0.0.0"
+  });
+
+  // Auto-create organized world compendiums
+  game.settings.register("runequest3", "autoCreateWorldCompendiums", {
+    name: "Auto-Create Organized World Compendiums",
+    hint: "Automatically create world compendiums with folder organization from JSON data on system ready",
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: false
   });
 }
 
@@ -780,6 +943,19 @@ function registerHandlebarsHelpers() {
     return true;
   });
 
+  // Logical OR helper for conditional checks
+  Handlebars.registerHelper("or", function() {
+    for (let i = 0; i < arguments.length - 1; i++) {
+      if (arguments[i]) return true;
+    }
+    return false;
+  });
+
+  // Logical NOT helper for conditional checks
+  Handlebars.registerHelper("not", function(value) {
+    return !value;
+  });
+
       // Lookup helper for accessing nested object properties
     Handlebars.registerHelper("lookup", function(obj, key) {
       return obj && obj[key];
@@ -788,6 +964,19 @@ function registerHandlebarsHelpers() {
     // Calculate effective HP from max HP and damage
     Handlebars.registerHelper("effectiveHP", function(maxHP, damage) {
       return Math.max(0, (maxHP || 0) - (damage || 0));
+    });
+
+    // Calculate effective armor points from max AP and armor damage
+    Handlebars.registerHelper("effectiveAP", function(maxAP, armorDamage) {
+      return Math.max(0, (maxAP || 0) - (armorDamage || 0));
+    });
+
+    // Format AP display with temp AP added to current (e.g., "8/6" where 8 = 6 current + 2 temp)
+    Handlebars.registerHelper("formatAP", function(maxAP, armorDamage, tempAP) {
+      const currentAP = Math.max(0, (maxAP || 0) - (armorDamage || 0));
+      const temp = tempAP || 0;
+      const totalAP = currentAP + temp;
+      return `${totalAP}/${maxAP}`;
     });
 
     // Calculate effective total HP from max HP, general damage, and all hit location damage
@@ -918,6 +1107,61 @@ function registerHandlebarsHelpers() {
     
     // Check if this item ID appears in any of the equipped weapon slots
     return Object.values(equippedWeapons).includes(itemId);
+  });
+
+  // Helper to get the attack skill value for a weapon type
+  Handlebars.registerHelper("getAttackSkillValue", function(context, weaponType) {
+    if (!context || !weaponType) return 0;
+    
+    // Map weapon type to attack skill key
+    const weaponTypeToSkillMap = {
+      'axe': 'blade',
+      'hammer': 'blade',
+      'dagger': 'close',
+      'fist': 'close',
+      'mace': 'blunt',
+      'shield': 'shield',
+      'spear': 'spear',
+      'javelin': 'spear',
+      'sword': 'sword',
+      'tool': 'tools',
+      'bow': 'bow',
+      'crossbow': 'crossbow',
+      'dart': 'dart',
+      'sling': 'sling',
+      'staff-sling': 'staffSling',
+      'rock': 'rock',
+      'club': 'club',
+      'net': 'net'
+    };
+    
+    const skillKey = weaponTypeToSkillMap[weaponType];
+    if (!skillKey) return 0;
+    
+    // Use the skillTotalValues from the context (already calculated with base + invested + category bonus)
+    if (context.skillTotalValues && context.skillTotalValues.weapon && context.skillTotalValues.weapon[skillKey] !== undefined) {
+      return context.skillTotalValues.weapon[skillKey];
+    }
+    
+    return 0;
+  });
+
+  // Helper to check if an item is a container
+  Handlebars.registerHelper("isContainer", function(item) {
+    return item && item.type === 'equipment' && item.system.equipmentType === 'container';
+  });
+
+  // Helper to get items inside a container
+  Handlebars.registerHelper("getContainerItems", function(containerId, allItems) {
+    if (!containerId || !allItems) return [];
+    return allItems.filter(item => item.system.containerId === containerId);
+  });
+
+  // Helper to check if a container is expanded
+  Handlebars.registerHelper("isContainerExpanded", function(containerId, containerStates) {
+    if (!containerId) return true; // Default to expanded
+    if (!containerStates) return true;
+    return containerStates[containerId] !== false; // Expanded if not explicitly set to false
   });
 
   // Helper to format encumbrance values to 2 decimal places
@@ -1150,15 +1394,17 @@ function setupStatusEffects() {
 /* -------------------------------------------- */
 
 async function initializeCompendiums() {
-  // This function handles initial population and migrations of compendium content
-  console.log("RQ3 | Checking compendium content and migrations");
+  // Migration functions are disabled - we now use JSON files and organized world compendiums
+  // Old system compendiums have been removed from system.json
+  console.log("RQ3 | Compendium migrations disabled - using JSON files and organized world compendiums");
   
-  await migrateSpeciesCompendium();
-  await migrateSpiritMagicCompendium();
-  await migrateDivineMagicCompendium();
-  await migrateSorceryCompendium();
-  await migrateWeaponsCompendium();
-  await migrateArmourCompendium();
+  // Optional: Uncomment below if you want to keep legacy compendiums updated
+  // await migrateSpeciesCompendium();
+  // await migrateSpiritMagicCompendium();
+  // await migrateDivineMagicCompendium();
+  // await migrateSorceryCompendium();
+  // await migrateWeaponsCompendium();
+  // await migrateArmourCompendium();
 }
 
 async function migrateSpeciesCompendium() {
@@ -1173,11 +1419,16 @@ async function migrateSpeciesCompendium() {
   const systemVersion = game.system.version;
   const compendiumVersion = game.settings.get("runequest3", "speciesCompendiumVersion");
   
-  console.log(`RQ3 | System version: ${systemVersion}, Compendium version: ${compendiumVersion}`);
+  console.log(`RQ3 | Species - System version: ${systemVersion}, Compendium version: ${compendiumVersion}`);
+
+  // Skip if already up to date
+  if (compendiumVersion === systemVersion) {
+    console.log("RQ3 | Species compendium up to date");
+    return;
+  }
 
   // Recreate all species from current data
-  console.log("Using embedded species data for force update");
-  let createdCount = 0;
+  console.log("RQ3 | Using embedded species data for migration");
 
   try {
     // Get existing documents to check what's already there
@@ -1217,7 +1468,7 @@ async function migrateSpeciesCompendium() {
 
     if (addedCount > 0 || updatedCount > 0) {
       ui.notifications.info(`RQ3: Added ${addedCount} new and updated ${updatedCount} species to compendium!`);
-      console.log(`RQ3 | Migration complete: added ${addedCount} new and updated ${updatedCount} species`);
+      console.log(`RQ3 | Species migration complete: added ${addedCount} new and updated ${updatedCount} species`);
     } else {
       console.log("RQ3 | Species compendium up to date");
     }
@@ -1237,6 +1488,15 @@ async function migrateSpiritMagicCompendium() {
   }
 
   const systemVersion = game.system.version;
+  const compendiumVersion = game.settings.get("runequest3", "spiritMagicCompendiumVersion");
+  
+  console.log(`RQ3 | Spirit Magic - System version: ${systemVersion}, Compendium version: ${compendiumVersion}`);
+  
+  // Skip if already up to date
+  if (compendiumVersion === systemVersion) {
+    console.log("RQ3 | Spirit Magic compendium up to date");
+    return;
+  }
   
   try {
     const existingDocs = await compendium.getDocuments();
@@ -1266,9 +1526,14 @@ async function migrateSpiritMagicCompendium() {
       }
     }
 
+    // Update the stored compendium version
+    await game.settings.set("runequest3", "spiritMagicCompendiumVersion", systemVersion);
+
     if (addedCount > 0 || updatedCount > 0) {
       ui.notifications.info(`RQ3: Added ${addedCount} new and updated ${updatedCount} spirit magic spells!`);
       console.log(`RQ3 | Spirit Magic migration complete: added ${addedCount} new and updated ${updatedCount} spells`);
+    } else {
+      console.log("RQ3 | Spirit Magic compendium up to date");
     }
 
   } catch (error) {
@@ -1286,6 +1551,15 @@ async function migrateDivineMagicCompendium() {
   }
 
   const systemVersion = game.system.version;
+  const compendiumVersion = game.settings.get("runequest3", "divineMagicCompendiumVersion");
+  
+  console.log(`RQ3 | Divine Magic - System version: ${systemVersion}, Compendium version: ${compendiumVersion}`);
+  
+  // Skip if already up to date
+  if (compendiumVersion === systemVersion) {
+    console.log("RQ3 | Divine Magic compendium up to date");
+    return;
+  }
   
   try {
     const existingDocs = await compendium.getDocuments();
@@ -1315,9 +1589,14 @@ async function migrateDivineMagicCompendium() {
       }
     }
 
+    // Update the stored compendium version
+    await game.settings.set("runequest3", "divineMagicCompendiumVersion", systemVersion);
+
     if (addedCount > 0 || updatedCount > 0) {
       ui.notifications.info(`RQ3: Added ${addedCount} new and updated ${updatedCount} divine magic spells!`);
       console.log(`RQ3 | Divine Magic migration complete: added ${addedCount} new and updated ${updatedCount} spells`);
+    } else {
+      console.log("RQ3 | Divine Magic compendium up to date");
     }
 
   } catch (error) {
@@ -1335,6 +1614,15 @@ async function migrateSorceryCompendium() {
   }
 
   const systemVersion = game.system.version;
+  const compendiumVersion = game.settings.get("runequest3", "sorceryCompendiumVersion");
+  
+  console.log(`RQ3 | Sorcery - System version: ${systemVersion}, Compendium version: ${compendiumVersion}`);
+  
+  // Skip if already up to date
+  if (compendiumVersion === systemVersion) {
+    console.log("RQ3 | Sorcery compendium up to date");
+    return;
+  }
   
   try {
     const existingDocs = await compendium.getDocuments();
@@ -1364,9 +1652,14 @@ async function migrateSorceryCompendium() {
       }
     }
 
+    // Update the stored compendium version
+    await game.settings.set("runequest3", "sorceryCompendiumVersion", systemVersion);
+
     if (addedCount > 0 || updatedCount > 0) {
       ui.notifications.info(`RQ3: Added ${addedCount} new and updated ${updatedCount} sorcery spells!`);
       console.log(`RQ3 | Sorcery migration complete: added ${addedCount} new and updated ${updatedCount} spells`);
+    } else {
+      console.log("RQ3 | Sorcery compendium up to date");
     }
 
   } catch (error) {
@@ -1384,38 +1677,72 @@ async function migrateWeaponsCompendium() {
   }
 
   const systemVersion = game.system.version;
+  const compendiumVersion = game.settings.get("runequest3", "weaponsCompendiumVersion");
+  
+  console.log(`RQ3 | Weapons - System version: ${systemVersion}, Compendium version: ${compendiumVersion}`);
+  
+  // Skip if already up to date
+  if (compendiumVersion === systemVersion) {
+    console.log("RQ3 | Weapons compendium up to date");
+    return;
+  }
+  
+  // Load weapons data (tries JSON first, falls back to .mjs)
+  let weaponsData;
+  try {
+    weaponsData = await loadCompendiumData("weapons");
+  } catch (error) {
+    console.warn("RQ3 | Failed to load weapons from JSON, using .mjs fallback");
+    weaponsData = RQ3_WEAPONS_DATA;
+  }
+  
+  console.log(`RQ3 | Starting weapons migration. Total weapons in data: ${Object.keys(weaponsData).length}`);
   
   try {
+    // Get existing weapons
     const existingDocs = await compendium.getDocuments();
-    const existingNames = existingDocs.map(doc => doc.name.toLowerCase());
-
+    const existingWeapons = new Map(existingDocs.map(doc => [doc.name, doc]));
+    
     let addedCount = 0;
     let updatedCount = 0;
-
-    for (const [weaponKey, weaponInfo] of Object.entries(RQ3_WEAPONS_DATA)) {
-      const weaponName = weaponInfo.data.name.toLowerCase();
-      
+    
+    // Process each weapon in the data
+    for (const [weaponKey, weaponInfo] of Object.entries(weaponsData)) {
+      // Skip weapons from future versions
       if (foundry.utils.isNewerVersion(weaponInfo.version, systemVersion)) {
         continue;
       }
       
-      const existingIndex = existingNames.indexOf(weaponName);
-      if (existingIndex === -1) {
-        console.log(`RQ3 | Adding weapon: ${weaponInfo.data.name}`);
-        await Item.create(weaponInfo.data, { pack: compendium.collection });
-        addedCount++;
+      const weaponData = foundry.utils.deepClone(weaponInfo.data);
+      const existingWeapon = existingWeapons.get(weaponData.name);
+      
+      if (existingWeapon) {
+        // Update existing weapon
+        try {
+          await existingWeapon.update(weaponData.system ? { system: weaponData.system } : {});
+          updatedCount++;
+        } catch (error) {
+          console.error(`RQ3 | Failed to update weapon ${weaponKey}:`, error);
+        }
       } else {
-        const existingDoc = existingDocs[existingIndex];
-        console.log(`RQ3 | Updating weapon: ${weaponInfo.data.name}`);
-        await existingDoc.delete();
-        await Item.create(weaponInfo.data, { pack: compendium.collection });
-        updatedCount++;
+        // Add new weapon
+        try {
+          await Item.create(weaponData, { pack: compendium.collection });
+          addedCount++;
+        } catch (error) {
+          console.error(`RQ3 | Failed to add weapon ${weaponKey}:`, error);
+        }
       }
     }
+
+    // Update the stored compendium version
+    await game.settings.set("runequest3", "weaponsCompendiumVersion", systemVersion);
 
     if (addedCount > 0 || updatedCount > 0) {
       ui.notifications.info(`RQ3: Added ${addedCount} new and updated ${updatedCount} weapons!`);
       console.log(`RQ3 | Weapons migration complete: added ${addedCount} new and updated ${updatedCount} weapons`);
+    } else {
+      console.log("RQ3 | Weapons compendium up to date");
     }
 
   } catch (error) {
@@ -1433,6 +1760,15 @@ async function migrateArmourCompendium() {
   }
 
   const systemVersion = game.system.version;
+  const compendiumVersion = game.settings.get("runequest3", "armourCompendiumVersion");
+  
+  console.log(`RQ3 | Armour - System version: ${systemVersion}, Compendium version: ${compendiumVersion}`);
+  
+  // Skip if already up to date
+  if (compendiumVersion === systemVersion) {
+    console.log("RQ3 | Armour compendium up to date");
+    return;
+  }
   
   try {
     const existingDocs = await compendium.getDocuments();
@@ -1462,9 +1798,14 @@ async function migrateArmourCompendium() {
       }
     }
 
+    // Update the stored compendium version
+    await game.settings.set("runequest3", "armourCompendiumVersion", systemVersion);
+
     if (addedCount > 0 || updatedCount > 0) {
       ui.notifications.info(`RQ3: Added ${addedCount} new and updated ${updatedCount} armour pieces!`);
       console.log(`RQ3 | Armour migration complete: added ${addedCount} new and updated ${updatedCount} armour pieces`);
+    } else {
+      console.log("RQ3 | Armour compendium up to date");
     }
 
   } catch (error) {
@@ -1474,15 +1815,229 @@ async function migrateArmourCompendium() {
 }
 
 /* -------------------------------------------- */
+/*  Compendium Context Menu                     */
+/* -------------------------------------------- */
+
+/**
+ * Add export option to compendium context menu (FoundryVTT v13)
+ */
+Hooks.on("getCompendiumDirectoryEntryContext", (entry, entryOptions) => {
+  console.log("RQ3 | getCompendiumDirectoryEntryContext hook called", entry, entryOptions);
+  
+  // Add export option for runequest3 compendiums
+  entryOptions.push({
+    name: "Export Compendium Data",
+    icon: '<i class="fas fa-download"></i>',
+    condition: () => {
+      // Try multiple ways to get the pack ID
+      const packId = entry?.dataset?.pack || 
+                     entry?.getAttribute?.("data-pack") || 
+                     $(entry).data("pack") ||
+                     entry?.closest?.("[data-pack]")?.dataset?.pack;
+      console.log("RQ3 | Checking pack ID:", packId);
+      return packId && packId.startsWith("runequest3.");
+    },
+    callback: async (entry) => {
+      try {
+        // Try multiple ways to get the pack ID
+        const packId = entry?.dataset?.pack || 
+                       entry?.getAttribute?.("data-pack") || 
+                       $(entry).data("pack") ||
+                       entry?.closest?.("[data-pack]")?.dataset?.pack;
+        
+        console.log("RQ3 | Exporting pack:", packId);
+        const pack = game.packs.get(packId);
+        
+        if (!pack) {
+          ui.notifications.error("Compendium not found!");
+          return;
+        }
+        
+        ui.notifications.info(`Exporting ${pack.metadata.label}...`);
+        
+        // Get all documents from the compendium
+        const items = await pack.getDocuments();
+        const data = items.map(item => item.toObject());
+        
+        // Create a downloadable JSON file
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${pack.metadata.id}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        ui.notifications.info(`Exported ${items.length} items from ${pack.metadata.label}`);
+        console.log(`RQ3 | Exported ${items.length} items from ${pack.metadata.label}`, data);
+      } catch (error) {
+        console.error("RQ3 | Error exporting compendium:", error);
+        ui.notifications.error(`Failed to export compendium: ${error.message}`);
+      }
+    }
+  });
+});
+
+/* -------------------------------------------- */
 /*  Chat Message Hooks                          */
 /* -------------------------------------------- */
 
-Hooks.on("renderChatMessage", (message, html, data) => {
+Hooks.on("renderChatMessage", async (message, html, data) => {
   // Add click handlers for roll results
   html.find(".rq3-skill-roll, .rq3-char-roll").click(event => {
     event.preventDefault();
     // Could add functionality to re-roll or modify results
   });
+  
+  // Enhance roll tooltips with custom descriptions and dice results
+  if (message.rolls && message.rolls.length > 0) {
+    message.rolls.forEach((roll, index) => {
+      // Find the roll element in the chat message
+      const rollElements = html.find('.dice-roll');
+      if (rollElements.length > index) {
+        const rollElement = rollElements.eq(index);
+        
+        // Add hover handler to show enhanced tooltip
+        rollElement.on('mouseenter', async function(event) {
+          // Create our custom tooltip
+          let tooltipElement = $('#rq3-custom-roll-tooltip');
+          if (tooltipElement.length === 0) {
+            tooltipElement = $('<div id="rq3-custom-roll-tooltip" style="position: fixed; background: rgba(0, 0, 0, 0.95); color: white; padding: 12px; border-radius: 6px; z-index: 10000; pointer-events: none; max-width: 400px; font-size: 13px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); border: 1px solid #666; line-height: 1.5;"></div>');
+            $('body').append(tooltipElement);
+          }
+          
+          // Build tooltip content
+          let tooltipContent = '';
+          
+          // Add dice breakdown
+          if (roll.terms && roll.terms.length > 0) {
+            tooltipContent += '<div style="margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #666;">';
+            tooltipContent += '<strong>Dice Results:</strong><br/>';
+            
+            roll.terms.forEach(term => {
+              if (term.results) {
+                // Dice term
+                const results = term.results.map(r => r.result).join(', ');
+                tooltipContent += `${term.number}d${term.faces}: [${results}]<br/>`;
+              } else if (term.number !== undefined) {
+                // Numeric term (modifier)
+                const sign = term.number >= 0 ? '+' : '';
+                tooltipContent += `Modifier: ${sign}${term.number}<br/>`;
+              } else if (typeof term === 'string') {
+                // Operator
+                // Skip operators in display
+              }
+            });
+            
+            tooltipContent += `<strong>Total: ${roll.total}</strong>`;
+            tooltipContent += '</div>';
+          }
+          
+          // Add custom description if available
+          if (roll.options && roll.options.tooltip) {
+            tooltipContent += roll.options.tooltip;
+          }
+          
+          tooltipElement.html(tooltipContent);
+          
+          // Show tooltip first to get its dimensions
+          tooltipElement.show();
+          
+          // Position tooltip intelligently based on mouse position and viewport
+          const mouseX = event.clientX;
+          const mouseY = event.clientY;
+          const tooltipWidth = tooltipElement.outerWidth();
+          const tooltipHeight = tooltipElement.outerHeight();
+          const viewportWidth = window.innerWidth;
+          const viewportHeight = window.innerHeight;
+          
+          // Default position (top-left of cursor)
+          let left = mouseX - tooltipWidth - 15;
+          let top = mouseY - tooltipHeight - 15;
+          
+          // Check if tooltip would go off left edge
+          if (left < 20) {
+            // Position to the right of cursor
+            left = mouseX + 15;
+          }
+          
+          // Check if tooltip would go off top edge
+          if (top < 20) {
+            // Position below cursor
+            top = mouseY + 15;
+          }
+          
+          // Check if tooltip would go off right edge (after adjusting for left edge)
+          if (left + tooltipWidth > viewportWidth - 20) {
+            // Position at right edge with margin
+            left = viewportWidth - tooltipWidth - 20;
+          }
+          
+          // Check if tooltip would go off bottom edge (after adjusting for top edge)
+          if (top + tooltipHeight > viewportHeight - 20) {
+            // Position at bottom edge with margin
+            top = viewportHeight - tooltipHeight - 20;
+          }
+          
+          tooltipElement.css({
+            left: left + 'px',
+            top: top + 'px'
+          });
+        });
+        
+        rollElement.on('mouseleave', function() {
+          $('#rq3-custom-roll-tooltip').hide();
+        });
+        
+        rollElement.on('mousemove', function(event) {
+          const tooltipElement = $('#rq3-custom-roll-tooltip');
+          if (tooltipElement.is(':visible')) {
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+            const tooltipWidth = tooltipElement.outerWidth();
+            const tooltipHeight = tooltipElement.outerHeight();
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            
+            // Default position (top-left of cursor)
+            let left = mouseX - tooltipWidth - 15;
+            let top = mouseY - tooltipHeight - 15;
+            
+            // Check if tooltip would go off left edge
+            if (left < 20) {
+              // Position to the right of cursor
+              left = mouseX + 15;
+            }
+            
+            // Check if tooltip would go off top edge
+            if (top < 20) {
+              // Position below cursor
+              top = mouseY + 15;
+            }
+            
+            // Check if tooltip would go off right edge (after adjusting for left edge)
+            if (left + tooltipWidth > viewportWidth - 20) {
+              // Position at right edge with margin
+              left = viewportWidth - tooltipWidth - 20;
+            }
+            
+            // Check if tooltip would go off bottom edge (after adjusting for top edge)
+            if (top + tooltipHeight > viewportHeight - 20) {
+              // Position at bottom edge with margin
+              top = viewportHeight - tooltipHeight - 20;
+            }
+            
+            tooltipElement.css({
+              left: left + 'px',
+              top: top + 'px'
+            });
+          }
+        });
+      }
+    });
+  }
 });
 
 /* -------------------------------------------- */
@@ -1499,12 +2054,8 @@ Hooks.on("renderActorSheet", (sheet, html, data) => {
     await sheet.actor.rollCharacteristic(characteristic);
   });
 
-  // Add click handlers for skill rolls
-  html.find(".skill-roll-button").click(async (event) => {
-    event.preventDefault();
-    const skillName = event.currentTarget.dataset.skill;
-    await sheet.actor.rollSkill(skillName);
-  });
+  // Skill roll handlers are now handled in actor-sheets.mjs to avoid duplicate rolls
+  // Removed duplicate handler that was causing double rolls
 
   // Add click handlers for general damage buttons
   html.find(".damage-btn").click(async (event) => {
@@ -1696,6 +2247,78 @@ Hooks.on("preCreateCombatant", (combatant, data, options, userId) => {
     const formula = game.settings.get("runequest3", "initiativeFormula");
     const roll = new Roll(formula, combatant.actor.getRollData());
     data.initiative = roll.total;
+  }
+});
+
+/**
+ * Modify the item creation dialog to only show the appropriate type for the compendium
+ */
+// Hook into dialog rendering to modify item type dropdown
+Hooks.on("renderDialogV2", (dialog, html) => {
+  // Convert html to jQuery if it isn't already
+  const $html = html instanceof jQuery ? html : $(html);
+  
+  // Check if this is an item creation dialog
+  const titleElement = $html.find('.window-title');
+  const title = titleElement.text();
+  
+  console.log("RQ3 | Dialog rendered with title:", title);
+  
+  if (!title || !title.includes("Create Item")) {
+    return;
+  }
+  
+  console.log("RQ3 | This is a Create New Item dialog");
+  
+  // Get the last opened compendium from our global store
+  const packId = game.rq3?.lastOpenedCompendium;
+  console.log("RQ3 | Using compendium:", packId);
+  
+  if (!packId) {
+    console.log("RQ3 | No compendium found");
+    return;
+  }
+  
+  // Map compendium names to item types
+  const compendiumTypeMap = {
+    'runequest3.weapons': 'weapon',
+    'runequest3.armour': 'armor',
+    'runequest3.equipment': 'equipment',
+    'runequest3.spirit-magic': 'spell',
+    'runequest3.divine-magic': 'spell',
+    'runequest3.sorcery': 'spell',
+    'runequest3.species': 'species',
+    'runequest3.skills': 'skill'
+  };
+  
+  const defaultType = compendiumTypeMap[packId];
+  
+  if (!defaultType) {
+    console.log("RQ3 | No default type mapping for", packId);
+    return;
+  }
+  
+  console.log("RQ3 | Setting default type to:", defaultType);
+  
+  // Find the type select dropdown
+  const typeSelect = $html.find('select[name="type"]');
+  
+  if (typeSelect.length) {
+    // Remove all options except the default type
+    typeSelect.find('option').each((i, option) => {
+      if (option.value !== defaultType) {
+        option.remove();
+      }
+    });
+    
+    // Set the value and disable the dropdown (since there's only one option)
+    typeSelect.val(defaultType);
+    typeSelect.prop('disabled', true);
+    typeSelect.css('opacity', '0.6');
+    
+    console.log(`RQ3 | Modified type dropdown to only show '${defaultType}'`);
+  } else {
+    console.log("RQ3 | Could not find type select dropdown");
   }
 });
 

@@ -1,0 +1,25 @@
+{
+  "human": {
+    "version": "1.0.3",
+    "folder": "Humanoid",
+    "data": {
+      "name": "Human",
+      "type": "species",
+      "img": "icons/environment/people/group.webp",
+      "system": {
+        "description": "<p>Humans are the most common and adaptable of all sentient species in Glorantha. They are versatile, ambitious, and found in nearly every corner of the world.</p>",
+        "type": "humanoid",
+        "averageHeight": "1.7m",
+        "averageWeight": "70kg",
+        "averageSize": { "min": 8, "max": 18 },
+        "characteristicMods": { "str": 0, "con": 0, "siz": 0, "int": 0, "pow": 0, "dex": 0, "app": 0, "luck": 0 },
+        "movement": { "walk": 8, "run": 24 },
+        "naturalArmor": 0,
+        "naturalWeapons": [],
+        "traits": ["Adaptable", "Ambitious", "Diverse"],
+        "abilities": "<p><strong>Adaptability:</strong> Humans gain a +10% bonus to any skill when first learning it.</p>"
+      }
+    }
+  }
+}
+

@@ -1,9 +1,12 @@
 # Foundry VTT System Files
 packs/*/LOCK
 packs/*/LOG*
+packs/*/LOG.old
 packs/*/MANIFEST-*
 packs/*/*.ldb
 packs/*/*.log
+packs/*/CURRENT
+packs/*/lost/
 
 # Node.js
 node_modules/
@@ -61,3 +64,10 @@ jspm_packages/
 
 # Yarn Integrity file
 .yarn-integrity
+
+# Foundry VTT temporary files
+tatus
+tatus --porcelain
+
+# Memory bank (optional - remove if you want to track it)
+# memory-bank/

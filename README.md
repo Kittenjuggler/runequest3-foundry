@@ -209,7 +209,18 @@ This system is provided under the terms that comply with Foundry VTT's licensing
 
 For issues, suggestions, or contributions, please visit the project repository.
 
+## Development & Releases
+
+For information on creating releases and updating the system, see [RELEASE.md](RELEASE.md).
+
+The system uses GitHub Releases for distribution. Each release includes:
+- `runequest3-foundry.zip` - The complete system package
+- `system.json` - Manifest file for Foundry VTT installation
+
 ## Changelog
+
+### Version 1.0.6
+- Current version
 
 ### Version 1.0.0
 - Initial release

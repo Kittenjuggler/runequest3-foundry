@@ -1,0 +1,139 @@
+{
+  "bladesharp": {
+    "version": "1.0.3",
+    "folder": "Spirit Magic",
+    "data": {
+      "name": "Bladesharp",
+      "type": "spell",
+      "img": "icons/weapons/swords/sword-guard-blue.webp",
+      "system": {
+        "spellType": "spirit",
+        "magicPointCost": 1,
+        "range": "Touch",
+        "duration": "10 minutes",
+        "description": "<p>This spell increases the damage done by any edged weapon by +1 point per point of magic invested.</p>",
+        "stackable": true,
+        "maxPoints": 4,
+        "resist": "None",
+        "components": "None",
+        "castingTime": "1 round"
+      }
+    }
+  },
+  "protection": {
+    "version": "1.0.3",
+    "folder": "Spirit Magic",
+    "data": {
+      "name": "Protection",
+      "type": "spell",
+      "img": "icons/magic/defensive/shield-barrier-flaming-diamond-blue.webp",
+      "system": {
+        "spellType": "spirit",
+        "magicPointCost": 1,
+        "range": "Touch",
+        "duration": "10 minutes",
+        "description": "<p>This spell provides 1 point of magical armor per point of magic invested.</p>",
+        "stackable": true,
+        "maxPoints": 6,
+        "resist": "None",
+        "components": "None",
+        "castingTime": "1 round"
+      }
+    }
+  },
+  "bless": {
+    "version": "1.0.3",
+    "folder": "Divine Magic",
+    "data": {
+      "name": "Bless",
+      "type": "spell",
+      "img": "icons/magic/holy/angel-winged-humanoid-blue.webp",
+      "system": {
+        "spellType": "divine",
+        "magicPointCost": 1,
+        "range": "Touch",
+        "duration": "1 hour",
+        "description": "<p>This spell provides the target with a +20% bonus to one specified skill for the duration.</p>",
+        "stackable": false,
+        "deity": "Any",
+        "runeRequirement": "Power or Form rune at 60%+",
+        "resist": "None",
+        "components": "Holy symbol",
+        "castingTime": "1 round"
+      }
+    }
+  },
+  "heal_body": {
+    "version": "1.0.3",
+    "folder": "Divine Magic",
+    "data": {
+      "name": "Heal Body",
+      "type": "spell",
+      "img": "icons/magic/life/crosses-trio-green.webp",
+      "system": {
+        "spellType": "divine",
+        "magicPointCost": 3,
+        "range": "Touch",
+        "duration": "Instant",
+        "description": "<p>This spell completely heals all hit point damage to the target.</p>",
+        "stackable": false,
+        "deity": "Chalana Arroy, other healing deities",
+        "runeRequirement": "Harmony rune at 70%+",
+        "resist": "None",
+        "components": "Holy symbol",
+        "castingTime": "1 round"
+      }
+    }
+  },
+  "mystic_vision": {
+    "version": "1.0.3",
+    "folder": "Sorcery",
+    "data": {
+      "name": "Mystic Vision",
+      "type": "spell",
+      "img": "icons/magic/perception/eye-ringed-green.webp",
+      "system": {
+        "spellType": "sorcery",
+        "magicPointCost": 1,
+        "range": "Personal",
+        "duration": "10 minutes",
+        "description": "<p>This spell allows the sorcerer to see magical auras, enchanted items, and active spells.</p>",
+        "manipulation": {
+          "intensity": "Add +1d6 to detection rolls per level",
+          "duration": "Double duration per level",
+          "range": "Not applicable"
+        },
+        "resist": "None",
+        "components": "Concentration",
+        "castingTime": "1 round",
+        "skill": "Insight"
+      }
+    }
+  },
+  "protective_circle": {
+    "version": "1.0.3",
+    "folder": "Sorcery",
+    "data": {
+      "name": "Protective Circle",
+      "type": "spell",
+      "img": "icons/magic/defensive/barrier-triangle-blue.webp",
+      "system": {
+        "spellType": "sorcery",
+        "magicPointCost": 3,
+        "range": "Touch",
+        "duration": "1 hour",
+        "description": "<p>This spell creates a protective barrier with 10 points of magical armor against all attacks.</p>",
+        "manipulation": {
+          "intensity": "Add +5 armor points per level",
+          "duration": "Double duration per level",
+          "range": "Add +1 meter radius per level"
+        },
+        "resist": "None",
+        "components": "Circle drawn with blessed chalk",
+        "castingTime": "10 minutes",
+        "skill": "Ward"
+      }
+    }
+  }
+}
+

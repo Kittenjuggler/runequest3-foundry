@@ -1,72 +1,154 @@
 # Active Context - RuneQuest 3 Foundry VTT System
 
 ## Current Development Focus
-- ✅ Characteristic roll tooltip system with x1-x10 multiplier buttons implemented
-- ✅ Tooltip display and interaction issues resolved
-- ✅ CSS architecture improved and inline styles removed
-- ✅ **Header system completely simplified to single always-visible header**
+- ✅ **Equipment drag-and-drop with container support fully implemented**
+- ✅ **Container accordion functionality working**
+- ✅ **Character name edit mode toggle implemented**
+- ✅ **Magic point deduction system for spell casting implemented**
+- ✅ **Magic section visibility toggles added**
+- ✅ **Hit location rolls integrated with attacks and offensive spells**
+- ✅ **Compendium migration system with version tracking implemented**
+- ✅ **Compendium export tool created (console-based)**
+- ✅ **World compendium organization macro created**
 
 ## Recent Changes
-- ✅ GitHub repository setup completed
-- ✅ Characteristic roll tooltip implementation completed
-- ✅ Tooltip positioning and event handling fixes implemented
-- ✅ CSS cleanup and inline style removal completed
+
+### Equipment System (Latest)
+- ✅ **Container drag-and-drop**: Items can be dragged into containers, visually indented
+- ✅ **Item reordering**: Items can be reordered within containers and main sections
+- ✅ **Container toggle**: Containers can be expanded/collapsed with arrow button
+- ✅ **Drop zone indicators**: Green lines show where items will drop during drag
+- ✅ **Container state persistence**: Expanded/collapsed state saved to actor data
+- ✅ **Move items out**: Items can be dragged from containers back to main inventory
+
+### Character Sheet UI
+- ✅ **Character name edit mode**: Name only editable when edit toggle is on
+- ✅ **Character name alignment**: Text left-aligned for better readability
+- ✅ **Magic section visibility**: Spirit/Divine/Sorcery sections can be hidden in edit mode
+- ✅ **Visibility persistence**: Section visibility state saved to actor data
+- ✅ **Conditional visibility controls**: Only show hide/show buttons if section is empty
+
+### Magic System Enhancements
+- ✅ **Magic point deduction**: MP automatically deducted based on spell casting results
+  - Critical: 1 MP
+  - Success/Special: Allocated MP
+  - Failure: 1 MP
+  - Fumble: Allocated MP
+- ✅ **Reset to max MP**: Button in MP tooltip to restore MP to maximum
+- ✅ **Hit location rolls**: d20 roll for hit location on successful attacks/offensive spells
+  - Melee attacks use melee hit location table (01-04 Right Leg, 05-08 Left Leg, etc.)
+  - Ranged/spells use ranged table (01-03 Right Leg, 04-06 Left Leg, etc.)
+- ✅ **Offensive spell flag**: Checkbox in spell config to mark spells as offensive
+- ✅ **Dice sound for context menu rolls**: Roll sound now plays for right-click skill rolls
+
+### Compendium System
+- ✅ **Version tracking**: Each compendium tracks its version to prevent redundant imports
+- ✅ **Automatic migration**: Compendiums auto-update when system version changes
+- ✅ **Species, Spirit Magic, Divine Magic, Sorcery, Weapons, Armour**: All tracked separately
+- ✅ **Compendium export tool**: Console command `game.rq3.exportCompendium(packId)` to export as JSON
+- ✅ **Compendium styling**: Dark grey backgrounds, banner images hidden
+- ✅ **World compendium macro**: `macros/organize-weapons-compendium.js` creates organized world compendium
+
+### Previous Changes
 - ✅ **Compact header completely removed and all header change functionality eliminated**
-- ✅ **JavaScript tab change handlers removed**
-- ✅ **CSS rules for header switching removed**
-- ✅ **Derived stats moved from header to main tab for better organization**
 - ✅ **Luck characteristic added to the system (str, con, siz, int, pow, dex, app, luck)**
-- ✅ **Characteristics table reorganized into 2 columns of 4 for better layout**
-- ✅ **Luck abbreviation updated from "LUC" to "LUCK" for clarity**
-- ✅ **Header layout reorganized: status bars moved to full-width horizontal layout below main header**
-- ✅ **Character name field height reduced by 20% and positioned alongside edit toggle**
-- ✅ **Characteristics section sizing reduced to fit better with new layout**
-- ✅ **Image, name, and attributes now grouped in single main header block**
-- ✅ **Status bar text repositioned inside bars with proper z-indexing and text shadows**
-- ✅ **Edit toggle styling updated: border removed, text changed to 'Edit', padding reduced**
-- ✅ **Status bar labels moved inside bars and aligned left**
-- ✅ **Status bar values aligned right and vertically centered within bars**
-- ✅ **Status bar fill colors restored (danger/warning states for HP, fatigue, encumbrance)**
-- ✅ **Encumbrance details converted from slidedown to hover tooltip functionality**
-- ✅ **Training ticks for skills and POW now manually controlled by user clicks instead of auto-ticking**
-- ✅ **Training tick functionality now available in both edit and non-edit modes**
+- ✅ **Training ticks for skills and POW now manually controlled by user clicks**
+- ✅ **Magic tab spell sections now support drag-and-drop functionality**
+- ✅ **Spirit Magic casting rating: POW × 5 - ENC penalty**
+- ✅ **Divine Magic casting rating: 100% - ENC penalty (96-00% always fumbles)**
 
 ## Active Decisions and Considerations
 
-### CSS Architecture Principles
-**CRITICAL**: Avoid inline CSS with `!important` declarations unless absolutely unavoidable. Use proper CSS classes and external stylesheets instead.
+### Foundry VTT v13 Compendium Architecture
+**CRITICAL LEARNING**: System compendiums are **locked** and cannot have folders created/deleted programmatically.
 
-**Completed Improvements:**
-- ✅ Tooltip positioning uses CSS custom properties instead of inline styles
-- ✅ All `!important` declarations removed from roll tooltip styles
-- ✅ Proper CSS classes implemented for tooltip positioning
-- ✅ Consistent styling with existing damage tooltip system
+**Key Constraints:**
+- System compendiums are read-only for folder management
+- Folders in compendiums are world-level entities, not pack-level
+- Attempting to create folders in system compendiums will fail silently or error
+- `Folder.createDocuments()` with `pack` option doesn't work for system compendiums
 
-### Tooltip System Status
-- ✅ Tooltip creation and positioning working consistently
-- ✅ Event handling fixed (delayed click-outside handler)
-- ✅ CSS implementation cleaned up and optimized
-- ✅ **Works consistently across all tabs with simplified header system**
+**Solution Implemented:**
+- ✅ **System compendiums**: Simple flat list, no folder management
+- ✅ **World compendiums**: Use macro to create organized, editable versions
+- ✅ **Macro-based organization**: `macros/organize-weapons-compendium.js` creates world compendium with folders
+- ✅ **Version tracking**: Prevents redundant imports on every page load
 
-### Header Layout Decision
-- ✅ **Compact header completely removed** to eliminate positioning inconsistencies
-- ✅ **All header change functionality removed** (JavaScript handlers, CSS rules, tab-based switching)
-- ✅ **Single full header now always visible** on all tabs for consistent user experience
-- ✅ **Tooltip positioning now works reliably** regardless of tab context
-- ✅ **Simplified layout reduces complexity** and maintenance overhead
-- ✅ **No more tab-based header switching logic** in JavaScript or CSS
+### Console Commands and Tools
+
+**Compendium Export:**
+```javascript
+// Export any compendium as JSON
+game.rq3.exportCompendium("runequest3.weapons")
+```
+- Opens new browser tab with formatted JSON
+- Includes all item data and folder structure
+- Useful for backing up or editing compendium data externally
+
+**Compendium Organization:**
+- Use the macro in `macros/organize-weapons-compendium.js`
+- Creates "Weapons (Organized)" world compendium
+- Automatically organizes weapons into folders by skill (Blade, Blunt, Bow, etc.)
+- Fully editable, no lock restrictions
+
+### Equipment Container System
+- ✅ **Drag-and-drop**: Items can be moved into/out of containers
+- ✅ **Visual indentation**: Items inside containers are indented for clarity
+- ✅ **Drop zones**: Green indicator lines show valid drop positions
+- ✅ **Reordering**: Items can be reordered within containers and main sections
+- ✅ **State persistence**: Container expanded/collapsed state saved to `actor.system.containerStates`
+- ✅ **Data model**: Items have `system.containerId` to track container membership
+
+### Magic System Implementation
+- ✅ **MP deduction**: Automatic based on casting result (critical: 1, success: allocated, failure: 1, fumble: allocated)
+- ✅ **Hit location integration**: d20 roll on successful attacks/offensive spells
+- ✅ **Two hit location tables**: Melee (01-04, 05-08, 09-11, 12, 13-15, 16-18, 19-20) vs Ranged/Spell (01-03, 04-06, 07-10, 11-15, 16-17, 18-19, 20)
+- ✅ **Offensive spell flag**: `item.system.offensive` boolean controls hit location roll
+- ✅ **Section visibility**: `actor.system.magicVisibility` tracks which sections are hidden
+- ✅ **Conditional hiding**: Only allow hiding sections if they contain no spells
+
+### UI/UX Patterns
+- ✅ **Edit mode gating**: Character name, magic visibility controls only available in edit mode
+- ✅ **State persistence without re-render**: Use `{ render: false }` and manual DOM updates
+- ✅ **Tooltip system**: Hover tooltips for stats (MP, encumbrance, etc.) with action buttons
+- ✅ **Dice sound integration**: `sound: CONFIG.sounds.dice` and `rolls: [roll]` in chat messages
 
 ## Next Steps
-1. **Immediate**: Test tooltip functionality across all tabs with simplified header
-2. **Short-term**: Verify consistent behavior in different tab contexts
-3. **Medium-term**: Apply same CSS principles to other components if needed
-4. **Long-term**: Maintain consistent header layout across all system components
+1. **Immediate**: Continue with any additional feature requests or bug fixes
+2. **Short-term**: Test all recent implementations thoroughly
+3. **Medium-term**: Add spell effects and automation
+4. **Long-term**: Enhance magic system with ritual casting and spell manipulation
 
 ## Technical Notes
-- **Header change functionality completely removed** from JavaScript (`_onFoundryTabChange` method eliminated)
-- **CSS rules for header switching removed** (`.non-main-tab`, `.compact-header` styles eliminated)
-- **Foundry VTT positioning challenges resolved** by using consistent header layout
-- Tooltips now use CSS custom properties for dynamic positioning
-- Mouse tracking implemented as fallback positioning method
-- All event handlers properly cleaned up to prevent memory leaks
-- **System now uses single header approach** eliminating all tab-based header logic
+
+### Compendium Management
+- **System compendiums are locked** in Foundry v13 - cannot programmatically manage folders
+- **Version tracking**: Each compendium has a setting (e.g., `weaponsCompendiumVersion`) to prevent re-import
+- **Migration pattern**: Check version, skip if current, update items, set new version
+- **Export tool**: `game.rq3.exportCompendium(packId)` - opens JSON in new tab
+- **World compendium macro**: Creates organized, editable copy with folders by skill
+
+### Container System
+- **Data structure**: `item.system.containerId` stores parent container ID
+- **State persistence**: `actor.system.containerStates` tracks expanded/collapsed
+- **Drop zones**: Dynamically created divs with `data-container-id` and `data-target-sort`
+- **Visual feedback**: `.drag-over` class for valid drops, `.invalid-drop` for invalid
+- **Reordering logic**: Compares `containerId`, `storageLocation`, and `sort` values
+
+### Magic System
+- **MP deduction**: Handled in `_onSpellCast()` based on `RQ3Actor.calculateRollResult()`
+- **Hit location**: `_rollHitLocation(attackType)` returns roll, location, description
+- **Offensive detection**: `item.system.offensive` boolean flag
+- **Section visibility**: `actor.system.magicVisibility.spirit/divine/sorcery` booleans
+- **Render optimization**: Use `{ render: false }` and manual DOM updates to prevent edit mode reset
+
+### Event Handling Patterns
+- **Delayed handlers**: Use `setTimeout()` for click-outside handlers to prevent immediate triggering
+- **Event delegation**: Attach listeners to parent elements for dynamic content
+- **State management**: Update actor data with `actor.update()`, use `{ render: false }` when needed
+- **Manual DOM updates**: Use jQuery to update specific elements without full re-render
+
+### Chat Message Integration
+- **Dice sound**: Include `sound: CONFIG.sounds.dice` in message data
+- **Multiple rolls**: Use `rolls: [roll1, roll2]` array for multiple dice (e.g., attack + hit location)
+- **Roll results**: Use `RQ3Actor.calculateRollResult(roll, targetNumber)` for consistent result determination

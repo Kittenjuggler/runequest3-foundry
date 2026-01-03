@@ -1,0 +1,281 @@
+{
+    "sapergis__battle_axe_": {
+      "version": "1.0.6",
+      "folder": "Blade",
+      "data": {
+        "name": "Sapergis (Battle Axe)",
+        "type": "weapon",
+        "img": "icons/weapons/axes/axe-battle-worn.webp",
+        "system": {
+          "weaponType": "axe",
+          "quantity": 1,
+          "price": {
+            "value": 0,
+            "currency": "lunars"
+          },
+          "encumbrance": 1,
+          "melee1Handed": {
+            "enabled": true,
+            "damage": "1d8+2",
+            "baseSkill": 10,
+            "armor": 8,
+            "strikeRank": 2,
+            "impale": false,
+            "strengthRequirement": 10,
+            "dexterityRequirement": 10
+          },
+          "melee2Handed": {
+            "enabled": true,
+            "damage": "1d8+2",
+            "baseSkill": 10,
+            "armor": 8,
+            "strikeRank": 2,
+            "impale": false,
+            "strengthRequirement": 10,
+            "dexterityRequirement": 10
+          },
+          "description": "Greek battle axe, also known as Epsilon. Can be wielded with one or two hands.",
+          "weight": 0,
+          "equipped": false,
+          "storageLocation": "carried",
+          "containerId": "",
+          "category": "melee",
+          "hands": "1-handed",
+          "damage": "1d6",
+          "strengthRequirement": 10,
+          "dexterityRequirement": 10,
+          "baseSkill": 0,
+          "armor": 0,
+          "strikeRank": 0,
+          "ap": 0,
+          "hp": 8,
+          "reach": 1,
+          "parry": 0,
+          "ranged": {
+            "isRanged": false,
+            "range": 0
+          },
+          "rangedAttack": {
+            "enabled": false,
+            "damage": "1d6",
+            "strengthRequirement": 10,
+            "dexterityRequirement": 10,
+            "baseSkill": 0,
+            "armor": 0,
+            "strikeRank": 0,
+            "deadlyBlow": false,
+            "impale": false,
+            "minRange": 0,
+            "maxRange": 0,
+            "rof": 0
+          }
+        },
+        "_id": "Eio7iAHvYv8dkzEW",
+        "effects": [],
+        "folder": null,
+        "sort": 0,
+        "ownership": {
+          "default": 0,
+          "TvrnW1yZ2ENwCQu6": 3
+        },
+        "flags": {},
+        "_stats": {
+          "compendiumSource": null,
+          "duplicateSource": null,
+          "exportSource": null,
+          "coreVersion": "13.351",
+          "systemId": "runequest3",
+          "systemVersion": "1.0.6",
+          "createdTime": 1767350389029,
+          "modifiedTime": 1767350389029,
+          "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+        }
+      }
+    },
+    "epsilon__battle_axe_": {
+      "version": "1.0.6",
+      "folder": "Blade",
+      "data": {
+        "name": "Epsilon (Battle Axe)",
+        "type": "weapon",
+        "img": "icons/weapons/axes/axe-battle-worn.webp",
+        "system": {
+          "weaponType": "axe",
+          "quantity": 1,
+          "price": {
+            "value": 0,
+            "currency": "lunars"
+          },
+          "encumbrance": 1,
+          "melee1Handed": {
+            "enabled": true,
+            "damage": "1d8+2",
+            "baseSkill": 10,
+            "armor": 8,
+            "strikeRank": 2,
+            "impale": false,
+            "strengthRequirement": 10,
+            "dexterityRequirement": 10
+          },
+          "melee2Handed": {
+            "enabled": true,
+            "damage": "1d8+2",
+            "baseSkill": 10,
+            "armor": 8,
+            "strikeRank": 2,
+            "impale": false,
+            "strengthRequirement": 10,
+            "dexterityRequirement": 10
+          },
+          "description": "Greek battle axe, also known as Sapergis. Can be wielded with one or two hands.",
+          "weight": 0,
+          "equipped": false,
+          "storageLocation": "carried",
+          "containerId": "",
+          "category": "melee",
+          "hands": "1-handed",
+          "damage": "1d6",
+          "strengthRequirement": 10,
+          "dexterityRequirement": 10,
+          "baseSkill": 0,
+          "armor": 0,
+          "strikeRank": 0,
+          "ap": 0,
+          "hp": 8,
+          "reach": 1,
+          "parry": 0,
+          "ranged": {
+            "isRanged": false,
+            "range": 0
+          },
+          "rangedAttack": {
+            "enabled": false,
+            "damage": "1d6",
+            "strengthRequirement": 10,
+            "dexterityRequirement": 10,
+            "baseSkill": 0,
+            "armor": 0,
+            "strikeRank": 0,
+            "deadlyBlow": false,
+            "impale": false,
+            "minRange": 0,
+            "maxRange": 0,
+            "rof": 0
+          }
+        },
+        "_id": "Nrp5xgEm95j4xsEq",
+        "effects": [],
+        "folder": null,
+        "sort": 0,
+        "ownership": {
+          "default": 0,
+          "TvrnW1yZ2ENwCQu6": 3
+        },
+        "flags": {},
+        "_stats": {
+          "compendiumSource": null,
+          "duplicateSource": null,
+          "exportSource": null,
+          "coreVersion": "13.351",
+          "systemId": "runequest3",
+          "systemVersion": "1.0.6",
+          "createdTime": 1767350389066,
+          "modifiedTime": 1767350389066,
+          "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+        }
+      }
+    },
+    "hatchet": {
+      "version": "1.0.6",
+      "folder": "Blade",
+      "data": {
+        "name": "Hatchet",
+        "type": "weapon",
+        "img": "icons/weapons/axes/axe-hand-simple.webp",
+        "system": {
+          "weaponType": "axe",
+          "quantity": 1,
+          "price": {
+            "value": 0,
+            "currency": "lunars"
+          },
+          "encumbrance": 0.5,
+          "melee1Handed": {
+            "enabled": true,
+            "damage": "1d6+1",
+            "baseSkill": 10,
+            "armor": 6,
+            "strikeRank": 2,
+            "impale": false,
+            "strengthRequirement": 10,
+            "dexterityRequirement": 10
+          },
+          "description": "A small hand axe, useful as both tool and weapon.",
+          "weight": 0,
+          "equipped": false,
+          "storageLocation": "carried",
+          "containerId": "",
+          "category": "melee",
+          "hands": "1-handed",
+          "damage": "1d6",
+          "strengthRequirement": 10,
+          "dexterityRequirement": 10,
+          "baseSkill": 0,
+          "armor": 0,
+          "strikeRank": 0,
+          "ap": 0,
+          "hp": 8,
+          "reach": 1,
+          "parry": 0,
+          "ranged": {
+            "isRanged": false,
+            "range": 0
+          },
+          "melee2Handed": {
+            "enabled": false,
+            "damage": "1d6",
+            "strengthRequirement": 10,
+            "dexterityRequirement": 10,
+            "baseSkill": 0,
+            "armor": 0,
+            "strikeRank": 0,
+            "impale": false
+          },
+          "rangedAttack": {
+            "enabled": false,
+            "damage": "1d6",
+            "strengthRequirement": 10,
+            "dexterityRequirement": 10,
+            "baseSkill": 0,
+            "armor": 0,
+            "strikeRank": 0,
+            "deadlyBlow": false,
+            "impale": false,
+            "minRange": 0,
+            "maxRange": 0,
+            "rof": 0
+          }
+        },
+        "_id": "kh6yqVinhDX8i1ZS",
+        "effects": [],
+        "folder": null,
+        "sort": 0,
+        "ownership": {
+          "default": 0,
+          "TvrnW1yZ2ENwCQu6": 3
+        },
+        "flags": {},
+        "_stats": {
+          "compendiumSource": null,
+          "duplicateSource": null,
+          "exportSource": null,
+          "coreVersion": "13.351",
+          "systemId": "runequest3",
+          "systemVersion": "1.0.6",
+          "createdTime": 1767350389013,
+          "modifiedTime": 1767350389013,
+          "lastModifiedBy": "TvrnW1yZ2ENwCQu6"
+        }
+      }
+    }
+  }

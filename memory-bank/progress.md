@@ -10,26 +10,51 @@
 - **Data Models**: Comprehensive data structure definitions for all game entities
 
 ### Character System
-- **Seven Core Characteristics**: STR, CON, SIZ, INT, POW, DEX, CHA implemented
+- **Eight Core Characteristics**: STR, CON, SIZ, INT, POW, DEX, APP, LUCK implemented
 - **Automatic Calculations**: Hit points, magic points, and derived values working
 - **Hit Location System**: Body location tracking with individual armor and HP
 - **Skill System**: Comprehensive skill management with categories and experience
 - **Rune System**: Elemental, Power, Form, and Condition rune support
+- **Character Name Edit Mode**: Name only editable when edit toggle is on
+- **Training Ticks**: Manual control for skill and POW training progress
+- **Edit Mode Toggle**: Controls visibility of edit-only features
 
 ### Combat and Equipment
 - **Weapon System**: Damage, reach, parry, and special properties implemented
 - **Armor System**: Location-based protection with encumbrance tracking
 - **Initiative System**: Configurable initiative formulas working
 - **Hit Location Combat**: Damage tracking by body location functional
+- **Hit Location Rolls**: Automatic d20 roll on successful attacks with melee/ranged tables
+- **Melee Hit Location Table**: 01-04 Right Leg, 05-08 Left Leg, 09-11 Abdomen, 12 Chest, 13-15 Right Arm, 16-18 Left Arm, 19-20 Head
+- **Ranged/Spell Hit Location Table**: 01-03 Right Leg, 04-06 Left Leg, 07-10 Abdomen, 11-15 Chest, 16-17 Right Arm, 18-19 Left Arm, 20 Head
+- **Container System**: Items can be placed inside containers with drag-and-drop
+- **Container Organization**: Visual indentation for contained items
+- **Container Toggle**: Expand/collapse containers with arrow button
+- **Item Reordering**: Drag items to reorder within containers or main inventory
+- **Move Between Containers**: Drag items in/out of containers seamlessly
 
 ### Magic System
 - **Three Magic Types**: Spirit Magic, Divine Magic, and Sorcery implemented
-- **Magic Point Management**: Automatic MP tracking and spell cost deduction
+- **Magic Point Management**: Automatic MP tracking and spell cost deduction based on casting results
+- **MP Deduction Rules**: Critical (1 MP), Success/Special (allocated MP), Failure (1 MP), Fumble (allocated MP)
+- **Reset to Max MP**: Button in MP tooltip to restore MP to maximum
 - **Spell Components**: Verbal, somatic, material, and focus requirements
 - **Rune Magic**: Integration with character rune affinities
+- **Drag-and-Drop**: Spells can be dragged from compendiums to character sheets
+- **Spell Sections**: Automatic categorization into spirit, divine, and sorcery sections
+- **Type Validation**: Spells can only be dropped in their matching magic type section
+- **Spell Controls**: Edit, delete, and cast functionality for each spell
+- **Section Visibility**: Spirit/Divine/Sorcery sections can be hidden when empty (edit mode only)
+- **Offensive Spell Flag**: Checkbox to mark spells as offensive for hit location rolls
+- **Hit Location Integration**: d20 roll on successful offensive spell casts (ranged table)
 
 ### Data Management
 - **Compendium Packs**: Equipment, skills, spells, and runes organized
+- **Compendium Migration System**: Automatic updates when system version changes
+- **Version Tracking**: Each compendium tracks its version to prevent redundant imports
+- **Compendium Export Tool**: Console command `game.rq3.exportCompendium(packId)` exports as JSON
+- **World Compendium Macro**: `macros/organize-weapons-compendium.js` creates organized, editable copy
+- **Compendium Styling**: Dark grey backgrounds, hidden banner images
 - **Data Modules**: Separate files for skills, weapons, armor, and magic data
 - **Localization**: English language support with JSON-based system
 - **Configuration**: System settings and house rules management

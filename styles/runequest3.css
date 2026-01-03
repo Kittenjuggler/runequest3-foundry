@@ -28,6 +28,10 @@
 /*  Base System Styling                        */
 /* -------------------------------------------- */
 
+body.game .app a:hover{
+  text-shadow: none;
+}
+
 .runequest3 {
   font-family: 'Source Sans Pro', sans-serif;
   color: var(--rq3-text);
@@ -87,6 +91,62 @@
   gap: 12px;
 }
 
+.runequest3 .header-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.runequest3 .profile-img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--rq3-border);
+  flex-shrink: 0;
+}
+
+.runequest3 .header-fields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.runequest3 .charname {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--rq3-text);
+}
+
+.runequest3 .charname input {
+  background: transparent;
+  border: none;
+  color: var(--rq3-text);
+  font-size: 24px;
+  font-weight: 600;
+  width: 100%;
+  padding: 0;
+}
+
+.runequest3 .charname input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.runequest3 .item-type {
+  font-size: 14px;
+  color: var(--rq3-text-light);
+  margin-top: 4px;
+}
+
+.runequest3 .item-type label {
+  font-weight: 400;
+}
+
 /* Main Header Content */
 .runequest3 .header-main-content {
   display: flex;
@@ -123,7 +183,7 @@
 
 .runequest3 .profile-img:hover {
   border-color: var(--rq3-light);
-  box-shadow: 0 0 12px rgba(218, 165, 32, 0.5);
+
 }
 
 .runequest3 .resource-bars-vertical {
@@ -184,11 +244,20 @@
 
 /* Character name display/edit mode controls - Main header only */
 .runequest3 .full-header .charname-display {
-  display: none;
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--rq3-light);
+  text-align: left;
+  padding: 10px 10px 10px 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .runequest3 .full-header .charname-edit {
-  display: block;
+  display: none;
   font-family: 'Inter', sans-serif;
   font-size: 24px;
   font-weight: 600;
@@ -199,6 +268,16 @@
   margin: 0;
   width: 100%;
   height: 100%;
+  text-align: left;
+}
+
+/* Show edit input only in edit mode */
+.runequest3.edit-mode .full-header .charname-display {
+  display: none;
+}
+
+.runequest3.edit-mode .full-header .charname-edit {
+  display: block;
 }
 
 .runequest3 .full-header .charname-edit:focus {
@@ -248,7 +327,7 @@
 .runequest3 .rq3-characteristic:hover {
   background: rgba(96, 96, 96, 0.8);
   border-color: var(--rq3-accent);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
 }
 
 .runequest3 .rq3-characteristic-label {
@@ -302,7 +381,7 @@
 .runequest3 .rq3-characteristic-current input:focus {
   outline: none;
   border-color: var(--rq3-accent);
-  box-shadow: 0 0 6px rgba(218, 165, 32, 0.3);
+
 }
 
 .runequest3 .rq3-characteristic-modifier {
@@ -388,7 +467,6 @@
 /* -------------------------------------------- */
 
 .rq3-skills {
-  margin: 16px 0;
 }
 
 .rq3-skills h3 {
@@ -451,7 +529,7 @@
   background: var(--rq3-light);
   border-radius: 50%;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
 }
 
 .global-edit-mode-toggle:checked + .toggle-slider {
@@ -582,21 +660,32 @@
 }
 
 .rq3-skill-category {
- 
   break-inside: avoid;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  margin-bottom: 20px;
+  background: rgba(96, 96, 96, 0.3);
+  border-radius: 8px;
+  padding: 8px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+/* Remove background from skill categories on combat tab only */
+.tab[data-tab="combat"] .rq3-skill-category {
+  background: none;
 }
 
 .rq3-skill-category-header {
-  background: var(--rq3-dark);
-  color: var(--rq3-light);
-  padding: 8px 12px;
-  border-radius: 6px 6px 0 0;
-  border: 2px 2px 0 2px solid var(--rq3-border);
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: var(--rq3-text);
   font-family: 'Inter', sans-serif;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
+  border-bottom: 2px solid var(--rq3-secondary);
+  padding-bottom: 4px;
 }
 
 .rq3-skill-list,
@@ -613,17 +702,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 4px 8px;
-  border-bottom: 1px solid rgba(102, 102, 102, 0.3);
   transition: background 0.2s ease;
   min-height: 24px;
 }
 
 .rq3-skill-item:hover {
   background: rgba(96, 96, 96, 0.6);
-}
-
-.rq3-skill-item:last-child {
-  border-bottom: none;
 }
 
 .rq3-skill-name {
@@ -686,7 +770,7 @@
 .weapons-list,
 .spells-list,
 .runes-list {
-  margin: 16px 0;
+  margin: 6px 0;
 }
 
 .rq3-item {
@@ -702,7 +786,7 @@
 
 .rq3-item:hover {
   background: rgba(96, 96, 96, 0.6);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
 }
 
 .rq3-item-image {
@@ -758,9 +842,6 @@
 .rq3-skill-roll,
 .rq3-char-roll,
 .rq3-spell-cast {
-  background: linear-gradient(135deg, rgba(96, 96, 96, 0.9) 0%, rgba(112, 112, 112, 0.9) 100%);
-  
-  border-radius: 8px;
   padding: 0px;
   margin: 8px 0;
   font-family: 'Source Sans Pro', sans-serif;
@@ -779,6 +860,28 @@
   text-align: center;
 }
 
+.rq3-spell-cast .spell-stats {
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.rq3-spell-cast .spell-stats p {
+  margin: 4px 0;
+  padding: 2px 0;
+  font-size: 13px;
+  color: var(--color-dark-4);
+}
+
+.rq3-spell-cast .divine-note {
+  margin-top: 8px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--color-dark-4);
+  opacity: 0.8;
+}
+
 .roll-result {
   font-size: 16px;
   font-weight: 600;
@@ -786,7 +889,7 @@
   margin: 8px 0;
   padding: 8px;
   border-radius: 6px;
-  color: var(--rq3-light);
+  color: var(--color-dark-4);
 }
 
 .result-text {
@@ -796,9 +899,12 @@
   padding: 4px 8px;
   border-radius: 4px;
   margin-top: 8px;
+  color: var(--color-dark-4);
 }
 
-.result-text.success {
+.result-text.success,
+.result-text.special,
+.result-text.critical {
   background: rgba(16, 145, 16, 0.8);
   color: var(--rq3-light);
 }
@@ -808,12 +914,14 @@
   color: var(--rq3-light);
 }
 
+.result-text.fumble {
+  background: rgba(139, 0, 0, 0.8);
+  color: var(--rq3-light);
+}
+
 .spell-description {
   margin-top: 8px;
   padding: 8px;
-  background: rgba(96, 96, 96, 0.4);
-  border-radius: 4px;
-  border-left: 4px solid var(--rq3-secondary);
 }
 
 /* -------------------------------------------- */
@@ -842,7 +950,7 @@
 
 .runequest3 .tabs .item.active {
   
-  color: var(--rq3-success);
+  color: #65d66a;
   text-shadow: none;
   
 }
@@ -1012,16 +1120,22 @@
 .runequest3 .characteristic-roll-custom:hover {
   background: rgba(96, 96, 96, 0.3);
   transform: translateY(-1px);
+  box-shadow: none !important;
 }
 
 .runequest3 .characteristic-roll-x5:active,
 .runequest3 .characteristic-roll-custom:active {
   transform: translateY(0);
-  box-shadow: 0 1px 2px rgba(139, 69, 19, 0.3);
+  box-shadow: none !important;
+}
+
+.runequest3 .characteristic-roll-x5:focus,
+.runequest3 .characteristic-roll-custom:focus {
+  box-shadow: none !important;
 }
 
 .runequest3 .characteristic-roll-x5 i {
-  font-size: 14px;
+  font-size: 18px;
 }
 
 .runequest3 .pow-training {
@@ -1161,6 +1275,10 @@
   line-height: 1.4;
 }
 
+.runequest3 .detail-group select {
+  text-align: left;
+}
+
 /* -------------------------------------------- */
 /*  Attributes Display                          */
 /* -------------------------------------------- */
@@ -1268,6 +1386,7 @@
   cursor: pointer;
   min-height: 32px;
   line-height: 1.4;
+  text-align: left;
 }
 
 .runequest3 select option {
@@ -1287,7 +1406,7 @@
 .runequest3 select:focus,
 .runequest3 textarea:focus {
   border-color: var(--rq3-secondary);
-  box-shadow: 0 0 8px rgba(218, 165, 32, 0.3);
+
   outline: none;
 }
 
@@ -1295,18 +1414,27 @@
   color: var(--rq3-light);
   font-family: 'Inter', sans-serif;
   font-weight: 600;
-  padding: 6px 12px;
+  padding: 6px 6px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .runequest3 button:hover {
-
+  box-shadow: none !important;
 }
 
 .runequest3 button:active {
-  transform: translateY(0);
-  box-shadow: 0 1px 4px rgba(139, 69, 19, 0.3);
+  box-shadow: none !important;
+}
+
+.runequest3 button:focus {
+  box-shadow: none !important;
+}
+
+.runequest3 input:focus,
+.runequest3 select:focus,
+.runequest3 textarea:focus {
+  box-shadow: none !important;
 }
 
 /* -------------------------------------------- */
@@ -1341,7 +1469,7 @@
 
 .runequest3 .characteristics-columns {
   display: flex;
-  gap: 50px;
+  gap: 20px;
   width: 100%;
 }
 
@@ -1436,7 +1564,7 @@
 
 .runequest3 .characteristics-header-row {
   display: grid;
-  grid-template-columns: 55px 35px 35px 40px 80px;
+  grid-template-columns: 55px 35px 35px 40px 40px;
   gap: 4px;
   padding: 3px 0;
   border-bottom: 1px solid var(--rq3-secondary);
@@ -1459,7 +1587,7 @@
 
 .runequest3 .characteristic-row {
   display: grid;
-  grid-template-columns: 55px 35px 35px 40px 80px;
+  grid-template-columns: 55px 35px 35px 40px 40px;
   gap: 4px;
   padding: 1px 0;
   align-items: center;
@@ -1533,6 +1661,9 @@
 .runequest3 .characteristic-row .characteristic-roll-x5:hover,
 .runequest3 .characteristic-row .characteristic-roll-custom:hover {
   background: rgba(96, 96, 96, 0.3);
+  box-shadow: none !important;
+  transform: scale(1.1);
+  color: var(--rq3-highlight);
 }
 
 /* Characteristics and Derived Stats Layout */
@@ -1665,6 +1796,10 @@
   background: rgba(96, 96, 96, 0.8);
   color: var(--rq3-text);
   font-family: 'Source Sans Pro', sans-serif;
+}
+
+.species-section .detail-group select {
+  text-align: left;
 }
 
 .species-section .detail-group input[type="number"] {
@@ -1945,9 +2080,9 @@
 }
 
 .runequest3 .skill-roll-button:hover {
-  background: rgba(96, 96, 96, 0.3) !important;
-  transform: translateY(-1px);
   box-shadow: none !important;
+  transform: scale(1.1);
+  color: var(--rq3-highlight);
 }
 
 .runequest3 .skill-roll-button:active {
@@ -1956,7 +2091,7 @@
 }
 
 .runequest3 .skill-roll-button i {
-  font-size: 14px;
+  font-size: 18px;
 }
 
 /* Skill training tick mark styling */
@@ -2091,8 +2226,8 @@
   display: grid;
   grid-template-columns: 300px 1fr;
   gap: 20px;
-  padding: 16px;
-  min-height: 500px;
+  padding: 0px;
+  align-items: start;
 }
 
 /* Armor Visualization */
@@ -2243,7 +2378,7 @@
   padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 0px;
 }
 
 .combat-info h3 {
@@ -2257,7 +2392,8 @@
 }
 
 .weapon-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: 40px 1fr 2fr;
   align-items: center;
   gap: 12px;
   padding: 8px;
@@ -2266,22 +2402,84 @@
   border: 1px solid var(--rq3-border);
 }
 
-.weapon-details {
-  flex: 1;
+.weapon-info-column {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.weapon-details .rq3-item-name {
+.weapon-info-column .rq3-item-name {
   font-weight: 600;
   color: var(--rq3-text);
+  font-size: 14px;
 }
 
-.weapon-details .weapon-damage,
-.weapon-details .weapon-skill {
+.weapon-info-column .weapon-subtype {
   font-size: 12px;
   color: var(--rq3-text-light);
+}
+
+.weapon-attacks-column {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.weapon-attack-entry {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.weapon-attack-entry .weapon-attack-type {
+  font-size: 12px;
+  color: var(--rq3-text);
+  font-weight: 600;
+}
+
+.weapon-attack-entry .weapon-damage {
+  font-weight: 600;
+  color: var(--rq3-text);
+  font-size: 14px;
+  text-align: center;
+}
+
+.weapon-attack-entry .weapon-sr {
+  font-weight: 600;
+  color: var(--rq3-text);
+  font-size: 14px;
+  text-align: center;
+}
+
+.weapon-attack-entry .weapon-skill-value {
+  font-weight: 600;
+  color: var(--rq3-text);
+  font-size: 14px;
+  text-align: center;
+}
+
+.weapon-attack-entry .weapon-roll-button {
+  justify-self: start;
+}
+
+.weapon-roll-button {
+  background: transparent;
+  border: none;
+  color: var(--rq3-text);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weapon-roll-button:hover {
+  transform: scale(1.1);
+  color: var(--rq3-highlight);
 }
 
 /* Armor Summary */
@@ -2392,12 +2590,7 @@
 /* -------------------------------------------- */
 
 /* Worn Equipment Section */
-.worn-equipment {
-  background: rgba(96, 96, 96, 0.3);
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 20px;
-}
+
 
 .worn-equipment h4,.carried-equipment h4,.bag-equipment h4 {
   margin-top: 0;
@@ -2409,6 +2602,85 @@
   padding-bottom: 4px;
 }
 
+.worn-equipment h5,.carried-equipment h5,.bag-equipment h5,
+.spirit-magic h5,.divine-magic h5,.sorcery-magic h5 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: var(--rq3-text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  border-bottom: 2px solid var(--rq3-secondary);
+  padding-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Main tab h3 headings - same styling as equipment/magic h5 */
+.personal-details-section h3,
+.derived-stats-section h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: var(--rq3-text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  border-bottom: 2px solid var(--rq3-secondary);
+  padding-bottom: 4px;
+}
+
+/* Combat tab headings - same styling as equipment/magic h5 */
+.general-damage-section h3,
+.combat-info h3,
+.combat-stats h4 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: var(--rq3-text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  border-bottom: 2px solid var(--rq3-secondary);
+  padding-bottom: 4px;
+}
+
+/* Background tab headings - same styling as equipment/magic h5 */
+.background-section h3,
+.background-section h4,
+.background-section h5,
+.biography-section h3,
+.biography-section h4,
+.biography-section h5,
+.notes-section h3,
+.notes-section h4,
+.notes-section h5 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: var(--rq3-text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  border-bottom: 2px solid var(--rq3-secondary);
+  padding-bottom: 4px;
+}
+
+.worn-equipment h5 .compendium-opener,
+.carried-equipment h5 .compendium-opener,
+.bag-equipment h5 .compendium-opener {
+  cursor: pointer;
+  color: var(--rq3-accent);
+  font-size: 16px;
+  transition: all 0.2s ease;
+  margin-left: 8px;
+}
+
+.worn-equipment h5 .compendium-opener:hover,
+.carried-equipment h5 .compendium-opener:hover,
+.bag-equipment h5 .compendium-opener:hover {
+  color: var(--rq3-text);
+  transform: scale(1.1);
+}
+
 /* Worn Equipment Subsections */
 .worn-armor-subsection,
 .worn-other-subsection {
@@ -2417,11 +2689,14 @@
 
 .worn-armor-subsection h5,
 .worn-other-subsection h5 {
-  margin: 0 0 12px 0;
+  margin-top: 0;
+  margin-bottom: 16px;
   color: var(--rq3-text);
   font-family: 'Inter', sans-serif;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
+  border-bottom: 2px solid var(--rq3-secondary);
+  padding-bottom: 4px;
   border-bottom: 1px solid var(--rq3-border);
   padding-bottom: 4px;
 }
@@ -2431,7 +2706,9 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  margin-top: 8px;
+
+  flex: 1;
+  min-height: 0;
 }
 
 /* Carried Equipment List */
@@ -2440,6 +2717,8 @@
   flex-direction: column;
   gap: 2px;
   margin-top: 8px;
+  flex: 1;
+  min-height: 0;
 }
 
 /* Bag Equipment List */
@@ -2448,13 +2727,15 @@
   flex-direction: column;
   gap: 2px;
   margin-top: 8px;
+  flex: 1;
+  min-height: 0;
 }
 
 /* Equipment Lists Specific Styling */
 .carried-items-list,
 .bag-items-list {
-  gap: 8px;
-  margin-bottom: 15px;
+  gap: 0px;
+  margin-bottom: 0px;
   min-height: 100px;
   margin-top: 0;
 }
@@ -2560,11 +2841,18 @@
 /* -------------------------------------------- */
 
 /* Equipped Armor Section - Full Width */
+.equipment-top-layout {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
 .equipped-armor-section, .equipped-hands-section {
+  flex: 1;
   background: rgba(96, 96, 96, 0.3);
   border-radius: 8px;
   padding: 16px;
-  margin-bottom: 20px;
+
 }
 
 .equipped-armor-section h4, .equipped-hands-section h4 {
@@ -2580,8 +2868,8 @@
 /* Three Column Equipment Container */
 .three-column-equipment-container {
   display: flex;
-  gap: 20px;
-  margin-top: 20px;
+  gap: 10px;
+
 }
 
 .three-column-equipment-container .worn-equipment,
@@ -2592,6 +2880,88 @@
   background: rgba(96, 96, 96, 0.3);
   border-radius: 8px;
   padding: 8px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+/* Drag over states for entire sections */
+.three-column-equipment-container .worn-equipment.drag-over,
+.three-column-equipment-container .carried-equipment.drag-over,
+.three-column-equipment-container .bag-equipment.drag-over {
+  background: rgba(76, 175, 80, 0.15);
+
+}
+
+/* Reorder drop zones - spaces between items */
+.reorder-drop-zone {
+  height: 10px;
+  margin: 0px 0;
+  /*background: rgba(76, 175, 80, 0.05);*/
+  /*border: 1px dashed rgba(76, 175, 80, 0.2);*/
+  border-radius: 3px;
+  transition: all 0.2s ease-out;
+  position: relative;
+  cursor: copy;
+}
+
+/* Hover effect to show drop zones are interactive */
+.reorder-drop-zone:hover {
+  /*background: rgba(76, 175, 80, 0.1);*/
+  /*border-color: rgba(76, 175, 80, 0.4);*/
+}
+
+/* When dragging over a drop zone */
+.reorder-drop-zone.active {
+  height: 30px;
+  margin: 0px 0;
+  /*background: rgba(76, 175, 80, 0.1);*/
+  /*border: 2px dashed var(--rq3-success);*/
+  border-radius: 4px;
+}
+
+/* Visual indicator line in the drop zone */
+.reorder-drop-zone.active::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 3px;
+  background: var(--rq3-success);
+  border-radius: 2px;
+  box-shadow: 0 0 6px rgba(76, 175, 80, 0.6);
+  animation: pulse 0.8s ease-in-out infinite;
+}
+
+/* Dot indicator at the start of the line */
+.reorder-drop-zone.active::after {
+  content: '';
+  position: absolute;
+  left: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background: var(--rq3-success);
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(76, 175, 80, 0.8);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Hide bag equipment section */
+.three-column-equipment-container .bag-equipment {
+  display: none;
 }
 
 /* Responsive adjustments for three columns */
@@ -2605,18 +2975,32 @@
 /* Worn Equipment Section Updates */
 .worn-subsection,
 .carried-subsection,
-.bag-subsection {
-  margin-bottom: 20px;
+.bag-subsection,
+.spirit-subsection,
+.divine-subsection,
+.sorcery-subsection {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .worn-subsection h5,
 .carried-subsection h5,
-.bag-subsection h5 {
-  color: var(--rq3-light);
-  font-weight: bold;
-  margin-bottom: 15px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--rq3-border);
+.bag-subsection h5,
+.spirit-subsection h5,
+.divine-subsection h5,
+.sorcery-subsection h5 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: var(--rq3-text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  border-bottom: 2px solid var(--rq3-secondary);
+  padding-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Armor Slots Grid */
@@ -2629,6 +3013,7 @@
 
 /* Hands Slots Grid - Only 2 columns for left and right hands */
 .hands-slots-grid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
@@ -2656,23 +3041,24 @@
 /* Equipment Item Row Layout - 3 Column Grid */
 .equipment-item-row {
   display: grid;
-  grid-template-columns: 50px 1fr auto;
-  gap: 12px;
+  grid-template-columns: 32px 1fr auto;
+  gap: 6px;
+  position: relative; /* Enable absolute positioning for drop indicator */
   align-items: center;
   width: 100%;
-  padding: 8px;
-  margin-bottom: 4px;
+  padding: 3px;
+  margin-bottom: 0px;
   background: rgba(0, 0, 0, 0.1);
   border: 1px solid var(--rq3-border);
   border-radius: 4px;
   cursor: grab;
   transition: all 0.3s ease;
+  align-content: center;
 }
 
 .equipment-item-row:hover {
   background: rgba(0, 0, 0, 0.2);
-  border-color: var(--rq3-light);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
 }
 
 .equipment-item-row:active {
@@ -2683,41 +3069,128 @@
   opacity: 0.5;
 }
 
+/* Container-specific styles */
+.equipment-item-row.container-item {
+  background: rgba(100, 100, 150, 0.1);
+}
+
+.equipment-item-row.container-item:hover {
+  background: rgba(100, 100, 150, 0.2);
+}
+
+.equipment-item-row.container-item.drag-over {
+  background: rgba(100, 150, 100, 0.3);
+  border-color: #4caf50;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+/* Container content items (nested items) */
+.equipment-item-row.container-content-item {
+  margin-left: 20px;
+  width: calc(100% - 20px);
+  background: rgba(0, 0, 0, 0.1);
+  cursor: grab;
+}
+
+.equipment-item-row.container-content-item:hover {
+  background: rgba(0, 0, 0, 0.2);
+  cursor: grab;
+}
+
+.equipment-item-row.container-content-item:active {
+  cursor: grabbing;
+}
+
+.equipment-item-row.container-content-item.dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+}
+
+/* Container toggle button */
+.container-toggle {
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: var(--rq3-text);
+  cursor: pointer;
+  padding: 4px 4px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+}
+
+.container-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--rq3-light);
+  transform: scale(1.05);
+}
+
+.container-toggle i {
+  transition: transform 0.2s ease;
+}
+
 /* Column 1: Image */
 .item-image-column {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
+  width: 24px;
+  height: 24px;
+  margin-left: 3px;
 }
 
 .equipment-item-row .item-image {
-  width: 40px;
-  height: 40px;
   border-radius: 4px;
-  border: 1px solid var(--rq3-border);
+  border: none;
   object-fit: cover;
 }
 
 /* Column 2: Info (Name and Stats) */
 .item-info-column {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  flex-direction: row;
+  align-items: center;
+  gap: 0px;
   min-width: 0; /* Allow text truncation */
   flex: 1;
 }
 
 .item-name-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.item-name-line .item-name {
   font-weight: bold;
   color: var(--rq3-text);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 14px;
+  flex-shrink: 1;
 }
 
+.item-name-line .item-encumbrance,
+.item-name-line .item-value {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  color: var(--rq3-text-light);
+  background: rgba(0, 0, 0, 0.1);
+  padding: 0px 3px;
+  border-radius: 2px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+
+/* Keep old class for backwards compatibility */
 .item-stats-line {
   display: flex;
   gap: 8px;
@@ -2737,29 +3210,30 @@
 /* Column 3: Controls */
 .item-controls-column {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   min-width: 60px;
+  line-height: 1;
 }
 
 .item-quantity-controls {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 1px;
-  min-width: 40px;
+  gap: 4px;
+  min-width: 60px;
 }
 
 .qty-up,
 .qty-down {
   background: transparent;
-  border: 1px solid var(--rq3-border);
+  border: none;
   border-radius: 2px;
   color: var(--rq3-text-light);
   cursor: pointer;
   padding: 0;
-  width: 20px;
+  width: 8px;
   height: 12px;
   font-size: 8px;
   line-height: 1;
@@ -2771,14 +3245,13 @@
 
 .qty-up:hover,
 .qty-down:hover {
-  background: var(--rq3-primary);
-  color: var(--rq3-light);
-  border-color: var(--rq3-light);
+
+
 }
 
 .qty-up:active,
 .qty-down:active {
-  transform: scale(0.95);
+
 }
 
 .item-quantity-display {
@@ -2787,7 +3260,7 @@
   color: var(--rq3-text);
   font-size: 10px;
   text-align: center;
-  min-width: 20px;
+  min-width: 10px;
   padding: 1px 2px;
 }
 
@@ -2809,6 +3282,13 @@
 /* Clear Hands Button - only show in edit mode */
 .clear-hands-btn {
   display: none;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #999;
+  z-index: 10;
 }
 
 .runequest3.edit-mode .clear-hands-btn {
@@ -2826,12 +3306,13 @@
 
 /* Combat tab armor items are display-only, not draggable */
 .tab[data-tab="combat"] .equipped-item {
-  cursor: default;
-  pointer-events: none;
+  cursor: context-menu; /* Changed from default to indicate right-click is available */
+  /* Removed pointer-events: none to allow right-click */
 }
 
 .tab[data-tab="combat"] .equipped-item img {
-  pointer-events: none;
+  cursor: context-menu; /* Changed to indicate right-click is available */
+  /* Removed pointer-events: none to allow right-click */
 }
 
 .edit-button,
@@ -2935,14 +3416,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 70px;
-  height: 70px;
-  position: relative;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  position: absolute;
+  top: -2px;
+  left: -2px;
   background: transparent;
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 0;
   border: none;
   cursor: grab;
+  overflow: hidden;
 }
 
 .equipped-item:active {
@@ -2955,11 +3439,12 @@
 }
 
 .equipped-item img {
-  width: 70px;
-  height: 70px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 8px;
   border: 2px solid var(--rq3-secondary);
+  box-sizing: border-box;
   transition: all 0.2s ease;
   pointer-events: none; /* Prevent image from interfering with drag */
 }
@@ -2988,26 +3473,31 @@
 }
 
 /* Empty Drop Zones */
+.empty-worn-drop-zone,
 .empty-carried-drop-zone, 
 .empty-bag-drop-zone {
-  min-height: 60px;
+  min-height: 80px;
   border: 2px dashed var(--rq3-border);
   border-radius: 8px;
   background: rgba(96, 96, 96, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 16px;
+  margin-top: auto;
   transition: all 0.3s ease;
   cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
 }
 
+.empty-worn-drop-zone:hover,
 .empty-carried-drop-zone:hover, 
 .empty-bag-drop-zone:hover {
   border-color: var(--rq3-light);
   background: rgba(96, 96, 96, 0.3);
 }
 
+.empty-worn-drop-zone.drag-over,
 .empty-carried-drop-zone.drag-over, 
 .empty-bag-drop-zone.drag-over {
   border-color: var(--rq3-success);
@@ -3018,14 +3508,150 @@
 
 .empty-drop-message {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   color: var(--rq3-text-light);
   opacity: 0.8;
+  text-align: center;
 }
 
 .empty-drop-message i {
   font-size: 20px;
+}
+
+.compendium-hint {
+  font-size: 11px;
+  color: var(--rq3-info);
+  opacity: 0.7;
+  font-style: italic;
+}
+
+/* Compendium Selection Overlay */
+.compendium-selection-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.compendium-selection-menu {
+  background: linear-gradient(135deg, var(--rq3-primary) 0%, var(--rq3-accent) 100%);
+  border: 2px solid var(--rq3-light);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  min-width: 300px;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { 
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to { 
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.compendium-selection-menu h3 {
+  margin: 0 0 12px 0;
+  color: var(--rq3-text);
+  text-align: center;
+  border-bottom: 2px solid var(--rq3-secondary);
+  padding-bottom: 8px;
+}
+
+.compendium-instructions {
+  margin: 0 0 16px 0;
+  color: var(--rq3-text-light);
+  text-align: center;
+  font-size: 13px;
+  font-style: italic;
+}
+
+.compendium-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.compendium-option {
+  background: rgba(96, 96, 96, 0.4);
+  border: 2px solid var(--rq3-border);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--rq3-text);
+}
+
+.compendium-option:hover {
+  background: rgba(96, 96, 96, 0.6);
+  border-color: var(--rq3-light);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.compendium-option i {
+  font-size: 24px;
+  color: var(--rq3-info);
+  width: 32px;
+  text-align: center;
+}
+
+.compendium-option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.compendium-option-title {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.compendium-option-subtitle {
+  font-size: 12px;
+  color: var(--rq3-text-light);
+  opacity: 0.8;
+}
+
+.compendium-close {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.compendium-close button {
+  background: rgba(96, 96, 96, 0.4);
+  border: 1px solid var(--rq3-border);
+  border-radius: 6px;
+  padding: 8px 20px;
+  color: var(--rq3-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.compendium-close button:hover {
+  background: rgba(96, 96, 96, 0.6);
+  border-color: var(--rq3-light);
 }
 
 .empty-drop-message p {
@@ -3039,15 +3665,38 @@
   display: grid;
   grid-template-columns: 300px 1fr;
   gap: 20px;
+  align-items: start;
+}
+
+/* Second Column Wrapper */
+.combat-right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Combat Statistics - Full Width */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+/* Weapon Skills Accordion */
+.weapon-skills-section {
+  margin-bottom: 20px;
+  background: rgba(96, 96, 96, 0.3);
+  border-radius: 8px;
   padding: 16px;
-  min-height: 500px;
 }
 
-.combat-info .combat-stats {
-  margin-top: 20px;
-}
-
-.combat-stats h4 {
+.weapon-skills-accordion-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
   margin: 0 0 12px 0;
   color: var(--rq3-text);
   font-size: 14px;
@@ -3055,13 +3704,28 @@
   font-weight: 600;
   border-bottom: 1px solid var(--rq3-secondary);
   padding-bottom: 4px;
+  transition: color 0.2s ease;
 }
 
-.stats-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
+.weapon-skills-accordion-header:hover {
+  color: var(--rq3-light);
 }
+
+.weapon-skills-toggle-icon {
+  font-size: 12px;
+  transition: transform 0.3s ease;
+  color: var(--rq3-secondary);
+}
+
+.weapon-skills-section.expanded .weapon-skills-toggle-icon {
+  transform: rotate(90deg);
+}
+
+.weapon-skills-content {
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
 
 .stat-item {
   display: flex;
@@ -3350,7 +4014,7 @@
 }
 
 .rq3-hp-current-value {
-  font-size: 48px;
+  font-size: 18px;
   font-weight: bold;
   color: var(--rq3-accent);
   margin: 10px 0;
@@ -3374,6 +4038,7 @@
   align-items: center;
   gap: 15px;
   margin-bottom: 20px;
+  padding-top: 15px;
 }
 
 .rq3-hp-controls-simple {
@@ -3605,7 +4270,6 @@
 }
 
 .rq3-damage-tooltip-header {
-  margin-bottom: 16px;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--rq3-border-color);
   text-align: center;
@@ -3669,6 +4333,7 @@
   display: flex;
   gap: 8px;
   justify-content: center;
+  padding-top: 15px;
 }
 
 .rq3-damage-btn {
@@ -3744,7 +4409,6 @@
 }
 
 .rq3-roll-tooltip-header {
-  margin-bottom: 16px;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--rq3-border-color);
   text-align: center;
@@ -3785,7 +4449,7 @@
   align-items: center;
   gap: 2px;
   min-height: 45px;
-  min-width: 35px;
+  min-width: 45px;
   justify-content: center;
 }
 
@@ -3942,4 +4606,728 @@
 
 .general-damage-value:focus {
 
+}
+
+/* -------------------------------------------- */
+/*  Weapon Form Styling                        */
+/* -------------------------------------------- */
+
+.weapon-section {
+  background: rgba(96, 96, 96, 0.3);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.weapon-section h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.weapon-properties {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+.weapon-properties .detail-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.weapon-properties .detail-group label {
+  font-weight: 600;
+  color: var(--rq3-text);
+  font-size: 14px;
+}
+
+.weapon-properties .detail-group input,
+.weapon-properties .detail-group select {
+  padding: 8px;
+  border: 1px solid var(--rq3-border);
+  border-radius: 4px;
+  background: rgba(96, 96, 96, 0.8);
+  color: var(--rq3-text);
+  font-size: 14px;
+}
+
+.weapon-properties .detail-group select {
+  text-align: left;
+}
+
+.weapon-properties .detail-group input:focus,
+.weapon-properties .detail-group select:focus {
+  outline: none;
+  border-color: var(--rq3-info);
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .weapon-properties {
+    grid-template-columns: 1fr;
+  }
+}
+
+.compendium-image{
+  width: 128px !important;
+  height: 128px !important;
+}
+
+/* -------------------------------------------- */
+/*  Item Sheet Info Tab                        */
+/* -------------------------------------------- */
+
+.runequest3.item .info-section {
+  padding: 16px;
+}
+
+.runequest3.item .info-section .info-display {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  border-radius: 4px;
+  border: 1px solid var(--rq3-border);
+  color: var(--rq3-text);
+  line-height: 1.6;
+  min-height: 200px;
+}
+
+.runequest3.item .info-section .info-display p {
+  margin-bottom: 8px;
+}
+
+.runequest3.item .info-section .info-display h1,
+.runequest3.item .info-section .info-display h2,
+.runequest3.item .info-section .info-display h3,
+.runequest3.item .info-section .info-display h4 {
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+/* Description editor in Data tab */
+.runequest3.item .description-editor {
+  margin-bottom: 16px;
+  width: 100%;
+  background-color: #555555;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.runequest3.item .description-editor .detail-group {
+  margin-bottom: 16px;
+}
+
+.runequest3.item .description-editor .detail-group label {
+  display: block;
+  font-weight: 600;
+  color: var(--rq3-text);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.runequest3.item .description-editor .editor {
+  min-height: 200px;
+}
+
+/* Remove padding from all editor toolbar buttons */
+.runequest3.item .description-editor .editor-menu button,
+.runequest3.item .description-editor .editor-container button {
+  padding: 0 6px 0 6px !important;
+}
+
+.runequest3.item .description-editor .editor-menu button:hover,
+.runequest3.item .description-editor .editor-container button:hover {
+  background-color:#121212;
+}
+
+/* Hide link, source HTML, secret, and toggle matches buttons in description editor */
+.runequest3.item .description-editor button[data-action="link"],
+.runequest3.item .description-editor button[data-action="source-code"],
+.runequest3.item .description-editor button[data-action="secret"],
+.runequest3.item .description-editor button[data-action="toggle-matches"] {
+  display: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* -------------------------------------------- */
+/*  Magic Stats Section                         */
+/* -------------------------------------------- */
+
+.magic-stats-section {
+  margin-bottom: 20px;
+}
+
+.magic-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+.magic-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+  background: rgba(96, 96, 96, 0.3);
+  border-radius: 6px;
+  transition: background-color 0.2s;
+  position: relative;
+}
+
+.magic-stat-item:hover {
+  background: rgba(96, 96, 96, 0.4);
+}
+
+.magic-stat-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--rq3-text);
+  margin-bottom: 8px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.magic-stat-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--rq3-success);
+  text-align: center;
+}
+
+.magic-stat-value-with-roll {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.magic-stat-roll-icon {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.magic-stat-roll-icon:hover {
+  color: var(--rq3-highlight);
+  transform: scale(1.2);
+}
+
+.magic-stat-cog {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.magic-stat-cog:hover {
+  color: var(--rq3-highlight);
+  transform: rotate(90deg);
+}
+
+.sorcery-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+/* Responsive adjustments for magic stats */
+@media (max-width: 1200px) {
+  .magic-stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .sorcery-skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .magic-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .sorcery-skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* -------------------------------------------- */
+/*  Magic Type Sections (Spirit/Divine/Sorcery)*/
+/* -------------------------------------------- */
+
+/* Magic sections use the same styling as equipment sections */
+.spirit-magic,
+.divine-magic,
+.sorcery-magic {
+  margin-bottom: 20px;
+  background: rgba(96, 96, 96, 0.3);
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.spirit-subsection,
+.divine-subsection,
+.sorcery-subsection {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.spell-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px;
+  color: var(--rq3-light);
+  border-bottom: 1px solid var(--rq3-secondary);
+  margin-bottom:10px;
+}
+
+.spell-section-header.accordion-header {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.spell-section-header.accordion-header:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.spell-section-header .header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.magic-section-visibility-toggle {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.magic-section-visibility-toggle:hover:not(:disabled) {
+  color: var(--rq3-highlight);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.magic-section-visibility-toggle:disabled,
+.magic-section-visibility-toggle.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.magic-section-visibility-toggle i {
+  pointer-events: none;
+}
+
+/* Hide magic sections when marked as hidden (only in player mode, not edit mode) */
+.magic-accordion.hidden-section {
+  display: none;
+}
+
+.accordion-icon {
+  font-size: 14px;
+  transition: transform 0.3s ease;
+  color: var(--rq3-text);
+}
+
+.magic-accordion.collapsed .accordion-icon {
+  transform: rotate(-90deg);
+}
+
+.accordion-content {
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  max-height: 5000px;
+  opacity: 1;
+}
+
+.magic-accordion.collapsed .accordion-content {
+  max-height: 0;
+  opacity: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.spell-section-header h5 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.casting-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.casting-rating-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.casting-rating-value {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--rq3-success);
+  min-width: 50px;
+  text-align: right;
+  cursor: help;
+  transition: all 0.2s ease;
+}
+
+.casting-rating-value:hover {
+}
+
+.spirit-subsection h5,
+.divine-subsection h5,
+.sorcery-subsection h5 {
+  padding: 8px 0;
+  color: var(--rq3-light);
+  border-radius: 4px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  border:none;
+  margin-bottom:0;
+}
+
+.spirit-items-list,
+.divine-items-list,
+.sorcery-items-list {
+  display: flex;
+  flex-direction: column;
+  min-height: 70px;
+  border-radius: 6px;
+}
+
+.spirit-items-list.drag-over,
+.divine-items-list.drag-over,
+.sorcery-items-list.drag-over {
+
+}
+
+.spirit-items-list.invalid-drop,
+.divine-items-list.invalid-drop,
+.sorcery-items-list.invalid-drop {
+  border-color: var(--rq3-danger);
+  background: rgba(255, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+}
+
+.empty-spell-section {
+  text-align: center;
+  padding: 20px;
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+  font-size: 13px;
+}
+
+.spell-storage-header.accordion-header {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spell-storage-header.accordion-header:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.spell-storage-accordion {
+  margin-top: 8px;
+}
+
+.spell-storage-header {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  padding: 8px;
+  background: rgba(96, 96, 96, 0.2);
+  border-radius: 4px;
+  border-left: 3px solid var(--rq3-secondary);
+}
+
+.spell-storage-header h6 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--rq3-text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.int-spirit-list,
+.spell-matrix-list {
+  margin-top: 8px;
+}
+
+.spell-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  background:#375145;
+  border: none;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  cursor: grab;
+  position: relative;
+  height:auto;
+}
+
+.spell-item:hover {
+  background: #3d5348;
+}
+
+.spell-item:active {
+  cursor: grabbing;
+}
+
+.spell-image {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+}
+
+.spell-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.spell-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--rq3-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.spell-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.spell-stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.spell-stat i {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.sorcery-invested {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sorcery-spell-cog {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-right: 4px;
+}
+
+.sorcery-spell-cog:hover {
+  color: var(--rq3-highlight);
+  transform: rotate(90deg);
+}
+
+.sorcery-total {
+  font-weight: 600;
+  color: var(--rq3-success);
+}
+
+.sorcery-invested-large {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--rq3-text);
+  margin-right: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sorcery-invested-large .sorcery-spell-cog {
+  font-size: 14px;
+  margin-right: 0;
+}
+
+.sorcery-total-large {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--rq3-success);
+  margin-right: 8px;
+  display: inline-flex;
+  align-items: center;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.spirit-mp-large {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--rq3-text);
+  margin-right: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.spirit-spell-cog {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-right: 0;
+}
+
+.spirit-spell-cog:hover {
+  color: var(--rq3-highlight);
+  transform: rotate(90deg);
+}
+
+.spirit-slots-remaining {
+  font-size: 12px;
+  font-weight: normal;
+  color: var(--rq3-text);
+  opacity: 0.8;
+  margin-left: 8px;
+}
+
+.spell-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 6px;
+  background: rgba(255, 215, 0, 0.2);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  border-radius: 3px;
+  font-size: 10px;
+  color: var(--rq3-highlight);
+}
+
+.spell-badge i {
+  font-size: 9px;
+}
+
+.spell-cost {
+  font-size: 12px;
+  color: var(--rq3-info);
+  font-weight: 500;
+}
+
+.spell-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.spell-controls a {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 4px;
+}
+
+.spell-controls a:hover {
+  color: var(--rq3-highlight);
+  transform: scale(1.1);
+}
+
+.spell-cast:hover {
+}
+
+/* -------------------------------------------- */
+/*  Compendium Directory Styling                */
+/* -------------------------------------------- */
+
+/* Hide compendium banner images and use dark grey background */
+.compendium-banner {
+  display: none !important;
+}
+
+/* Dark grey background for compendium entries */
+#compendium .directory-list .compendium-pack,
+#compendium .directory-list .directory-item,
+.compendium-sidebar .directory-list .compendium-pack,
+.compendium-sidebar .directory-list .directory-item,
+.compendium-pack,
+.directory-item[data-pack] {
+  background: #2a2a2a !important;
+  background-image: none !important;
+}
+
+/* Hover state */
+#compendium .directory-list .compendium-pack:hover,
+#compendium .directory-list .directory-item:hover,
+.compendium-sidebar .directory-list .compendium-pack:hover,
+.compendium-sidebar .directory-list .directory-item:hover,
+.compendium-pack:hover,
+.directory-item[data-pack]:hover {
+  background: #3a3a3a !important;
+  background-image: none !important;
+}
+
+.spell-edit:hover {
+  color: var(--rq3-info);
+}
+
+.spell-delete {
+  display: none;
+}
+
+.runequest3.edit-mode .spell-delete {
+  display: inline-flex;
+}
+
+.spell-delete:hover {
+  color: var(--rq3-danger);
+}
+
+/* Tab content styling */
+.runequest3 .sheet-body .tab {
+  overflow-y: auto;
+}
+
+.window-app .window-content{
+  overflow-y: scroll;
+  padding: 0px;
 }

@@ -65,7 +65,8 @@
       "knowledge": "Knowledge",
       "manipulation": "Manipulation",
       "perception": "Perception",
-      "stealth": "Stealth"
+      "stealth": "Stealth",
+      "weapon": "Attack Skills"
     },
     
     "Skills": {
@@ -104,22 +105,56 @@
       "track": "Track",
       "tasteAnalysis": "Taste Analysis",
       "hide": "Hide",
-      "sneak": "Sneak"
+      "sneak": "Sneak",
+      "blade": "Blade",
+      "close": "Close",
+      "blunt": "Blunt",
+      "shield": "Shield",
+      "spear": "Spear",
+      "sword": "Sword",
+      "tools": "Tools",
+      "bow": "Bow",
+      "crossbow": "Crossbow",
+      "dart": "Dart",
+      "sling": "Sling",
+      "staffSling": "Staff Sling",
+      "rock": "Rock",
+      "club": "Club",
+      "net": "Net"
     },
     
     "WeaponTypes": {
-      "1h-sword": "1H Sword",
-      "2h-sword": "2H Sword",
-      "1h-axe": "1H Axe",
-      "2h-axe": "2H Axe",
-      "spear": "Spear",
+      "axe": "Axe",
+      "hammer": "Hammer",
       "dagger": "Dagger",
+      "fist": "Fist",
       "mace": "Mace",
+      "shield": "Shield",
+      "spear": "Spear",
+      "javelin": "Javelin",
+      "sword": "Sword",
+      "tool": "Tool",
       "bow": "Bow",
       "crossbow": "Crossbow",
+      "dart": "Dart",
       "sling": "Sling",
-      "javelin": "Javelin",
-      "thrown": "Thrown"
+      "staff-sling": "Staff Sling",
+      "rock": "Rock",
+      "club": "Club",
+      "net": "Net"
+    },
+    
+    "WeaponCategories": {
+      "melee": "Melee",
+      "ranged": "Ranged",
+      "thrown": "Thrown",
+      "siege": "Siege"
+    },
+    
+    "WeaponHands": {
+      "1-handed": "1 Handed",
+      "2-handed": "2 Handed",
+      "1-or-2-handed": "1 or 2 Handed"
     },
     
     "ArmorTypes": {
@@ -211,6 +246,7 @@
       "modifier": "Modifier",
       "damage": "Damage",
       "armor": "Armor",
+      "attackModifier": "Attack Modifier",
       "skill": "Skill",
       "range": "Range",
       "duration": "Duration",
@@ -246,10 +282,31 @@
       "form": "Form Runes",
       "condition": "Condition Runes",
       "personalDetails": "Personal Details",
+      "itemProperties": "Item Properties",
+      "meleeAttack": "Melee Attack",
+      "meleeAttack1Handed": "Melee Attack (1 Handed)",
+      "meleeAttack2Handed": "Melee Attack (2 Handed)",
+      "rangedAttack": "Ranged Attack",
+      "enableMelee1Handed": "Enable Melee Attack (1 Handed)",
+      "enableMelee2Handed": "Enable Melee Attack (2 Handed)",
+      "enableRangedAttack": "Enable Ranged Attack",
       "type": "Type",
       "category": "Category",
       "baseChance": "Base Chance",
       "weaponType": "Weapon Type",
+      "weaponCategory": "Category",
+      "weaponHands": "Hands",
+      "strengthRequirement": "Min STR",
+      "dexterityRequirement": "Min DEX",
+      "baseSkill": "Base %",
+      "strikeRank": "Weapon SR",
+      "weaponArmor": "AP",
+      "deadlyBlow": "DB",
+      "impale": "Impale",
+      "minRange": "Min Range",
+      "maxRange": "Max Range",
+      "rof": "ROF",
+      "encumbrance": "ENC",
       "armorType": "Armor Type",
       "armorLocation": "Armor Location",
       "equipmentType": "Equipment Type",
@@ -301,8 +358,21 @@
     },
     
     "Magic": {
-      "spellType": "Spell Type",
+      "magicRating": "Magic Rating",
       "magicPoints": "Magic Points",
+      "freeInt": "Free INT",
+      "ceremony": "Ceremony",
+      "summon": "Summon",
+      "enchant": "Enchant",
+      "intensity": "Intensity",
+      "range": "Range",
+      "duration": "Duration",
+      "multispell": "Multispell",
+      "baseValue": "Base",
+      "bonusValue": "Bonus",
+      "currentValue": "Current",
+      "investedValue": "Invested",
+      "spellType": "Spell Type",
       "castingTime": "Casting Time",
       "components": "Components",
       "verbal": "Verbal",
@@ -315,7 +385,13 @@
       "affinityValue": "Affinity Value",
       "opposition": "Opposition",
       "associations": "Associations",
-      "spells": "Associated Spells"
+      "spells": "Associated Spells",
+      "spirit": "Spirit",
+      "divine": "Divine",
+      "sorcery": "Sorcery",
+      "spellMatrix": "Spell Matrix",
+      "intSpirit": "INT Spirit",
+      "unavailable": "Unavailable"
     },
     
     "Equipment": {
@@ -328,7 +404,11 @@
       "protection": "Protection",
       "locations": "Locations",
       "uses": "Uses",
-      "consumable": "Consumable"
+      "consumable": "Consumable",
+      "container": "Container",
+      "expandCollapse": "Expand/Collapse Container",
+      "itemsInContainer": "Items in Container",
+      "containerEncumbrance": "Items in containers have 1/3 encumbrance"
     },
     
     "Settings": {

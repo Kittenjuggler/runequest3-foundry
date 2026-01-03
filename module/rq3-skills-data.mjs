@@ -332,6 +332,147 @@ export const RQ3_SKILLS = {
         description: "Moving in silence, without alerting a foe."
       }
     }
+  },
+
+  weapon: {
+    label: "Weapon Skills",
+    skills: {
+      "blade": {
+        name: "Blade",
+        baseChance: 0,
+        category: "weapon",
+        canGainExperience: true,
+        characteristic1: "dex",
+        characteristic2: "str",
+        description: "Skill with bladed weapons."
+      },
+      "close": {
+        name: "Close",
+        baseChance: 0,
+        category: "weapon",
+        canGainExperience: true,
+        characteristic1: "dex",
+        characteristic2: "str",
+        description: "Close combat skill."
+      },
+      "blunt": {
+        name: "Blunt",
+        baseChance: 0,
+        category: "weapon",
+        canGainExperience: true,
+        characteristic1: "dex",
+        characteristic2: "str",
+        description: "Skill with blunt weapons."
+      },
+      "shield": {
+        name: "Shield",
+        baseChance: 0,
+        category: "weapon",
+        canGainExperience: true,
+        characteristic1: "dex",
+        characteristic2: "str",
+        description: "Skill with shields."
+      },
+      "spear": {
+        name: "Spear",
+        baseChance: 0,
+        category: "weapon",
+        canGainExperience: true,
+        characteristic1: "dex",
+        characteristic2: "str",
+        description: "Skill with spears."
+      },
+      "sword": {
+        name: "Sword",
+        baseChance: 0,
+        category: "weapon",
+        canGainExperience: true,
+        characteristic1: "dex",
+        characteristic2: "str",
+        description: "Skill with swords."
+      },
+      "tools": {
+        name: "Tools",
+        baseChance: 0,
+        category: "weapon",
+        canGainExperience: true,
+        characteristic1: "dex",
+        characteristic2: "str",
+        description: "Skill with tools as weapons."
+      },
+      "bow": {
+        name: "Bow",
+        baseChance: 0,
+        category: "weapon",
+        canGainExperience: true,
+        characteristic1: "dex",
+        characteristic2: "str",
+        description: "Skill with bows."
+      },
+      "crossbow": {
+        name: "Crossbow",
+        baseChance: 0,
+        category: "weapon",
+        canGainExperience: true,
+        characteristic1: "dex",
+        characteristic2: "str",
+        description: "Skill with crossbows."
+      },
+      "dart": {
+        name: "Dart",
+        baseChance: 0,
+        category: "weapon",
+        canGainExperience: true,
+        characteristic1: "dex",
+        characteristic2: "str",
+        description: "Skill with darts."
+      },
+      "sling": {
+        name: "Sling",
+        baseChance: 0,
+        category: "weapon",
+        canGainExperience: true,
+        characteristic1: "dex",
+        characteristic2: "str",
+        description: "Skill with slings."
+      },
+      "staffSling": {
+        name: "Staff Sling",
+        baseChance: 0,
+        category: "weapon",
+        canGainExperience: true,
+        characteristic1: "dex",
+        characteristic2: "str",
+        description: "Skill with staff slings."
+      },
+      "rock": {
+        name: "Rock",
+        baseChance: 0,
+        category: "weapon",
+        canGainExperience: true,
+        characteristic1: "dex",
+        characteristic2: "str",
+        description: "Skill with rocks as weapons."
+      },
+      "club": {
+        name: "Club",
+        baseChance: 0,
+        category: "weapon",
+        canGainExperience: true,
+        characteristic1: "dex",
+        characteristic2: "str",
+        description: "Skill with clubs."
+      },
+      "net": {
+        name: "Net",
+        baseChance: 0,
+        category: "weapon",
+        canGainExperience: true,
+        characteristic1: "dex",
+        characteristic2: "str",
+        description: "Skill with nets."
+      }
+    }
   }
 };
 
