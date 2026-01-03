@@ -30,7 +30,6 @@ import { RQ3_DIVINE_MAGIC_DATA } from "./module/rq3-divine-magic-data.mjs";
 import { RQ3_SORCERY_DATA } from "./module/rq3-sorcery-data.mjs";
 
 // Import equipment data
-import { RQ3_WEAPONS_DATA } from "./module/rq3-weapons-data.mjs";
 import { RQ3_ARMOUR_DATA } from "./module/rq3-armour-data.mjs";
 
 // Import JSON data loader (supports both JSON and .mjs fallback)
@@ -1711,8 +1710,9 @@ async function migrateWeaponsCompendium() {
   try {
     weaponsData = await loadCompendiumData("weapons");
   } catch (error) {
-    console.warn("RQ3 | Failed to load weapons from JSON, using .mjs fallback");
-    weaponsData = RQ3_WEAPONS_DATA;
+    console.error("RQ3 | Failed to load weapons from JSON:", error);
+    ui.notifications.error("Failed to load weapons data. Check console for details.");
+    return;
   }
   
   console.log(`RQ3 | Starting weapons migration. Total weapons in data: ${Object.keys(weaponsData).length}`);
@@ -2602,13 +2602,13 @@ function initializeLazyLoading() {
   });
   
   Object.defineProperty(CONFIG.RQ3, 'equipment', {
-    get: function() {
+    get: async function() {
       if (!_equipmentDataLoaded) {
         _equipmentDataLoaded = true;
         console.log("RQ3 | Equipment data loaded on first access");
       }
       return {
-        weapons: RQ3_WEAPONS_DATA,
+        weapons: await loadCompendiumData('weapons'),
         armor: RQ3_ARMOUR_DATA
       };
     },
