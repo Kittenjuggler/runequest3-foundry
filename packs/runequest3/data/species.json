@@ -7,19 +7,102 @@
       "type": "species",
       "img": "icons/environment/people/group.webp",
       "system": {
-        "description": "<p>Humans are the most common and adaptable of all sentient species in Glorantha. They are versatile, ambitious, and found in nearly every corner of the world.</p>",
+        "description": "<p>Humans are the most common and adaptable of all sentient species in Glorantha. They are versatile, ambitious, and found in nearly every corner of the world.</p><p>Humans form the backbone of most civilizations and are known for their diverse cultures, beliefs, and occupations. They are neither the strongest nor the wisest of species, but their adaptability and determination often see them succeed where others fail.</p>",
         "type": "humanoid",
         "averageHeight": "1.7m",
         "averageWeight": "70kg",
-        "averageSize": { "min": 8, "max": 18 },
-        "characteristicMods": { "str": 0, "con": 0, "siz": 0, "int": 0, "pow": 0, "dex": 0, "app": 0, "luck": 0 },
-        "movement": { "walk": 8, "run": 24 },
+        "averageSize": {
+          "min": 8,
+          "max": 18
+        },
+        "characteristicMods": {
+          "str": 0,
+          "con": 0,
+          "siz": 0,
+          "int": 0,
+          "pow": 0,
+          "dex": 0,
+          "app": 0,
+          "luck": 0
+        },
+        "movement": {
+          "walk": 8,
+          "run": 24
+        },
         "naturalArmor": 0,
         "naturalWeapons": [],
-        "traits": ["Adaptable", "Ambitious", "Diverse"],
-        "abilities": "<p><strong>Adaptability:</strong> Humans gain a +10% bonus to any skill when first learning it.</p>"
+        "traits": [
+          "Adaptable",
+          "Ambitious",
+          "Diverse"
+        ],
+        "abilities": "<p><strong>Adaptability:</strong> Humans gain a +10% bonus to any skill when first learning it.</p><p><strong>Cultural Diversity:</strong> Humans can choose from any cultural background without penalty.</p><p><strong>Determination:</strong> Once per session, a human character may reroll a failed skill roll.</p>",
+        "culture": {
+          "homeland": "Varies by region",
+          "language": "Common (varies by homeland)",
+          "commonOccupations": [
+            "Farmer",
+            "Warrior",
+            "Merchant",
+            "Crafter",
+            "Scholar",
+            "Priest"
+          ],
+          "commonCults": [
+            "Orlanth",
+            "Ernalda",
+            "Humakt",
+            "Issaries",
+            "Lhankor Mhy",
+            "Chalana Arroy"
+          ]
+        },
+        "lifespan": {
+          "maturity": 18,
+          "prime": 40,
+          "old": 60,
+          "venerable": 80
+        },
+        "skills": {
+          "boat": 5,
+          "climb": 40,
+          "dodge": 25,
+          "jump": 25,
+          "ride": 5,
+          "swim": 15,
+          "throw": 25,
+          "fast_talk": 5,
+          "orate": 5,
+          "sing": 5,
+          "speak_own_language": 30,
+          "speak_trade_talk": 20,
+          "animal_lore": 5,
+          "evaluate": 5,
+          "first_aid": 10,
+          "human_lore": 5,
+          "mineral_lore": 5,
+          "plant_lore": 5,
+          "read_write": 0,
+          "shiphandling": 0,
+          "world_lore": 10,
+          "conceal": 5,
+          "devise": 5,
+          "play_instrument": 5,
+          "sleight": 5,
+          "listen": 5,
+          "scan": 25,
+          "search": 25,
+          "track": 5,
+          "hide": 10,
+          "sneak": 10
+        },
+        "price": {
+          "value": 0,
+          "currency": "lunars"
+        },
+        "weight": 0,
+        "quantity": 1
       }
     }
   }
 }
-
